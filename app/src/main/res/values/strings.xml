@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">R102S蓝牙配置工具</string>
+    <string name="tv_result_title">执行结果:</string>
+    <string name="tv_version_title">版本号:</string>
+    <string name="tv_frequency_band_title">频段:</string>
+    <string name="tv_frequency_min_title">最小频点:</string>
+    <string name="tv_frequency_max_title">最大频点:</string>
+    <string name="tv_power_title">功率:</string>
+    <string name="btn_read_config_title">读取</string>
+    <string name="btn_set_power_title">设置功率</string>
+    <string name="btn_set_frequency_band_title">设置频段</string>
+    <string name="tv_SN_title">SN:</string>
+    <string name="tv_id_title">ID</string>
+    <string name="tv_epc_or_tid_title">EPC/TID</string>
+    <string name="tv_tag_count_title">张数:</string>
+    <string name="tv_runTime_title">运行时间(ms):</string>
+    <string name="tv_session_title">Session:</string>
+    <string name="btn_scan_title">扫描</string>
+    <string name="checkBox_antenna1">天线1</string>
+    <string name="checkBox_antenna2">天线2</string>
+    <string name="checkBox_antenna3">天线3</string>
+    <string name="checkBox_antenna4">天线4</string>
+    <string name="checkBox_antenna5">天线5</string>
+    <string name="checkBox_antenna6">天线6</string>
+    <string name="checkBox_antenna7">天线7</string>
+    <string name="checkBox_antenna8">天线8</string>
+    <string name="read_config_success">读取成功</string>
+    <string name="read_config_fail">读取失败</string>
+    <string name="set_success">设置成功</string>
+    <string name="set_fail">设置失败</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_clear">清空</string>
+    <string name="btn_connect">连接</string>
+    <string name="title_activity_scan_device">ScanDeviceActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="tv_device_name_title">设备名</string>
+    <string name="tv_device_mac_title">MAC</string>
+    <string name="btn_scan_device">搜索设备</string>
+    <string name="btn_connect_device">连接设备</string>
+</resources>

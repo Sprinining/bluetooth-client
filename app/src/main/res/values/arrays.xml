@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_spinner_frequency_band">
+        <item>Chinese band2</item>
+        <item>US band</item>
+        <item>Korean band</item>
+        <item>EU band</item>
+        <item>Chinese band1</item>
+    </string-array>
+    <string-array name="array_spinner_frequency_min">
+        <item>902.750MHz</item>
+        <item>903.250MHz</item>
+        <item>903.750MHz</item>
+        <item>904.250MHz</item>
+        <item>904.750MHz</item>
+        <item>905.250MHz</item>
+        <item>905.750MHz</item>
+        <item>906.250MHz</item>
+        <item>906.750MHz</item>
+        <item>907.250MHz</item>
+        <item>907.750MHz</item>
+        <item>908.250MHz</item>
+        <item>908.750MHz</item>
+        <item>909.250MHz</item>
+        <item>909.750MHz</item>
+        <item>910.250MHz</item>
+        <item>910.750MHz</item>
+        <item>911.250MHz</item>
+        <item>911.750MHz</item>
+        <item>912.250MHz</item>
+        <item>912.750MHz</item>
+        <item>913.250MHz</item>
+        <item>913.750MHz</item>
+        <item>914.250MHz</item>
+        <item>914.750MHz</item>
+        <item>915.250MHz</item>
+        <item>915.750MHz</item>
+        <item>916.250MHz</item>
+        <item>916.750MHz</item>
+        <item>917.250MHz</item>
+        <item>917.750MHz</item>
+        <item>918.250MHz</item>
+        <item>918.750MHz</item>
+        <item>919.250MHz</item>
+        <item>919.750MHz</item>
+        <item>920.250MHz</item>
+        <item>920.750MHz</item>
+        <item>921.250MHz</item>
+        <item>921.750MHz</item>
+        <item>922.250MHz</item>
+        <item>922.750MHz</item>
+        <item>923.250MHz</item>
+        <item>923.750MHz</item>
+        <item>924.250MHz</item>
+        <item>924.750MHz</item>
+        <item>925.250MHz</item>
+        <item>925.750MHz</item>
+        <item>926.250MHz</item>
+        <item>926.750MHz</item>
+        <item>927.250MHz</item>
+    </string-array>
+    <string-array name="array_spinner_frequency_max">
+        <item>902.750MHz</item>
+        <item>903.250MHz</item>
+        <item>903.750MHz</item>
+        <item>904.250MHz</item>
+        <item>904.750MHz</item>
+        <item>905.250MHz</item>
+        <item>905.750MHz</item>
+        <item>906.250MHz</item>
+        <item>906.750MHz</item>
+        <item>907.250MHz</item>
+        <item>907.750MHz</item>
+        <item>908.250MHz</item>
+        <item>908.750MHz</item>
+        <item>909.250MHz</item>
+        <item>909.750MHz</item>
+        <item>910.250MHz</item>
+        <item>910.750MHz</item>
+        <item>911.250MHz</item>
+        <item>911.750MHz</item>
+        <item>912.250MHz</item>
+        <item>912.750MHz</item>
+        <item>913.250MHz</item>
+        <item>913.750MHz</item>
+        <item>914.250MHz</item>
+        <item>914.750MHz</item>
+        <item>915.250MHz</item>
+        <item>915.750MHz</item>
+        <item>916.250MHz</item>
+        <item>916.750MHz</item>
+        <item>917.250MHz</item>
+        <item>917.750MHz</item>
+        <item>918.250MHz</item>
+        <item>918.750MHz</item>
+        <item>919.250MHz</item>
+        <item>919.750MHz</item>
+        <item>920.250MHz</item>
+        <item>920.750MHz</item>
+        <item>921.250MHz</item>
+        <item>921.750MHz</item>
+        <item>922.250MHz</item>
+        <item>922.750MHz</item>
+        <item>923.250MHz</item>
+        <item>923.750MHz</item>
+        <item>924.250MHz</item>
+        <item>924.750MHz</item>
+        <item>925.250MHz</item>
+        <item>925.750MHz</item>
+        <item>926.250MHz</item>
+        <item>926.750MHz</item>
+        <item>927.250MHz</item>
+    </string-array>
+    <string-array name="array_spinner_session">
+        <item>S0</item>
+        <item>S1</item>
+    </string-array>
+</resources>

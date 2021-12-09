@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/drawable/selector_item_selected.xml" value="0.36822916666666666" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/activity_scan_device.xml" value="0.2717391304347826" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/device_found_cell.xml" value="0.2717391304347826" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/fragment_blank.xml" value="0.15" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/fragment_configuration.xml" value="0.25" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/fragment_scan.xml" value="0.33" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/fragment_server_simulation.xml" value="0.24139492753623187" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/page_item.xml" value="0.67" />
+        <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/taginfo_cell.xml" value="0.67" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
+  </component>
+</project>
