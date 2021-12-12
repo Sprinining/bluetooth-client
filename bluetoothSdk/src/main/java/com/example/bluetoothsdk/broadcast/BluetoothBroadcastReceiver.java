@@ -19,10 +19,6 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
     private ConnectStateListener connectStateListener;
     private PairingResultListener pairingResultListener;
 
-    public BluetoothBroadcastReceiver() {
-        Log.e("wmj", "MyBroadcastReceiver: 广播初始化了");
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();

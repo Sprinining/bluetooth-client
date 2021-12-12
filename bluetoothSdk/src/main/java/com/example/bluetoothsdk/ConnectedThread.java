@@ -96,7 +96,7 @@ public class ConnectedThread extends Thread {
         @Override
         public void run() {
             try {
-                byte[] bytes = new byte[1024*10];
+                byte[] bytes = new byte[1024 * 10];
                 int n;
                 // 一条指令的字节长度
                 int count;
@@ -111,7 +111,7 @@ public class ConnectedThread extends Thread {
                     byte[] oneMessage = new byte[count];
                     System.arraycopy(bytes, 0, oneMessage, 0, count);
 //                    readBlockingQueue.put(oneMessage);
-                        readTransferListener.transferSuccess(oneMessage);
+                    readTransferListener.transferSuccess(oneMessage);
 /*                    threadPool.execute(()->{
                     });*/
 
