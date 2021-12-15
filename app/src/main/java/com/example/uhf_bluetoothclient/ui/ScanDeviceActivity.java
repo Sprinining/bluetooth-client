@@ -65,7 +65,6 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
             @Override
             public void onChanged(String s) {
                 binding.tvConnectState.setText(s);
-                Log.e("wmj", "onChanged: " + s);
             }
         });
     }

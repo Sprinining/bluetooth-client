@@ -40,13 +40,21 @@ public class BluetoothClient {
         bluetoothAdapter.cancelDiscovery();
 
         try {
-            // 通过调用 connect() 发起连接。请注意，此方法为阻塞调用。
             /*
-            当客户端调用此方法后，系统会执行 SDP 查找，以找到带有所匹配 UUID 的远程设备。
-            如果查找成功并且远程设备接受连接，则其会共享 RFCOMM 通道以便在连接期间使用，并且 connect() 方法将会返回。
-            如果连接失败，或者 connect() 方法超时（约 12 秒后），则此方法将引发 IOException。
+                通过调用 connect() 发起连接。请注意，此方法为阻塞调用。
+                当客户端调用此方法后，系统会执行 SDP 查找，以找到带有所匹配 UUID 的远程设备。
+                如果查找成功并且远程设备接受连接，则其会共享 RFCOMM 通道以便在连接期间使用，并且 connect() 方法将会返回。
+                如果连接失败，或者 connect() 方法超时（约 12 秒后），则此方法将引发 IOException。
              */
             bluetoothSocket.connect();
+
+            // 放到客户端线程中处理
+            connectedThread = new ConnectedThread(bluetoothSocket);
+            connectedThread.start();
+            if (connectResultListener != null) {
+                connectResultListener.connectSuccess(connectedThread);
+                connectedThread.setConnectResultListener(connectResultListener);
+            }
         } catch (IOException e) {
             if (connectResultListener != null) {
                 connectResultListener.connectFail(e);
@@ -55,20 +63,13 @@ public class BluetoothClient {
             try {
                 bluetoothSocket.close();
             } catch (IOException closeException) {
-                Log.e(TAG, "Could not close the client socket", closeException);
+                Log.e(TAG, "start: 客户端关闭bluetoothSocket失败", closeException);
             }
-            return;
-        }
-
-        // 放到客户端线程中处理
-        connectedThread = new ConnectedThread(bluetoothSocket);
-        connectedThread.start();
-        if (connectResultListener != null) {
-            connectResultListener.connectSuccess(connectedThread);
         }
     }
 
     public void closeBluetoothClient() {
+        // 断开连接
         if (connectResultListener != null) {
             connectResultListener.disconnect();
         }
@@ -80,9 +81,9 @@ public class BluetoothClient {
         if (bluetoothSocket != null) {
             try {
                 bluetoothSocket.close();
-                Log.i(TAG, "closeClient: 客户端关闭成功");
+                Log.i(TAG, "closeBluetoothClient: 客户端关闭成功");
             } catch (IOException e) {
-                Log.e(TAG, "closeClient: 客户端关闭异常", e);
+                Log.e(TAG, "closeBluetoothClient: 客户端关闭异常", e);
             }
         }
     }

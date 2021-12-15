@@ -65,8 +65,9 @@ public class BleClient {
         return bluetoothUtils.isPaired(device);
     }
 
+    @SuppressLint("MissingPermission")
     public void startPairing(BluetoothDevice device, PairingResultListener pairingResultListener) {
-        bluetoothUtils.startPairing(device, pairingResultListener);
+        bluetoothUtils.startPairing(device, false, pairingResultListener);
     }
 
     public void connect(BluetoothDevice device) {
@@ -149,6 +150,12 @@ public class BleClient {
         @Override
         public void disconnect() {
             showToast("蓝牙断开连接");
+            // 弹出提示框
+            Message message = new Message();
+            message.what = 2;
+            if (handler_main_activity != null) {
+                handler_main_activity.sendMessage(message);
+            }
         }
     };
 
@@ -219,6 +226,7 @@ public class BleClient {
 
     // 连接状态监听
     private final ConnectStateListener connectStateListener = connectState -> {
+        Log.i(TAG, "广播接收: " + connectState.toString());
         if (scanDeviceViewModel != null) {
             scanDeviceViewModel.getConnectState().setValue(connectState.toString());
         }
@@ -236,7 +244,6 @@ public class BleClient {
 
     public BleClient setHandler_main_activity(Handler handler_main_activity) {
         this.handler_main_activity = handler_main_activity;
-        connectedThread.setHandler(handler_main_activity);
         return this;
     }
 
@@ -248,6 +255,14 @@ public class BleClient {
             bundle.putString("toast", str);
             message.setData(bundle);
             handler_scan_activity.sendMessage(message);
+        }
+        if (handler_main_activity != null) {
+            android.os.Message message = new android.os.Message();
+            message.what = 1;
+            Bundle bundle = new Bundle();
+            bundle.putString("toast", str);
+            message.setData(bundle);
+            handler_main_activity.sendMessage(message);
         }
     }
 

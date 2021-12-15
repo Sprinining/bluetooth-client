@@ -1,9 +1,8 @@
 package com.example.bluetoothsdk;
 
 import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
-import android.os.Message;
 
+import com.example.bluetoothsdk.interfaces.ConnectResultListener;
 import com.example.bluetoothsdk.interfaces.TransferListener;
 
 import java.io.IOException;
@@ -19,11 +18,7 @@ public class ConnectedThread extends Thread {
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
     private TransferListener readTransferListener;
     private TransferListener writeTransferListener;
-    private Handler handler;
-
-    public void setHandler(Handler handler) {
-        this.handler = handler;
-    }
+    private ConnectResultListener connectResultListener;
 
     // 双方通信的bluetoothSocket
     private final BluetoothSocket bluetoothSocket;
@@ -57,14 +52,6 @@ public class ConnectedThread extends Thread {
         }
     }
 
-    public void setReadTransferListener(TransferListener readTransferListener) {
-        this.readTransferListener = readTransferListener;
-    }
-
-    public void setWriteTransferListener(TransferListener writeTransferListener) {
-        this.writeTransferListener = writeTransferListener;
-    }
-
     /**
      * 启动读写线程
      */
@@ -94,11 +81,8 @@ public class ConnectedThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            // 弹出提示框
-            Message message = new Message();
-            message.what = 2;
-            if (handler != null) {
-                handler.sendMessage(message);
+            if (connectResultListener != null) {
+                connectResultListener.disconnect();
             }
         }
     }
@@ -170,5 +154,17 @@ public class ConnectedThread extends Thread {
                 writeTransferListener.transferFinish();
             }
         }
+    }
+
+    public void setConnectResultListener(ConnectResultListener connectResultListener) {
+        this.connectResultListener = connectResultListener;
+    }
+
+    public void setReadTransferListener(TransferListener readTransferListener) {
+        this.readTransferListener = readTransferListener;
+    }
+
+    public void setWriteTransferListener(TransferListener writeTransferListener) {
+        this.writeTransferListener = writeTransferListener;
     }
 }

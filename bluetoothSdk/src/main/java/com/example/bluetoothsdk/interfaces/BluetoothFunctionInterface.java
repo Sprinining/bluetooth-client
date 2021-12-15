@@ -38,12 +38,11 @@ public interface BluetoothFunctionInterface {
     void stopScan();
 
     /**
-     * 配对
-     *
      * @param device                设备
+     * @param autoPair              是否自动配对
      * @param pairingResultListener 配对结果监听
      */
-    void startPairing(BluetoothDevice device, PairingResultListener pairingResultListener);
+    void startPairing(BluetoothDevice device, boolean autoPair, PairingResultListener pairingResultListener);
 
     /**
      * 取消配对

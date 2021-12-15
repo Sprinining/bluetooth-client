@@ -3,6 +3,7 @@ package com.example.uhf_bluetoothclient.ui;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,14 +61,22 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3:
                     // 重连成功
-                    if (alertDialog != null) {
-                        alertDialog.dismiss();
+                    try {
+                        if (alertDialog != null) {
+                            alertDialog.dismiss();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
                 case 4:
                     // 重连失败
-                    if (alertDialog != null) {
-                        alertDialog.setMessage("重连失败，请再次尝试");
+                    try {
+                        if (alertDialog != null) {
+                            alertDialog.setMessage("重连失败，请再次尝试");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 default:
             }
@@ -106,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager2 = findViewById(R.id.vp);
         tabLayout = findViewById(R.id.table_layout);
+        tabLayout.setBackgroundColor(Color.parseColor("#D3D3D3"));
 
         initPager();
         initTabLayout();

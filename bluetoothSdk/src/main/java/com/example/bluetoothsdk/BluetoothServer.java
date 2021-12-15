@@ -66,43 +66,43 @@ public class BluetoothServer {
                 服务器才会接受连接。连接成功后，accept() 将返回已连接的 BluetoothSocket。
                  */
                 bluetoothSocket = bluetoothServerSocket.accept();
+
+                if (bluetoothSocket != null) {
+                    Log.i(TAG, "start: 服务器收到了一个客户端连接 name:" + bluetoothSocket.getRemoteDevice().getName() +
+                            ", address:" + bluetoothSocket.getRemoteDevice().getAddress());
+
+                    // 在子线程中处理socket
+                    connectedThread = new ConnectedThread(bluetoothSocket);
+                    connectedThread.start();
+                    if (connectResultListener != null) {
+                        connectedThread.setConnectResultListener(connectResultListener);
+                        connectResultListener.connectSuccess(connectedThread);
+                    }
+
+                    // 然后立刻关闭serverSocket
+                    // 从 BluetoothServerSocket 获取 BluetoothSocket 后，可以（并且应该）舍弃 BluetoothServerSocket，除非设备需要接受更多连接。
+/*
+                    此方法调用会释放服务器套接字及其所有资源，但不会关闭 accept () 所返回的已连接的 BluetoothSocket。
+                    与 TCP/IP 不同，RFCOMM 一次只允许每个通道有一个已连接的客户端，因此大多数情况下，在接受已连接的套接字后，
+                    可以立即在 BluetoothServerSocket 上调用 close ()。
+*/
+
+                    // 关闭socket不再接收
+/*                    if (bluetoothServerSocket != null) {
+                        try {
+                            bluetoothServerSocket.close();
+                            Log.i(TAG, "closeBluetoothServer: 服务器关闭成功");
+                        } catch (IOException e) {
+                            Log.e(TAG, "closeBluetoothServer: 服务器关闭异常", e);
+                        }
+                    }*/
+                }
             } catch (IOException e) {
                 Log.e(TAG, "start: 蓝牙服务器监听异常终止", e);
                 if (connectResultListener != null) {
                     connectResultListener.connectFail(e);
                 }
                 break;
-            }
-
-            if (bluetoothSocket != null) {
-                Log.i(TAG, "start: 服务器收到了一个客户端连接 name:" + bluetoothSocket.getRemoteDevice().getName() +
-                        ", address:" + bluetoothSocket.getRemoteDevice().getAddress());
-
-                // 在子线程中处理socket
-                connectedThread = new ConnectedThread(bluetoothSocket);
-                connectedThread.start();
-                if (connectResultListener != null) {
-                    connectResultListener.connectSuccess(connectedThread);
-                }
-
-                // 然后立刻关闭serverSocket
-                // 从 BluetoothServerSocket 获取 BluetoothSocket 后，可以（并且应该）舍弃 BluetoothServerSocket，除非设备需要接受更多连接。
-                /*
-                此方法调用会释放服务器套接字及其所有资源，但不会关闭 accept() 所返回的已连接的 BluetoothSocket。
-                与 TCP/IP 不同，RFCOMM 一次只允许每个通道有一个已连接的客户端，因此大多数情况下，在接受已连接的套接字后，
-                可以立即在 BluetoothServerSocket 上调用 close()。
-                 */
-
-                // 关闭socket不再接收
-/*                if (bluetoothServerSocket != null) {
-                    try {
-                        bluetoothServerSocket.close();
-                        Log.i(TAG, "closeBluetoothServer: 服务器关闭成功");
-                    } catch (IOException e) {
-                        Log.e(TAG, "closeBluetoothServer: 服务器关闭异常", e);
-                    }
-                }*/
-//                break;
             }
         }
     }
