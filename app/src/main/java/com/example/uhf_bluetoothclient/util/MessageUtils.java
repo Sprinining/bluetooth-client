@@ -19,6 +19,7 @@ import com.example.uhf_bluetoothclient.entity.MsgBaseSetFreqRange;
 import com.example.uhf_bluetoothclient.entity.MsgBaseSetPower;
 import com.example.uhf_bluetoothclient.entity.MsgBaseStop;
 import com.example.uhf_bluetoothclient.entity.MsgFrequencyHopTable;
+import com.example.uhf_bluetoothclient.entity.MsgSetIPv4;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -79,6 +80,10 @@ public class MessageUtils {
         Message<?> requestMessage = gson.fromJson(request, Message.class);
         try {
             switch (requestMessage.getCode()) {
+                case Constants.SET_IPV4:
+                    // 设置ipv4
+                case Constants.SET_IPV6:
+                    // 设置ipv6
                 case Constants.MSG_BASE_SET_POWER:
                     // 设置功率
                 case Constants.MSG_BASE_SET_FREQUENCY_HOP_TABLE:
@@ -190,6 +195,13 @@ public class MessageUtils {
                         showToast("设置基带参数失败: " + requestMessage.getRtMsg());
                     }
                     break;
+                case Constants.GET_IP:
+                    // 获取ip
+                    if (requestMessage.getRtCode() == 0) {
+                        viewModel.getIp().postValue((String) requestMessage.getData());
+                        showExecuteResult(Constants.GET_SUCCESS);
+                    }
+                    break;
                 default:
                     Log.e(TAG, "handlerMessage: " + Constants.CODE_ERROR);
             }
@@ -288,6 +300,50 @@ public class MessageUtils {
     public void getReaderInfo() {
         Message<MsgAppGetReaderInfo> message = new Message<>();
         message.setCode(Constants.MSG_APP_GET_READER_INFO);
+        sendMessage(message);
+    }
+
+    /**
+     * 1029
+     */
+    public void getIP() {
+        Message<String> message = new Message<>();
+        message.setCode(Constants.GET_IP);
+        sendMessage(message);
+    }
+
+    /**
+     * 1030
+     * @param mode
+     * @param ipAddress
+     * @param netmask
+     * @param gateway
+     * @param dns1
+     * @param dns2
+     */
+    public void setIPv4(String mode, String ipAddress, String netmask, String gateway, String dns1, String dns2) {
+        Message<MsgSetIPv4> message = new Message<>();
+        message.setCode(Constants.SET_IPV4);
+        message.setData(new MsgSetIPv4(
+                mode,
+                ipAddress,
+                netmask,
+                gateway,
+                dns1,
+                dns2
+        ));
+        sendMessage(message);
+    }
+
+    /**
+     * 1031
+     *
+     * @param iPv6
+     */
+    public void setIPv6(String iPv6) {
+        Message<String> message = new Message<>();
+        message.setCode(Constants.SET_IPV6);
+        message.setData(iPv6);
         sendMessage(message);
     }
 

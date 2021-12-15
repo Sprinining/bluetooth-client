@@ -1,6 +1,8 @@
 package com.example.bluetoothsdk;
 
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Message;
 
 import com.example.bluetoothsdk.interfaces.TransferListener;
 
@@ -17,6 +19,11 @@ public class ConnectedThread extends Thread {
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
     private TransferListener readTransferListener;
     private TransferListener writeTransferListener;
+    private Handler handler;
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
 
     // 双方通信的bluetoothSocket
     private final BluetoothSocket bluetoothSocket;
@@ -86,6 +93,13 @@ public class ConnectedThread extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            // 弹出提示框
+            Message message = new Message();
+            message.what = 2;
+            if (handler != null) {
+                handler.sendMessage(message);
+            }
         }
     }
 

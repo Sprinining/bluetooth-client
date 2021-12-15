@@ -55,6 +55,9 @@ public class ScanDeviceViewModel extends ViewModel {
 
     public void connectDeviceClick() {
         if (listMutableLiveData.getValue() != null) {
+            if (currentSelectedDeviceIndex <= 0){
+                return;
+            }
             BluetoothDevice device = listMutableLiveData.getValue().get(currentSelectedDeviceIndex);
             if (bleClient.isPaired(device)) {
                 bleClient.connect(device);

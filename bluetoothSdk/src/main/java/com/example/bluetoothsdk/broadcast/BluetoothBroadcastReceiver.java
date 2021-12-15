@@ -13,7 +13,6 @@ import com.example.bluetoothsdk.interfaces.PairingResultListener;
 import com.example.bluetoothsdk.interfaces.ScanResultListener;
 import com.example.bluetoothsdk.utils.ClsUtils;
 
-
 public class BluetoothBroadcastReceiver extends BroadcastReceiver {
     private ScanResultListener scanResultListener;
     private ConnectStateListener connectStateListener;
@@ -63,13 +62,13 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
                 break;
             case BluetoothDevice.ACTION_PAIRING_REQUEST:
                 sendConnectState(ConnectState.ACTION_PAIRING_REQUEST);
-                try {
+/*                try {
                     ClsUtils.setPairingConfirmation(device.getClass(), device, true);
                     abortBroadcast();
                     ClsUtils.setPin(device.getClass(), device, "1234");
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
                 break;
             case BluetoothDevice.ACTION_BOND_STATE_CHANGED:
                 switch (device.getBondState()) {

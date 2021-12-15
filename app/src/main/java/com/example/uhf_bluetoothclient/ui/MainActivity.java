@@ -2,6 +2,7 @@ package com.example.uhf_bluetoothclient.ui;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -24,6 +26,7 @@ import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 import com.google.android.material.tabs.TabLayout;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private boolean mIsExit;
+    private AlertDialog alertDialog;
     private final Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -42,8 +46,52 @@ public class MainActivity extends AppCompatActivity {
                     String str = msg.getData().getString("toast");
                     Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     break;
+                case 2:
+                    BleClient.getINSTANCE().enableBluetooth();
+                    // 断开连接
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    alertDialog = builder.setIcon(R.drawable.bluetooth_disconnect)
+                            .setTitle("连接中断")
+                            .setMessage("与设备的蓝牙连接已断开")
+                            .setPositiveButton("退出应用", dialogOnclickListener)
+                            .setNeutralButton("重新连接", dialogOnclickListener)
+                            .create();
+                    alertDialog.show();
+                    break;
+                case 3:
+                    // 重连成功
+                    if (alertDialog != null) {
+                        alertDialog.dismiss();
+                    }
+                    break;
+                case 4:
+                    // 重连失败
+                    if (alertDialog != null) {
+                        alertDialog.setMessage("重连失败，请再次尝试");
+                    }
                 default:
             }
+        }
+    };
+
+    private final DialogInterface.OnClickListener dialogOnclickListener = (dialog, which) -> {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                exitAPP();
+                break;
+            case DialogInterface.BUTTON_NEUTRAL:
+                BleClient.getINSTANCE().reconnect();
+                alertDialog.setMessage("重连中...");
+                // 不退出dialog
+                try {
+                    Field field = dialog.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
+                    field.setAccessible(true);
+                    field.set(dialog, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
         }
     };
 
@@ -66,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 .setViewModel(viewModel)
                 .setContext(getApplicationContext())
                 .setHandler(handler);
+
+        BleClient.getINSTANCE().setHandler_main_activity(handler);
     }
 
     public void initPager() {
@@ -121,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mIsExit) {
-                BleClient.getINSTANCE().destroy();
                 exitAPP();
             } else {
                 Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -134,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exitAPP() {
+        // 关闭蓝牙客户端
+        BleClient.getINSTANCE().destroy();
+        // 关闭app
         ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.AppTask> appTaskList = activityManager.getAppTasks();
         for (ActivityManager.AppTask appTask : appTaskList) {

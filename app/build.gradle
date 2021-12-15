@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.uhf_bluetoothclient"
-        minSdk 29
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -19,7 +19,7 @@ android {
         }
     }
 
-    signingConfigs {
+/*    signingConfigs {
         release {
 //            def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "D:\\keystore\\r102s\\platform.keystore"
             def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "..\\platform.keystore"
@@ -37,7 +37,7 @@ android {
             storeFile file(KEYSTORE_FILE)
             storePassword 'android'
         }
-    }
+    }*/
 
     buildTypes {
         release {

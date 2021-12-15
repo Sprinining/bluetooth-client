@@ -62,29 +62,9 @@ public interface Constants {
     int RFID_APP_DOWNLOAD_APP = 1026;// 读写器下载app
     int MSG_BASE_GET_FREQUENCY_HOP_TABLE = 1027;// 获取跳频表
     int MSG_BASE_SET_FREQUENCY_HOP_TABLE = 1028;// 设置跳频表
-
-    /*    List<Integer> FREQUENCY_HOP_TABLE = new ArrayList<Integer>() {{
-            add(920125);
-            add(920375);
-            add(920625);
-            add(920875);
-            add(921125);
-            add(921375);
-            add(921625);
-            add(921875);
-            add(922125);
-            add(922375);
-            add(922625);
-            add(922875);
-            add(923125);
-            add(923375);
-            add(923625);
-            add(923875);
-            add(924125);
-            add(924375);
-            add(924625);
-            add(924875);
-        }};*/
+    int GET_IP = 1029;  // 获取ip，如果是静态ipv4就返回，否则返回ipv6
+    int SET_IPV4 = 1030;// 设置ipv4
+    int SET_IPV6 = 1031;// 设置ipv6
     List<Integer> FREQUENCY_HOP_TABLE = new ArrayList<Integer>() {{
         add(902750);
         add(903250);

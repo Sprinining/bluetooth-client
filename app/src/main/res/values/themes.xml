@@ -22,4 +22,43 @@
     <style name="Theme.UHF_BluetoothClient.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.UHF_BluetoothClient.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="config_title">
+        <item name="android:gravity">right</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.3</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="config_content_tv">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">0.7</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="config_content_edt">
+        <item name="android:gravity">center</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_weight">0.7</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+    <style name="config_content_spinner">
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:layout_weight">0.7</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

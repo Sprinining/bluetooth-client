@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
-import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 
 import java.util.ArrayList;
@@ -27,6 +26,8 @@ public class MyViewModel extends ViewModel {
     private final MutableLiveData<Integer> powerIndex = new MutableLiveData<>(20);
     // SN
     private final MutableLiveData<String> sn = new MutableLiveData<>("");
+    // ip
+    private final MutableLiveData<String> ip = new MutableLiveData<>("");
 
     // 是否在扫描中
     private final MutableLiveData<Boolean> scanFlag = new MutableLiveData<>(false);
@@ -64,6 +65,11 @@ public class MyViewModel extends ViewModel {
 //    public MutableLiveData<String> getConnectState() {
 //        return connectState;
 //    }
+
+
+    public MutableLiveData<String> getIp() {
+        return ip;
+    }
 
     public MutableLiveData<Long> getRunTimeLiveData() {
         return runTimeLiveData;
@@ -134,11 +140,6 @@ public class MyViewModel extends ViewModel {
         }
     }
 
-    // 启动客户端
-/*    public void startClientOnClick() {
-        BleClient.getINSTANCE().scan();
-    }*/
-
     public void updateTagList(List<LogBaseEpcInfo> list) {
         // 在原有的数据上追加新的list
         tagInfoList = tagInfoListLiveData.getValue();
@@ -148,12 +149,6 @@ public class MyViewModel extends ViewModel {
                 tagInfoList.add(logBaseEpcInfo);
             }
         }
-
-/*        LogBaseEpcInfo logBaseEpcInfo = new LogBaseEpcInfo();
-        logBaseEpcInfo.setEpc("hh");
-        tagInfoList.add(logBaseEpcInfo);
-        tagInfoList.add(logBaseEpcInfo);
-        tagInfoList.add(logBaseEpcInfo);*/
         tagInfoListLiveData.postValue(tagInfoList);
         countLiveData.postValue(tagInfoList.size());
     }

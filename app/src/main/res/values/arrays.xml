@@ -115,4 +115,9 @@
         <item>S0</item>
         <item>S1</item>
     </string-array>
+    <string-array name="array_spinner_ip_mode">
+        <item>STATIC</item>
+        <item>DHCP</item>
+        <item>UNASSIGNED</item>
+    </string-array>
 </resources>

@@ -25,6 +25,7 @@ import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.viewmodel.ScanDeviceViewModel;
 
 public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPermissionInterface {
+    private static final String TAG = ScanDeviceActivity.class.getSimpleName();
 
     private final Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -53,12 +54,11 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
         binding.rvDeviceFound.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         BleClient.getINSTANCE()
-                .setContext(getApplicationContext())
+                .setContext(this)
                 .enableBluetooth()
                 .registerConnectStateListener()
                 .registerBluetoothBroadcastReceiver()
-                .enableDiscoverable()
-                .setHandler(handler)
+                .setHandler_scan_activity(handler)
                 .setScanDeviceViewModel(scanDeviceViewModel);
 
         scanDeviceViewModel.getConnectState().observe(this, new Observer<String>() {

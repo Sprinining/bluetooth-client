@@ -33,11 +33,10 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
     private BluetoothConfig bluetoothConfig;
     private BluetoothServer bluetoothServer;
     private BluetoothClient bluetoothClient;
-    private final BluetoothBroadcastReceiver bluetoothBroadcastReceiver;
+    private BluetoothBroadcastReceiver bluetoothBroadcastReceiver;
 
     private BluetoothUtils() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        bluetoothBroadcastReceiver = new BluetoothBroadcastReceiver();
     }
 
     public static BluetoothUtils getINSTANCE() {
@@ -55,6 +54,7 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
     public BluetoothUtils setContext(Context context) {
         this.context = context;
         config().setUuid("00001101-0000-1000-8000-00805F9B34FB");
+        bluetoothBroadcastReceiver = new BluetoothBroadcastReceiver();
         return this;
     }
 
@@ -178,16 +178,20 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
 
     @Override
     public void connect(BluetoothDevice device, ConnectResultListener connectResultListener) {
-        bluetoothClient = new BluetoothClient(device, config().getUuid());
-        bluetoothClient.setConnectResultListener(connectResultListener);
-        bluetoothClient.start();
+        if (bluetoothAdapter.isEnabled()) {
+            bluetoothClient = new BluetoothClient(device, config().getUuid());
+            bluetoothClient.setConnectResultListener(connectResultListener);
+            bluetoothClient.start();
+        }
     }
 
     @Override
     public BluetoothUtils registerServer(ConnectResultListener connectResultListener) {
-        bluetoothServer = BluetoothServer.getINSTANCE(config().getUuid());
-        bluetoothServer.setConnectResultListener(connectResultListener);
-        bluetoothServer.start();
+        if (bluetoothAdapter.isEnabled()) {
+            bluetoothServer = BluetoothServer.getINSTANCE(config().getUuid());
+            bluetoothServer.setConnectResultListener(connectResultListener);
+            bluetoothServer.start();
+        }
         return this;
     }
 
@@ -228,9 +232,9 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
 
             setDiscoverableTimeout.invoke(adapter, 0);
             setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE, 0);
-            Log.i(TAG, "enableDiscoverable: ");
+            Log.i(TAG, "enableDiscoverable: 蓝牙可见性开启");
         } catch (Exception e) {
-            Log.e(TAG, "enableDiscoverable: fail", e);
+            Log.e(TAG, "enableDiscoverable: 蓝牙可见性开启失败", e);
         }
         return this;
     }
@@ -289,6 +293,9 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
         filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         if (context != null) {
             context.registerReceiver(bluetoothBroadcastReceiver, filter);
+            Log.e(TAG, "registerBluetoothBroadcastReceiver: 注册了广播");
+        } else {
+            Log.e(TAG, "registerBluetoothBroadcastReceiver: 注册广播失败");
         }
         return this;
     }

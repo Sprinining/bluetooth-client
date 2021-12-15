@@ -19,7 +19,7 @@ import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 
 public class ConfigurationFragment extends Fragment {
     private View rootView;
-    private String[] frequencyBandArray, frequencyMinArray, frequencyMaxArray, powerArray;
+    private String[] frequencyBandArray, frequencyMinArray, frequencyMaxArray, powerArray, ipModeArray;
     private MyViewModel viewModel;
 
     public static ConfigurationFragment newInstance() {
@@ -37,6 +37,7 @@ public class ConfigurationFragment extends Fragment {
         frequencyBandArray = getResources().getStringArray(R.array.array_spinner_frequency_band);
         frequencyMinArray = getResources().getStringArray(R.array.array_spinner_frequency_min);
         frequencyMaxArray = getResources().getStringArray(R.array.array_spinner_frequency_max);
+        ipModeArray = getResources().getStringArray(R.array.array_spinner_ip_mode);
         powerArray = new String[34];
         for (int i = 0; i <= 33; i++) {
             powerArray[i] = String.valueOf(i);
@@ -67,26 +68,33 @@ public class ConfigurationFragment extends Fragment {
             ArrayAdapter<String> powerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, powerArray);
             powerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             binding.spinnerPower.setAdapter(powerAdapter);
+            ArrayAdapter<String> ipModeAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ipModeArray);
+            ipModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.spinnerIpv4Mode.setAdapter(ipModeAdapter);
 
             viewModel.getScanFlag().observe(requireActivity(), aBoolean -> {
                 if (aBoolean) {
                     binding.btnReadConfig.setEnabled(false);
                     binding.btnSetFrequencyBand.setEnabled(false);
                     binding.btnSetPower.setEnabled(false);
-//                    binding.btnConnect.setEnabled(false);
                     binding.spinnerPower.setEnabled(false);
                     binding.spinnerFrequencyBand.setEnabled(false);
                     binding.spinnerFrequencyMin.setEnabled(false);
                     binding.spinnerFrequencyMax.setEnabled(false);
+                    binding.spinnerIpv4Mode.setEnabled(false);
+                    binding.btnSetIpv4.setEnabled(false);
+                    binding.btnSetIpv6.setEnabled(false);
                 } else {
                     binding.btnReadConfig.setEnabled(true);
                     binding.btnSetFrequencyBand.setEnabled(true);
                     binding.btnSetPower.setEnabled(true);
-//                    binding.btnConnect.setEnabled(true);
                     binding.spinnerPower.setEnabled(true);
                     binding.spinnerFrequencyBand.setEnabled(true);
                     binding.spinnerFrequencyMin.setEnabled(true);
                     binding.spinnerFrequencyMax.setEnabled(true);
+                    binding.spinnerIpv4Mode.setEnabled(true);
+                    binding.btnSetIpv4.setEnabled(true);
+                    binding.btnSetIpv6.setEnabled(true);
                 }
             });
 
@@ -95,6 +103,7 @@ public class ConfigurationFragment extends Fragment {
                 MessageUtils.getINSTANCE().getFrequencyBandIndex();
                 MessageUtils.getINSTANCE().getPowerIndex();
                 MessageUtils.getINSTANCE().getReaderInfo();
+                MessageUtils.getINSTANCE().getIP();
             });
             binding.btnSetPower.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().setPower(binding.spinnerPower.getSelectedItemPosition());
@@ -106,6 +115,19 @@ public class ConfigurationFragment extends Fragment {
                 }
                 MessageUtils.getINSTANCE().setFrequencyBand(binding.spinnerFrequencyBand.getSelectedItemPosition());
                 MessageUtils.getINSTANCE().setFrequencyHopTableIndex(binding.spinnerFrequencyMin.getSelectedItemPosition(), binding.spinnerFrequencyMax.getSelectedItemPosition());
+            });
+            binding.btnSetIpv4.setOnClickListener(v -> {
+                MessageUtils.getINSTANCE().setIPv4(
+                        ipModeArray[binding.spinnerIpv4Mode.getSelectedItemPosition()],
+                        binding.edtIpv4Address.getText().toString(),
+                        binding.edtIpv4Netmask.getText().toString(),
+                        binding.edtIpv4Gateway.getText().toString(),
+                        binding.edtIpv4Dns1.getText().toString(),
+                        binding.edtIpv4Dns2.getText().toString()
+                );
+            });
+            binding.btnSetIpv6.setOnClickListener(v -> {
+                MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString());
             });
         }
 

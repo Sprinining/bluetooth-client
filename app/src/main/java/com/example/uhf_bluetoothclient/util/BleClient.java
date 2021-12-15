@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.example.bluetoothsdk.BluetoothUtils;
@@ -30,7 +31,9 @@ public class BleClient {
     private ConnectedThread connectedThread;
     private ScanDeviceViewModel scanDeviceViewModel;
     private Context context;
-    private Handler handler;
+    private Handler handler_scan_activity;
+    private Handler handler_main_activity;
+    private BluetoothDevice tempDevice;
 
     private BleClient() {
         bluetoothUtils = BluetoothUtils.getINSTANCE();
@@ -53,18 +56,8 @@ public class BleClient {
         return this;
     }
 
-    public BleClient enableBluetooth(){
+    public BleClient enableBluetooth() {
         bluetoothUtils.enableBluetooth();
-        return this;
-    }
-
-    public BleClient enableDiscoverable() {
-        bluetoothUtils.enableDiscoverable();
-        return this;
-    }
-
-    public BleClient disableDiscoverable() {
-        bluetoothUtils.disableDiscoverable();
         return this;
     }
 
@@ -79,34 +72,17 @@ public class BleClient {
     public void connect(BluetoothDevice device) {
         Log.e(TAG, "connect: " + device.getName());
         Log.e(TAG, "connect: " + device.getAddress());
+        tempDevice = device;
         bluetoothUtils.stopScan();
-        bluetoothUtils.connect(device, new ConnectResultListener() {
-            @Override
-            public void connectSuccess(ConnectedThread connectedThread) {
-                showToast("连接成功");
-                BleClient.getINSTANCE().connectedThread = connectedThread;
-                // 读监听
-                connectedThread.setReadTransferListener(readTransferListener);
-                // 写监听
-                connectedThread.setWriteTransferListener(writeTransferListener);
-                // 跳转界面
-                if (context != null) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            }
+        bluetoothUtils.connect(device, connectResultListener);
+    }
 
-            @Override
-            public void connectFail(Exception e) {
-                showToast("蓝牙连接失败");
-            }
-
-            @Override
-            public void disconnect() {
-                showToast("蓝牙断开连接");
-            }
-        });
+    public void reconnect() {
+        if (tempDevice != null) {
+            Log.e(TAG, "reconnect: 重新连接中...");
+            bluetoothUtils.stopScan();
+            bluetoothUtils.connect(tempDevice, connectResultListener);
+        }
     }
 
     public void destroy() {
@@ -136,10 +112,45 @@ public class BleClient {
         return this;
     }
 
-    public BleClient registerBluetoothBroadcastReceiver(){
+    public BleClient registerBluetoothBroadcastReceiver() {
         bluetoothUtils.registerBluetoothBroadcastReceiver();
         return this;
     }
+
+    // 连接监听
+    private final ConnectResultListener connectResultListener = new ConnectResultListener() {
+        @Override
+        public void connectSuccess(ConnectedThread connectedThread) {
+            showToast("连接成功");
+            dismissDialog();
+            BleClient.getINSTANCE().connectedThread = connectedThread;
+            // 读监听
+            connectedThread.setReadTransferListener(readTransferListener);
+            // 写监听
+            connectedThread.setWriteTransferListener(writeTransferListener);
+            // 跳转界面
+            if (context != null) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        }
+
+        @Override
+        public void connectFail(Exception e) {
+            if (handler_main_activity != null) {
+                Message message = new Message();
+                message.what = 4;
+                handler_main_activity.sendMessage(message);
+            }
+            showToast("蓝牙连接失败");
+        }
+
+        @Override
+        public void disconnect() {
+            showToast("蓝牙断开连接");
+        }
+    };
 
     // 扫描监听
     private final ScanResultListener scanResultListener = new ScanResultListener() {
@@ -218,20 +229,33 @@ public class BleClient {
         return this;
     }
 
-    public BleClient setHandler(Handler handler) {
-        this.handler = handler;
+    public BleClient setHandler_scan_activity(Handler handler_scan_activity) {
+        this.handler_scan_activity = handler_scan_activity;
         return this;
     }
 
-    public BleClient showToast(String str) {
-        if (handler != null) {
+    public BleClient setHandler_main_activity(Handler handler_main_activity) {
+        this.handler_main_activity = handler_main_activity;
+        connectedThread.setHandler(handler_main_activity);
+        return this;
+    }
+
+    public void showToast(String str) {
+        if (handler_scan_activity != null) {
             android.os.Message message = new android.os.Message();
             message.what = 1;
             Bundle bundle = new Bundle();
             bundle.putString("toast", str);
             message.setData(bundle);
-            handler.sendMessage(message);
+            handler_scan_activity.sendMessage(message);
         }
-        return this;
+    }
+
+    public void dismissDialog() {
+        if (handler_main_activity != null) {
+            Message message = new Message();
+            message.what = 3;
+            handler_main_activity.sendMessage(message);
+        }
     }
 }
