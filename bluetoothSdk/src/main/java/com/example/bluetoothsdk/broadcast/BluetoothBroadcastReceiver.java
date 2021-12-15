@@ -5,8 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
+import com.example.bluetoothsdk.BluetoothUtils;
 import com.example.bluetoothsdk.entity.ConnectState;
 import com.example.bluetoothsdk.interfaces.ConnectStateListener;
 import com.example.bluetoothsdk.interfaces.PairingResultListener;
@@ -62,13 +62,15 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
                 break;
             case BluetoothDevice.ACTION_PAIRING_REQUEST:
                 sendConnectState(ConnectState.ACTION_PAIRING_REQUEST);
-/*                try {
-                    ClsUtils.setPairingConfirmation(device.getClass(), device, true);
-                    abortBroadcast();
-                    ClsUtils.setPin(device.getClass(), device, "1234");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
+                if (BluetoothUtils.getINSTANCE().isAutoPair()) {
+                    try {
+                        ClsUtils.setPairingConfirmation(device.getClass(), device, true);
+                        abortBroadcast();
+                        ClsUtils.setPin(device.getClass(), device, "1234");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case BluetoothDevice.ACTION_BOND_STATE_CHANGED:
                 switch (device.getBondState()) {

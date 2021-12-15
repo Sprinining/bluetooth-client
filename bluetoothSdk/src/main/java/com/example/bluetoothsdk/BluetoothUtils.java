@@ -19,7 +19,6 @@ import com.example.bluetoothsdk.interfaces.ConnectStateListener;
 import com.example.bluetoothsdk.interfaces.PairingResultListener;
 import com.example.bluetoothsdk.interfaces.ResultListener;
 import com.example.bluetoothsdk.interfaces.ScanResultListener;
-import com.example.bluetoothsdk.utils.ClsUtils;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -34,6 +33,8 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
     private BluetoothServer bluetoothServer;
     private BluetoothClient bluetoothClient;
     private BluetoothBroadcastReceiver bluetoothBroadcastReceiver;
+    // 默认自动配对
+    private boolean isAutoPair = true;
 
     private BluetoothUtils() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -134,18 +135,19 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
 
     @RequiresPermission("android.permission.BLUETOOTH_PRIVILEGED")
     @Override
-    public void startPairing(BluetoothDevice device, PairingResultListener pairingResultListener) {
+    public void startPairing(BluetoothDevice device, boolean autoPair, PairingResultListener pairingResultListener) {
         if (device == null) {
             return;
         }
-        try {
+        if (device.getBondState() == BluetoothDevice.BOND_NONE) {
+            this.isAutoPair = autoPair;
+            device.createBond();
+        }
+        bluetoothBroadcastReceiver.setPairingResultListener(pairingResultListener);
+/*        try {
             ClsUtils.createBond(device.getClass(), device);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        bluetoothBroadcastReceiver.setPairingResultListener(pairingResultListener);
-/*        if (device.getBondState() == BluetoothDevice.BOND_NONE) {
-            device.createBond();
         }*/
     }
 
@@ -298,5 +300,9 @@ public class BluetoothUtils implements BluetoothFunctionInterface {
             Log.e(TAG, "registerBluetoothBroadcastReceiver: 注册广播失败");
         }
         return this;
+    }
+
+    public boolean isAutoPair() {
+        return isAutoPair;
     }
 }
