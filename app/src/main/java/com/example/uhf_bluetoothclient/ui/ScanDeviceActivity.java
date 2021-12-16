@@ -61,12 +61,7 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
                 .setHandler_scan_activity(handler)
                 .setScanDeviceViewModel(scanDeviceViewModel);
 
-        scanDeviceViewModel.getConnectState().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.tvConnectState.setText(s);
-            }
-        });
+        scanDeviceViewModel.getConnectState().observe(this, binding.tvConnectState::setText);
     }
 
     @Override

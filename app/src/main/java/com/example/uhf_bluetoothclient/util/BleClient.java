@@ -169,7 +169,7 @@ public class BleClient {
             Log.i(TAG, "搜索到的设备: deviceName: " + deviceName + " deviceHardwareAddress: " + deviceHardwareAddress);
             if (scanDeviceViewModel != null) {
                 List<BluetoothDevice> list = scanDeviceViewModel.getListMutableLiveData().getValue();
-                if (list != null) {
+                if (list != null && !list.contains(device)) {
                     list.add(device);
                     scanDeviceViewModel.getListMutableLiveData().setValue(list);
                     scanDeviceViewModel.getScanDeviceRecyclerViewAdapter().notifyDataSetChanged();
