@@ -140,6 +140,8 @@ public class MessageUtils {
                         int maxIndex = 49;
                         if (d_min != null) minIndex = d_min.intValue();
                         if (d_max != null) maxIndex = d_max.intValue();
+                        if (minIndex < 0 || minIndex >= 50) minIndex = 0;
+                        if (maxIndex < 0 || maxIndex >= 50) maxIndex = 49;
                         viewModel.getFrequencyMinIndex().postValue(minIndex);
                         viewModel.getFrequencyMaxIndex().postValue(maxIndex);
                         showExecuteResult(Constants.GET_SUCCESS);
@@ -156,6 +158,8 @@ public class MessageUtils {
                         Map<String, Double> map1 = (Map<String, Double>) map.get("dicPower");
                         Double d = map1.get("1");
                         int index = d.intValue();
+                        if (index < 0) index = 0;
+                        if (index > 33) index = 33;
                         viewModel.getPowerIndex().postValue(index);
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
@@ -314,6 +318,7 @@ public class MessageUtils {
 
     /**
      * 1030
+     *
      * @param mode
      * @param ipAddress
      * @param netmask

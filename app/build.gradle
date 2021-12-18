@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+def appName = "R102S_BluetoothTools"
+
 android {
     compileSdk 31
 
@@ -16,6 +18,12 @@ android {
 
         dataBinding {
             enabled true
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${appName}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
         }
     }
 
