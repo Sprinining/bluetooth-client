@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,18 +23,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.adapter.TagInfoRecyclerViewAdapter;
-import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
+import com.example.uhf_bluetoothclient.entity.TagCells;
 import com.example.uhf_bluetoothclient.util.MessageProtocolUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
-import com.example.uhf_bluetoothclient.util.SharedPreferencesUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class ScanFragment extends Fragment {
 
@@ -46,7 +41,6 @@ public class ScanFragment extends Fragment {
     private String mParam1;
     private Spinner spinner_session;
     private TextView tv_count, tv_runTime;
-    private String[] sessionArray;
     private CheckBox checkBox_antenna1,
             checkBox_antenna2,
             checkBox_antenna3,
@@ -55,7 +49,7 @@ public class ScanFragment extends Fragment {
             checkBox_antenna6,
             checkBox_antenna7,
             checkBox_antenna8;
-    private List<LogBaseEpcInfo> tagInfoList;
+    private TagCells tagCells;
     private Button btn_scan, btn_clear;
     private MyViewModel viewModel;
     private volatile boolean run_flag = false;
@@ -76,13 +70,8 @@ public class ScanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }*/
-
         viewModel = new ViewModelProvider(requireActivity()).get(MyViewModel.class);
-
-        tagInfoList = viewModel.getTagInfoListLiveData().getValue();
+        tagCells = viewModel.getTagCellsMutableLiveData().getValue();
     }
 
 
@@ -114,10 +103,10 @@ public class ScanFragment extends Fragment {
             checkBox_antenna8 = rootView.findViewById(R.id.checkBox_antenna8);
 
 
-            tagInfoList = viewModel.getTagInfoListLiveData().getValue();
+            tagCells = viewModel.getTagCellsMutableLiveData().getValue();
 //            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
             LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-            tagInfoRecyclerViewAdapter = new TagInfoRecyclerViewAdapter(tagInfoList);
+            tagInfoRecyclerViewAdapter = new TagInfoRecyclerViewAdapter(requireContext(), tagCells.getTagCells());
             RecyclerView recyclerView = rootView.findViewById(R.id.rv_taginfo);
             recyclerView.setAdapter(tagInfoRecyclerViewAdapter);
             recyclerView.setLayoutManager(layoutManager);
@@ -128,24 +117,15 @@ public class ScanFragment extends Fragment {
                 TextView textView = rootView.findViewById(R.id.tv_tag_count);
                 textView.setText(String.valueOf(integer));
             });
-            viewModel.getTagInfoListLiveData().observe(requireActivity(), logBaseEpcInfos -> {
-                // 只刷新部分区域
-/*                    tagInfoList = viewModel.getTagInfoListLiveData().getValue();
-                int start = tagInfoList.size() - 1;
-                int end = logBaseEpcInfos.size() - 1;
-                for (int i = start; i <= end; i++) {
-                    tagInfoRecyclerViewAdapter.notifyItemInserted(i);
-                }
-                tagInfoRecyclerViewAdapter.notifyItemRangeChanged(start, end - start);
-                tagInfoList = logBaseEpcInfos;*/
+            viewModel.getTagCellsMutableLiveData().observe(requireActivity(), tagCells -> {
                 tagInfoRecyclerViewAdapter.notifyDataSetChanged();
-                recyclerView.scrollToPosition(tagInfoList.size() - 1);
+                recyclerView.scrollToPosition(tagCells.getTagCells().size() - 1);
             });
             viewModel.getCountLiveData().observe(requireActivity(), integer -> tv_count.setText(String.valueOf(integer)));
             viewModel.getRunTimeLiveData().observe(requireActivity(), aLong -> tv_runTime.setText(String.valueOf(aLong)));
 
             // 为spinner设置数据源
-            sessionArray = getResources().getStringArray(R.array.array_spinner_session);
+            String[] sessionArray = getResources().getStringArray(R.array.array_spinner_session);
             ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sessionArray);
             sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_session.setAdapter(sessionAdapter);
@@ -238,8 +218,8 @@ public class ScanFragment extends Fragment {
                 // 重置界面
                 viewModel.getCountLiveData().postValue(0);
                 viewModel.getRunTimeLiveData().postValue(0L);
-                if (viewModel.getTagInfoListLiveData().getValue() != null) {
-                    viewModel.getTagInfoListLiveData().getValue().clear();
+                if (viewModel.getTagCellsMutableLiveData().getValue() != null) {
+                    viewModel.getTagCellsMutableLiveData().getValue().clear();
                 }
                 tagInfoRecyclerViewAdapter.notifyDataSetChanged();
                 Log.i(TAG, "onCreateView: 重置界面");

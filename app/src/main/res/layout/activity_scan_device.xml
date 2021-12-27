@@ -34,12 +34,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adapter="@{vm.scanDeviceRecyclerViewAdapter}"
-            app:layoutManager="@{vm.staggeredGridLayoutManager}"
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
+<!--            app:layoutManager="@{vm.staggeredGridLayoutManager}"-->
         <TextView
             android:id="@+id/tv_device_name_title"
             android:layout_width="wrap_content"

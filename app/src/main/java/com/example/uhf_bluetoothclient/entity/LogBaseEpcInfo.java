@@ -8,10 +8,7 @@ import com.example.uhf_bluetoothclient.BR;
 import java.util.Date;
 
 public class LogBaseEpcInfo extends BaseObservable {
-
-
     // 16 进制 EPC 字符串
-//    private String epc;
     private String epc;
 
     // EPC 字节数组
@@ -37,6 +34,7 @@ public class LogBaseEpcInfo extends BaseObservable {
 
     // 16 进制 Userdata 字符串
     private String userdata;
+
     //Userdata 字节数组
     private byte[] bUser;
 
@@ -54,104 +52,136 @@ public class LogBaseEpcInfo extends BaseObservable {
         return epc;
     }
 
-    public void setEpc(String epc) {
+    public LogBaseEpcInfo setEpc(String epc) {
         this.epc = epc;
         notifyPropertyChanged(BR.epc);
+        return this;
     }
 
     public byte[] getbEpc() {
         return bEpc;
     }
 
-    public void setbEpc(byte[] bEpc) {
+    public LogBaseEpcInfo setbEpc(byte[] bEpc) {
         this.bEpc = bEpc;
+        return this;
     }
 
     public String getPc() {
         return pc;
     }
 
-    public void setPc(String pc) {
+    public LogBaseEpcInfo setPc(String pc) {
         this.pc = pc;
+        return this;
     }
 
     public int getAntId() {
         return antId;
     }
 
-    public void setAntId(int antId) {
+    public LogBaseEpcInfo setAntId(int antId) {
         this.antId = antId;
+        return this;
     }
 
     public int getRssi() {
         return rssi;
     }
 
-    public void setRssi(int rssi) {
+    public LogBaseEpcInfo setRssi(int rssi) {
         this.rssi = rssi;
+        return this;
     }
 
     public int getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public LogBaseEpcInfo setResult(int result) {
         this.result = result;
+        return this;
     }
 
     public String getTid() {
         return tid;
     }
 
-    public void setTid(String tid) {
+    public LogBaseEpcInfo setTid(String tid) {
         this.tid = tid;
+        return this;
     }
 
     public byte[] getbTid() {
         return bTid;
     }
 
-    public void setbTid(byte[] bTid) {
+    public LogBaseEpcInfo setbTid(byte[] bTid) {
         this.bTid = bTid;
+        return this;
     }
 
     public String getUserdata() {
         return userdata;
     }
 
-    public void setUserdata(String userdata) {
+    public LogBaseEpcInfo setUserdata(String userdata) {
         this.userdata = userdata;
+        return this;
     }
 
     public byte[] getbUser() {
         return bUser;
     }
 
-    public void setbUser(byte[] bUser) {
+    public LogBaseEpcInfo setbUser(byte[] bUser) {
         this.bUser = bUser;
+        return this;
     }
 
     public String getReserved() {
         return reserved;
     }
 
-    public void setReserved(String reserved) {
+    public LogBaseEpcInfo setReserved(String reserved) {
         this.reserved = reserved;
+        return this;
     }
 
     public byte[] getbRes() {
         return bRes;
     }
 
-    public void setbRes(byte[] bRes) {
+    public LogBaseEpcInfo setbRes(byte[] bRes) {
         this.bRes = bRes;
+        return this;
     }
 
     public Date getReadTime() {
         return readTime;
     }
 
-    public void setReadTime(Date readTime) {
+    public LogBaseEpcInfo setReadTime(Date readTime) {
+        this.readTime = readTime;
+        return this;
+    }
+
+    public LogBaseEpcInfo() {
+    }
+
+    public LogBaseEpcInfo(String epc, byte[] bEpc, String pc, int antId, int rssi, int result, String tid, byte[] bTid, String userdata, byte[] bUser, String reserved, byte[] bRes, Date readTime) {
+        this.epc = epc;
+        this.bEpc = bEpc;
+        this.pc = pc;
+        this.antId = antId;
+        this.rssi = rssi;
+        this.result = result;
+        this.tid = tid;
+        this.bTid = bTid;
+        this.userdata = userdata;
+        this.bUser = bUser;
+        this.reserved = reserved;
+        this.bRes = bRes;
         this.readTime = readTime;
     }
 }

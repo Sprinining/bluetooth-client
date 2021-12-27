@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ScanDeviceViewModel extends ViewModel {
     private final BleClient bleClient;
-    private final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+//    private final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
     private final ScanDeviceRecyclerViewAdapter scanDeviceRecyclerViewAdapter;
     // 连接状态
     private final MutableLiveData<String> connectState = new MutableLiveData<>("蓝牙未连接");
@@ -40,9 +40,9 @@ public class ScanDeviceViewModel extends ViewModel {
         return connectState;
     }
 
-    public StaggeredGridLayoutManager getStaggeredGridLayoutManager() {
+/*    public StaggeredGridLayoutManager getStaggeredGridLayoutManager() {
         return staggeredGridLayoutManager;
-    }
+    }*/
 
     public void scanDeviceClick() {
         if (listMutableLiveData.getValue() != null) {

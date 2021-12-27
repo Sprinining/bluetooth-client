@@ -1,25 +1,28 @@
 package com.example.uhf_bluetoothclient.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.TaginfoCellBinding;
-import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
+import com.example.uhf_bluetoothclient.entity.TagCells;
 
 import java.util.List;
 
 public class TagInfoRecyclerViewAdapter extends RecyclerView.Adapter<TagInfoRecyclerViewAdapter.TagInfoViewHolder> {
 
-    private final List<LogBaseEpcInfo> tagInfoList;
+    private final List<TagCells.TagCell> tagCellList;
+    private Context context;
 
-    public TagInfoRecyclerViewAdapter(List<LogBaseEpcInfo> tagInfoList) {
-        this.tagInfoList = tagInfoList;
+    public TagInfoRecyclerViewAdapter(Context context, List<TagCells.TagCell> tagCellList) {
+        this.context = context;
+        this.tagCellList = tagCellList;
     }
 
     @NonNull
@@ -31,28 +34,28 @@ public class TagInfoRecyclerViewAdapter extends RecyclerView.Adapter<TagInfoRecy
 
     @Override
     public void onBindViewHolder(@NonNull TagInfoViewHolder holder, int position) {
-        holder.tv_epc.setText(tagInfoList.get(position).getEpc());
-        holder.id.setText(String.valueOf(position + 1));
-        if (holder.taginfoCellBinding != null) {
-            holder.taginfoCellBinding.setTagInfo(tagInfoList.get(position));
+        if (holder.binding != null) {
+            holder.binding.tvEpc.setText(tagCellList.get(position).getEpc());
+            // recyclerView
+//            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            holder.binding.rvTagDetail.setLayoutManager(layoutManager);
+            TagInfoDetailRecyclerViewAdapter tagInfoDetailRecyclerViewAdapter = new TagInfoDetailRecyclerViewAdapter(tagCellList.get(position).getAntennaCells());
+            holder.binding.rvTagDetail.setAdapter(tagInfoDetailRecyclerViewAdapter);
         }
     }
 
     @Override
     public int getItemCount() {
-        return tagInfoList == null ? 0 : tagInfoList.size();
+        return tagCellList.size();
     }
 
     static class TagInfoViewHolder extends RecyclerView.ViewHolder {
-        private final TaginfoCellBinding taginfoCellBinding;
-        private final TextView tv_epc;
-        private final TextView id;
+        private final TaginfoCellBinding binding;
 
         public TagInfoViewHolder(@NonNull View itemView) {
             super(itemView);
-            taginfoCellBinding = TaginfoCellBinding.bind(itemView);
-            tv_epc = itemView.findViewById(R.id.tv_tagInfo_epc);
-            id = itemView.findViewById(R.id.tv_tagInfo_id);
+            binding = TaginfoCellBinding.bind(itemView);
         }
     }
 }

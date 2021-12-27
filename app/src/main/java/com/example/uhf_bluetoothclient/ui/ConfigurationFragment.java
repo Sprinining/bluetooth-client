@@ -107,6 +107,13 @@ public class ConfigurationFragment extends Fragment {
             });
             binding.btnSetPower.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().setPower(binding.spinnerPower.getSelectedItemPosition());
+/*                List<LogBaseEpcInfo> list = new ArrayList<>();
+                LogBaseEpcInfo logBaseEpcInfo = new LogBaseEpcInfo();
+                logBaseEpcInfo.setEpc("xixi");
+                logBaseEpcInfo.setAntId(1);
+                logBaseEpcInfo.setReadTime(new Date());
+                list.add(logBaseEpcInfo);
+                viewModel.updateTagList(list);*/
             });
             binding.btnSetFrequencyBand.setOnClickListener(v -> {
                 if (binding.spinnerFrequencyMin.getSelectedItemPosition() >= binding.spinnerFrequencyMax.getSelectedItemPosition()) {
@@ -115,6 +122,13 @@ public class ConfigurationFragment extends Fragment {
                 }
                 MessageUtils.getINSTANCE().setFrequencyBand(binding.spinnerFrequencyBand.getSelectedItemPosition());
                 MessageUtils.getINSTANCE().setFrequencyHopTableIndex(binding.spinnerFrequencyMin.getSelectedItemPosition(), binding.spinnerFrequencyMax.getSelectedItemPosition());
+/*                List<LogBaseEpcInfo> list = new ArrayList<>();
+                LogBaseEpcInfo logBaseEpcInfo = new LogBaseEpcInfo();
+                logBaseEpcInfo.setEpc("haha");
+                logBaseEpcInfo.setAntId(1);
+                logBaseEpcInfo.setReadTime(new Date());
+                list.add(logBaseEpcInfo);
+                viewModel.updateTagList(list);*/
             });
             binding.btnSetIpv4.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().setIPv4(
@@ -125,9 +139,23 @@ public class ConfigurationFragment extends Fragment {
                         binding.edtIpv4Dns1.getText().toString(),
                         binding.edtIpv4Dns2.getText().toString()
                 );
+/*                List<LogBaseEpcInfo> list = new ArrayList<>();
+                LogBaseEpcInfo logBaseEpcInfo = new LogBaseEpcInfo();
+                logBaseEpcInfo.setEpc("xixi");
+                logBaseEpcInfo.setAntId(2);
+                logBaseEpcInfo.setReadTime(new Date());
+                list.add(logBaseEpcInfo);
+                viewModel.updateTagList(list);*/
             });
             binding.btnSetIpv6.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString());
+/*                List<LogBaseEpcInfo> list = new ArrayList<>();
+                LogBaseEpcInfo logBaseEpcInfo = new LogBaseEpcInfo();
+                logBaseEpcInfo.setEpc("xixi");
+                logBaseEpcInfo.setAntId(3);
+                logBaseEpcInfo.setReadTime(new Date());
+                list.add(logBaseEpcInfo);
+                viewModel.updateTagList(list);*/
             });
         }
 
