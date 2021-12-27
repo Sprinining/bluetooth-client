@@ -175,8 +175,20 @@ public class MessageUtils {
                         for (Object o : list) {
                             if (o != null) {
                                 Map<String, Object> map_tag = (Map<String, Object>) o;
+                                // 需要啥字段就取啥字段
                                 LogBaseEpcInfo tagInfo = new LogBaseEpcInfo();
-                                tagInfo.setEpc((String) map_tag.get("epc"));
+                                // 天线id
+                                Double d_antennaId = (Double) map_tag.get("antId");
+                                if (d_antennaId == null) {
+                                    d_antennaId = 0.0;
+                                }
+                                int antennaId = d_antennaId.intValue();
+                                // 读取时间
+                                Double d_readTime = (Double) map_tag.get("readTime");
+                                Date readTime = new Date(d_readTime.longValue());
+                                tagInfo.setEpc((String) map_tag.get("epc"))
+                                        .setAntId(antennaId)
+                                        .setReadTime(readTime);
                                 value.add(tagInfo);
                             }
                         }

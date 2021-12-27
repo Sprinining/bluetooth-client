@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bluetoothsdk.interfaces.BluetoothPermissionInterface;
 import com.example.uhf_bluetoothclient.R;
@@ -52,6 +51,7 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
         requestPermission();
 
         binding.rvDeviceFound.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        binding.rvDeviceFound.setLayoutManager(new LinearLayoutManager(this));
 
         BleClient.getINSTANCE()
                 .setContext(this)
