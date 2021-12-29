@@ -61,4 +61,5 @@
     <string name="tv_antenna_id_title">天线ID</string>
     <string name="tv_first_read_time_title">首次读取时间</string>
     <string name="tv_antenna_read_count_title">读取次数</string>
+    <string name="btn_test_ping">PING</string>
 </resources>

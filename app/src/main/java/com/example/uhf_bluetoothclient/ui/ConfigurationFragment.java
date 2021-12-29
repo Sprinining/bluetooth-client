@@ -98,6 +98,9 @@ public class ConfigurationFragment extends Fragment {
                 }
             });
 
+            binding.btnTestPing.setOnClickListener(v -> {
+                MessageUtils.getINSTANCE().testPing(binding.edtPingAddress.getText().toString());
+            });
             binding.btnReadConfig.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().getFrequencyHopTableIndex();
                 MessageUtils.getINSTANCE().getFrequencyBandIndex();
