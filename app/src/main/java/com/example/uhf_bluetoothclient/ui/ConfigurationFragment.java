@@ -99,7 +99,7 @@ public class ConfigurationFragment extends Fragment {
             });
 
             binding.btnTestPing.setOnClickListener(v -> {
-                MessageUtils.getINSTANCE().testPing(binding.edtPingAddress.getText().toString());
+//                NetworkUtils
             });
             binding.btnReadConfig.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().getFrequencyHopTableIndex();

@@ -97,14 +97,6 @@ public class MessageUtils {
                         showToast(Constants.SET_FAIL + ": " + requestMessage.getRtMsg());
                     }
                     break;
-                case Constants.TEST_PING:
-                    // 测试ping
-                    if (requestMessage.getRtCode() == 0) {
-                        showToast("ping成功");
-                    } else {
-                        showToast(requestMessage.getRtMsg());
-                    }
-                    break;
                 case Constants.MSG_APP_GET_READER_INFO:
                     // 获取设备信息，包括SN和version
                     if (requestMessage.getRtCode() == 0) {
@@ -369,18 +361,6 @@ public class MessageUtils {
         Message<String> message = new Message<>();
         message.setCode(Constants.SET_IPV6);
         message.setData(iPv6);
-        sendMessage(message);
-    }
-
-    /**
-     * 1034
-     *
-     * @param ipAddress
-     */
-    public void testPing(String ipAddress) {
-        Message<String> message = new Message<>();
-        message.setCode(Constants.TEST_PING);
-        message.setData(ipAddress);
         sendMessage(message);
     }
 
