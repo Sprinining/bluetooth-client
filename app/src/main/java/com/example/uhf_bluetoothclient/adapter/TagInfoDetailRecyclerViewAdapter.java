@@ -36,7 +36,7 @@ public class TagInfoDetailRecyclerViewAdapter extends RecyclerView.Adapter<TagIn
         if (holder.binding != null) {
             holder.binding.tvAntennaId.setText("" + antennaCells.get(position).getAntennaId());
             LocalDateTime localDateTime = antennaCells.get(position).getReadTime();
-            holder.binding.tvFirstReadTime.setText(localDateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+            holder.binding.tvFirstReadTime.setText(localDateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss:SSS")));
             holder.binding.tvCount.setText("" + antennaCells.get(position).getCount());
         }
     }
