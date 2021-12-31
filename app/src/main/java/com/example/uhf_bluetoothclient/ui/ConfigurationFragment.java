@@ -14,8 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
+import com.example.uhf_bluetoothclient.util.CalibrationUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
+import com.seuic.util.common.NetworkUtils;
 
 public class ConfigurationFragment extends Fragment {
     private View rootView;
@@ -99,7 +101,17 @@ public class ConfigurationFragment extends Fragment {
             });
 
             binding.btnTestPing.setOnClickListener(v -> {
-//                NetworkUtils
+                String ipAddress = binding.edtPingAddress.getText().toString();
+                if ((!CalibrationUtils.isIPv4Address(ipAddress) && !CalibrationUtils.isIPv6Address(ipAddress)) || ipAddress.equals("")) {
+                    Toast.makeText(requireContext(), "ip地址格式错误", Toast.LENGTH_SHORT).show();
+                } else {
+                    boolean availableByPing = NetworkUtils.isAvailableByPing(ipAddress);
+                    if (availableByPing) {
+                        Toast.makeText(requireContext(), "ping成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "ping失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
             });
             binding.btnReadConfig.setOnClickListener(v -> {
                 MessageUtils.getINSTANCE().getFrequencyHopTableIndex();
