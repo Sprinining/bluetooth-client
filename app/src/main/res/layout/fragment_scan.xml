@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.06" />
+                app:layout_constraintGuide_percent="0.08" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline12"
@@ -256,7 +256,7 @@
             <View
                 android:id="@+id/divider4"
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="3dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toTopOf="@+id/guideline11"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -292,11 +292,6 @@
                     android:text="@string/tv_antenna_id_title"
                     android:textColor="@color/black" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
-
                 <TextView
                     android:id="@+id/tv_first_read_time_title"
                     android:layout_width="0dp"
@@ -305,11 +300,6 @@
                     android:gravity="center"
                     android:text="@string/tv_first_read_time_title"
                     android:textColor="@color/black" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider" />
 
                 <TextView
                     android:id="@+id/tv_antenna_read_count_title"

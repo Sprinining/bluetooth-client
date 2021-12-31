@@ -36,6 +36,11 @@
                 android:text="@string/tv_antenna_id"
                 tools:text="1" />
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider" />
+
             <TextView
                 android:id="@+id/tv_first_read_time"
                 android:layout_width="0dp"
@@ -44,6 +49,11 @@
                 android:gravity="center"
                 android:text="@string/tv_first_read_time"
                 tools:text="22m45s" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/tv_count"
