@@ -339,10 +339,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/btn_exit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/btn_exit" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/btn_set_ipv4"

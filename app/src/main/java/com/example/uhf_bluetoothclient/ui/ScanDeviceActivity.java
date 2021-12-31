@@ -25,6 +25,7 @@ import com.example.uhf_bluetoothclient.viewmodel.ScanDeviceViewModel;
 
 public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPermissionInterface {
     private static final String TAG = ScanDeviceActivity.class.getSimpleName();
+    private ActivityScanDeviceBinding binding;
 
     private final Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -43,7 +44,7 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityScanDeviceBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_scan_device);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_scan_device);
         ScanDeviceViewModel scanDeviceViewModel = new ViewModelProvider(this).get(ScanDeviceViewModel.class);
         binding.setVm(scanDeviceViewModel);
         binding.setLifecycleOwner(this);
@@ -77,6 +78,7 @@ public class ScanDeviceActivity extends AppCompatActivity implements BluetoothPe
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // 判断授权结果
         switch (requestCode) {
             case 1:

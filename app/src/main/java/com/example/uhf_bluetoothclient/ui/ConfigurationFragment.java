@@ -1,5 +1,6 @@
 package com.example.uhf_bluetoothclient.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
+import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.CalibrationUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
@@ -171,6 +173,12 @@ public class ConfigurationFragment extends Fragment {
                 logBaseEpcInfo.setReadTime(new Date());
                 list.add(logBaseEpcInfo);
                 viewModel.updateTagList(list);*/
+            });
+            binding.btnExit.setOnClickListener(v -> {
+                // TODO: 2021/12/31 退回设备搜索界面
+                BleClient.getINSTANCE().destroy();
+                Intent intent = new Intent(requireActivity(), ScanDeviceActivity.class);
+                startActivity(intent);
             });
         }
 
