@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="vm"
+            name="vmm"
             type="com.example.uhf_bluetoothclient.viewmodel.ScanDeviceViewModel" />
     </data>
 
@@ -33,13 +33,13 @@
             android:id="@+id/rv_device_found"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adapter="@{vm.scanDeviceRecyclerViewAdapter}"
+            android:adapter="@{vmm.scanDeviceRecyclerViewAdapter}"
             app:layout_constraintBottom_toTopOf="@+id/guideline21"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
-<!--            app:layoutManager="@{vm.staggeredGridLayoutManager}"-->
+        <!--            app:layoutManager="@{vmm.staggeredGridLayoutManager}"-->
         <TextView
             android:id="@+id/tv_device_name_title"
             android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:id="@+id/btn_connect_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->vm.connectDeviceClick()}"
+            android:onClick="@{()->vmm.connectDeviceClick()}"
             android:text="@string/btn_connect_device"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
             android:id="@+id/btn_scan_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->vm.scanDeviceClick()}"
+            android:onClick="@{()->vmm.scanDeviceClick()}"
             android:text="@string/btn_scan_device"
             app:layout_constraintBottom_toBottomOf="@+id/btn_connect_device"
             app:layout_constraintEnd_toStartOf="@+id/btn_connect_device"
@@ -117,7 +117,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline21"
             tools:text="连接状态" />
 
-<!--            android:text="@{vm.connectState}"-->
+        <!--            android:text="@{vmm.connectState}"-->
         <View
             android:id="@+id/divider16"
             android:layout_width="0dp"

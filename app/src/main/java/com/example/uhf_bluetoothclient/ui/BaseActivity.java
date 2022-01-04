@@ -18,6 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bluetoothsdk.interfaces.BluetoothPermissionInterface;
 import com.example.uhf_bluetoothclient.R;
@@ -26,9 +30,14 @@ import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
-public abstract class BaseActivity extends AppCompatActivity implements BluetoothPermissionInterface {
+public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewModel> extends AppCompatActivity implements BluetoothPermissionInterface {
+    protected T binding;
+    protected V viewModel;
+    private static final String TAG = BaseActivity.class.getSimpleName();
     private boolean mIsExit;
     private AlertDialog alertDialog;
     public final Handler baseActivityHandler = new Handler(Looper.getMainLooper()) {
@@ -60,6 +69,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Bluetoot
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Type superclass = getClass().getGenericSuperclass();
+        Class<V> bClass = (Class<V>) ((ParameterizedType) superclass).getActualTypeArguments()[1];
+        viewModel = new ViewModelProvider(this).get(bClass);
+        binding = DataBindingUtil.setContentView(this, initLayout(savedInstanceState));
+        binding.setLifecycleOwner(this);
+        binding.setVariable(initBR(), viewModel);
+        setContentView(binding.getRoot());
+
         requestPermission();
         initBleClient();
         initMessageUtil();
@@ -72,6 +89,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Bluetoot
     public abstract void initView();
 
     public abstract void initOthers();
+
+    public abstract int initLayout(Bundle savedInstanceState);
+
+    public abstract int initBR();
 
     // 蓝牙
     private void initBleClient() {

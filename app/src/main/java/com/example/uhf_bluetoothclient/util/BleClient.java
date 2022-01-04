@@ -140,7 +140,7 @@ public class BleClient {
         public void connectFail(Exception e) {
             if (handler != null) {
                 Message message = new Message();
-                message.what = 4;
+                message.what = Constants.MESSAGE_WHAT_BLE_RECONNECT_FAIL;
                 handler.sendMessage(message);
             }
             showToast("蓝牙连接失败");
@@ -151,7 +151,7 @@ public class BleClient {
             showToast("蓝牙断开连接");
             // 弹出提示框
             Message message = new Message();
-            message.what = 2;
+            message.what = Constants.MESSAGE_WHAT_BLE_DISCONNECT;
             if (handler != null) {
                 handler.sendMessage(message);
             }
@@ -242,7 +242,7 @@ public class BleClient {
     public void showToast(String str) {
         if (handler != null) {
             android.os.Message message = new android.os.Message();
-            message.what = 1;
+            message.what = Constants.MESSAGE_WHAT_SHOW_TOAST;
             Bundle bundle = new Bundle();
             bundle.putString("toast", str);
             message.setData(bundle);
@@ -253,7 +253,7 @@ public class BleClient {
     public void dismissDialog() {
         if (handler != null) {
             Message message = new Message();
-            message.what = 3;
+            message.what = Constants.MESSAGE_WHAT_BLE_RECONNECT_SUCCESS;
             handler.sendMessage(message);
         }
     }

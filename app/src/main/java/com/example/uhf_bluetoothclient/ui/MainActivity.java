@@ -1,10 +1,10 @@
 package com.example.uhf_bluetoothclient.ui;
 
 import android.graphics.Color;
+import android.os.Bundle;
 
-import androidx.databinding.DataBindingUtil;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.uhf_bluetoothclient.R;
@@ -17,23 +17,16 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MyViewModel> {
 
     private final String[] tabs = {"配置", "扫描"};
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
-    private MyViewModel viewModel;
 
     @Override
     public void initView() {
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        viewModel = new ViewModelProvider(this).get(MyViewModel.class);
-        binding.setVm(viewModel);
         binding.setLifecycleOwner(this);
-
-        viewPager2 = findViewById(R.id.vp);
-        tabLayout = findViewById(R.id.table_layout);
-        tabLayout.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        binding.setVm(viewModel);
 
         initPager();
         initTabLayout();
@@ -45,7 +38,18 @@ public class MainActivity extends BaseActivity {
                 .setViewModel(viewModel);
     }
 
+    @Override
+    public int initLayout(Bundle savedInstanceState) {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public int initBR() {
+        return BR.vm;
+    }
+
     public void initPager() {
+        viewPager2 = findViewById(R.id.vp);
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(ConfigurationFragment.newInstance());
         fragments.add(ScanFragment.newInstance());
@@ -64,6 +68,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initTabLayout() {
+        tabLayout = findViewById(R.id.table_layout);
+        tabLayout.setBackgroundColor(Color.parseColor("#D3D3D3"));
         // 设置标题
         for (String tab : tabs) {
             tabLayout.addTab(tabLayout.newTab().setText(tab));
