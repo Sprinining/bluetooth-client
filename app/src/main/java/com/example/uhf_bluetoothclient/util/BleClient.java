@@ -31,8 +31,7 @@ public class BleClient {
     private ConnectedThread connectedThread;
     private ScanDeviceViewModel scanDeviceViewModel;
     private Context context;
-    private Handler handler_scan_activity;
-    private Handler handler_main_activity;
+    private Handler handler;
     private BluetoothDevice tempDevice;
 
     private BleClient() {
@@ -139,10 +138,10 @@ public class BleClient {
 
         @Override
         public void connectFail(Exception e) {
-            if (handler_main_activity != null) {
+            if (handler != null) {
                 Message message = new Message();
                 message.what = 4;
-                handler_main_activity.sendMessage(message);
+                handler.sendMessage(message);
             }
             showToast("蓝牙连接失败");
         }
@@ -153,8 +152,8 @@ public class BleClient {
             // 弹出提示框
             Message message = new Message();
             message.what = 2;
-            if (handler_main_activity != null) {
-                handler_main_activity.sendMessage(message);
+            if (handler != null) {
+                handler.sendMessage(message);
             }
         }
     };
@@ -240,40 +239,26 @@ public class BleClient {
         return this;
     }
 
-    public BleClient setHandler_scan_activity(Handler handler_scan_activity) {
-        this.handler_scan_activity = handler_scan_activity;
-        return this;
-    }
-
-    public BleClient setHandler_main_activity(Handler handler_main_activity) {
-        this.handler_main_activity = handler_main_activity;
-        return this;
-    }
-
     public void showToast(String str) {
-        if (handler_scan_activity != null) {
+        if (handler != null) {
             android.os.Message message = new android.os.Message();
             message.what = 1;
             Bundle bundle = new Bundle();
             bundle.putString("toast", str);
             message.setData(bundle);
-            handler_scan_activity.sendMessage(message);
-        }
-        if (handler_main_activity != null) {
-            android.os.Message message = new android.os.Message();
-            message.what = 1;
-            Bundle bundle = new Bundle();
-            bundle.putString("toast", str);
-            message.setData(bundle);
-            handler_main_activity.sendMessage(message);
+            handler.sendMessage(message);
         }
     }
 
     public void dismissDialog() {
-        if (handler_main_activity != null) {
+        if (handler != null) {
             Message message = new Message();
             message.what = 3;
-            handler_main_activity.sendMessage(message);
+            handler.sendMessage(message);
         }
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
     }
 }

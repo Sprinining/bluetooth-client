@@ -32,6 +32,11 @@ public interface Constants {
     String GET_SUCCESS = "获取成功";
     String GET_FAIL = "获取失败";
 
+    int MESSAGE_WHAT_SHOW_TOAST = 1;
+    int MESSAGE_WHAT_BLE_DISCONNECT = 2;
+    int MESSAGE_WHAT_BLE_RECONNECT_SUCCESS = 3;
+    int MESSAGE_WHAT_BLE_RECONNECT_FAIL = 4;
+
     // 建行的
     int MSG_APP_HEARTBEAT = 1000;// 心跳包标识
     int LOG_BASE_EPC_INFO = 1001;// 标签上报事件标识
