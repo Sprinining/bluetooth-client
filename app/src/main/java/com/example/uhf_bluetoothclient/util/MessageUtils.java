@@ -37,8 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class MessageUtils {
     @SuppressLint("StaticFieldLeak")
@@ -219,37 +217,43 @@ public class MessageUtils {
                 case Constants.GET_IP:
                     // 获取ip
                     if (requestMessage.getRtCode() == 0) {
-                        NetworkStateBean bean = GsonUtils.fromJson((String) requestMessage.getData(), NetworkStateBean.class);
-                        if (bean != null) {
-                            viewModel.getNetworkType().postValue(bean.networkType);
-                            if (bean.IP != null && !bean.IP.isEmpty()) {
-                                bean.IP.forEach(s -> {
-                                    if (RegexUtils.isIP(s)) {
-                                        viewModel.getIpv4().postValue(s);
-                                    } else {
-                                        viewModel.getIpv6().postValue(s);
-                                    }
-                                });
-                            } else {
-                                viewModel.getIpv4().postValue("");
-                                viewModel.getIpv6().postValue("");
-                            }
-                            viewModel.getNetMask().postValue(bean.NETMASK);
-                            viewModel.getGateWay().postValue(bean.GATEWAY);
-                            if (bean.DNS != null && !bean.DNS.isEmpty()) {
-                                switch (bean.DNS.size()) {
-                                    case 2:
-                                        viewModel.getDns2().postValue(bean.DNS.get(1));
-                                    case 1:
-                                        viewModel.getDns1().postValue(bean.DNS.get(0));
+                        Log.e(TAG, "handlerMessage: " + GsonUtils.toJson(requestMessage.getData()));
+                        Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
+                        NetworkStateBean bean = new NetworkStateBean(
+                                (String) map.get("networkType"),
+                                (List<String>) map.get("iP"),
+                                (String) map.get("nETMASK"),
+                                (String) map.get("gATEWAY"),
+                                (List<String>) map.get("dNS"),
+                                (String) map.get("mAC")
+                        );
+                        viewModel.getNetworkType().postValue(bean.networkType);
+                        if (bean.IP != null && !bean.IP.isEmpty()) {
+                            bean.IP.forEach(s -> {
+                                if (RegexUtils.isIP(s)) {
+                                    viewModel.getIpv4().postValue(s);
+                                } else {
+                                    viewModel.getIpv6().postValue(s);
                                 }
-                            } else {
-                                viewModel.getDns1().postValue("");
-                                viewModel.getDns2().postValue("");
-                            }
-                            viewModel.getMac().postValue(bean.MAC);
+                            });
+                        } else {
+                            viewModel.getIpv4().postValue("");
+                            viewModel.getIpv6().postValue("");
                         }
-
+                        viewModel.getNetMask().postValue(bean.NETMASK);
+                        viewModel.getGateWay().postValue(bean.GATEWAY);
+                        if (bean.DNS != null && !bean.DNS.isEmpty()) {
+                            switch (bean.DNS.size()) {
+                                case 2:
+                                    viewModel.getDns2().postValue(bean.DNS.get(1));
+                                case 1:
+                                    viewModel.getDns1().postValue(bean.DNS.get(0));
+                            }
+                        } else {
+                            viewModel.getDns1().postValue("");
+                            viewModel.getDns2().postValue("");
+                        }
+                        viewModel.getMac().postValue(bean.MAC);
                         showExecuteResult(Constants.GET_SUCCESS);
                     }
                     break;
