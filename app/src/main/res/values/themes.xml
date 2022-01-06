@@ -2,8 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.UHF_BluetoothClient" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+<!--        <item name="colorPrimary">@color/purple_500</item>-->
+<!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
+<!--        <item name="colorOnPrimary">@color/white</item>-->
+        <item name="colorPrimary">@color/teal_200</item>
+        <item name="colorPrimaryVariant">@color/teal_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -24,11 +27,11 @@
     <style name="Theme.UHF_BluetoothClient.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="config_title">
-        <item name="android:gravity">right</item>
+        <item name="android:gravity">right|center</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">0.3</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="config_content_tv">

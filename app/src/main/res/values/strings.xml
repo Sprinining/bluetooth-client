@@ -47,9 +47,9 @@
     <string name="btn_set_ipv4">设置IPv4</string>
     <string name="btn_set_ipv6">设置IPv6</string>
     <string name="tv_ip_title">获取IP:</string>
-    <string name="tv_ipv6_title">设置IPv6:</string>
-    <string name="tv_ipv4_title">设置IPv4:</string>
-    <string name="tv_ipv4_address">IPv4地址:</string>
+    <string name="tv_ipv6_title">IPv6:</string>
+    <string name="tv_ipv4_mode">IPv4模式:</string>
+    <string name="tv_ipv4_address">IPv4:</string>
     <string name="tv_ipv4_netmask">子网掩码:</string>
     <string name="tv_ipv4_gateway">网关:</string>
     <string name="tv_ipv4_dns1">DNS1:</string>

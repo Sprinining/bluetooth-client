@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,367 +10,329 @@
             type="com.example.uhf_bluetoothclient.viewmodel.MyViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:divider="@drawable/shape_dividers"
+                app:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_read_config"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_read_config_title" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_result"
+                        style="@style/config_content_tv"
+                        android:text="@{vm.executeResult}"
+                        tools:text="13:49:08读取成功" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_version_title"
+                        style="@style/config_title"
+                        android:text="@string/tv_version_title" />
+
+                    <TextView
+                        android:id="@+id/tv_version"
+                        style="@style/config_content_tv"
+                        android:text="@{vm.version}"
+                        tools:text="0.3.25" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_SN_title"
+                        style="@style/config_title"
+                        android:text="@string/tv_SN_title" />
+
+                    <TextView
+                        android:id="@+id/tv_SN"
+                        style="@style/config_content_tv"
+                        android:text="@{vm.sn}"
+                        tools:text="11111" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_set_frequency_band"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_set_frequency_band_title" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_frequency_band"
+                        style="@style/config_content_spinner"
+                        android:selectedItemPosition="@{vm.frequencyBandIndex}"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_frequency_min_title"
+                        style="@style/config_title"
+                        android:text="@string/tv_frequency_min_title" />
+
+                    <Spinner
+                        android:id="@+id/spinner_frequency_min"
+                        style="@style/config_content_spinner"
+                        android:selectedItemPosition="@{vm.frequencyMinIndex}"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_frequency_max_title"
+                        style="@style/config_title"
+                        android:text="@string/tv_frequency_max_title" />
+
+                    <Spinner
+                        android:id="@+id/spinner_frequency_max"
+                        style="@style/config_content_spinner"
+                        android:selectedItemPosition="@{vm.frequencyMaxIndex}"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_set_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_set_power_title" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_power"
+                        style="@style/config_content_spinner"
+                        android:selectedItemPosition="@{vm.powerIndex}"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+
+                <!--            <LinearLayout-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:orientation="horizontal">-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_ip_title"-->
+                <!--                    style="@style/config_title"-->
+                <!--                    android:text="@string/tv_ip_title" />-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_ip"-->
+                <!--                    style="@style/config_content_tv"-->
+                <!--                    android:ellipsize="none"-->
+                <!--                    android:maxLines="5"-->
+                <!--                    android:singleLine="false"-->
+                <!--                    android:text="@{vm.ip}"-->
+                <!--                    tools:text="IP" />-->
+                <!--            </LinearLayout>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_set_ipv6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_set_ipv6" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_ipv6"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!--                <TextView-->
+                    <!--                    android:id="@+id/tv_ipv4_address"-->
+                    <!--                    style="@style/config_title"-->
+                    <!--                    android:text="@string/tv_ipv4_address" />-->
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_set_ipv4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_set_ipv4" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_ipv4_address"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ipv4_title"
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4_mode" />
+
+                    <Spinner
+                        android:id="@+id/spinner_ipv4_mode"
+                        style="@style/config_content_spinner"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ipv4_netmask"
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4_netmask" />
+
+                    <EditText
+                        android:id="@+id/edt_ipv4_netmask"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ipv4_gateway"
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4_gateway" />
+
+                    <EditText
+                        android:id="@+id/edt_ipv4_gateway"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ipv4_dns1"
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4_dns1" />
+
+                    <EditText
+                        android:id="@+id/edt_ipv4_dns1"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_ipv4_dns2"
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4_dns2" />
+
+
+                    <EditText
+                        android:id="@+id/edt_ipv4_dns2"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/config_title">
+
+                        <Button
+                            android:id="@+id/btn_test_ping"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btn_test_ping" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_ping_address"
+                        style="@style/config_content_edt"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </LinearLayout>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_result_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_result_title" />
-
-                <TextView
-                    android:id="@+id/tv_result"
-                    style="@style/config_content_tv"
-                    android:text="@{vm.executeResult}"
-                    tools:text="13:49:08读取成功" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_version_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_version_title" />
-
-                <TextView
-                    android:id="@+id/tv_version"
-                    style="@style/config_content_tv"
-                    android:text="@{vm.version}"
-                    tools:text="0.3.25" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_SN_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_SN_title" />
-
-                <TextView
-                    android:id="@+id/tv_SN"
-                    style="@style/config_content_tv"
-                    android:text="@{vm.sn}"
-                    tools:text="11111" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_frequency_band_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_frequency_band_title" />
-
-                <Spinner
-                    android:id="@+id/spinner_frequency_band"
-                    style="@style/config_content_spinner"
-                    android:selectedItemPosition="@{vm.frequencyBandIndex}"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_frequency_min_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_frequency_min_title" />
-
-                <Spinner
-                    android:id="@+id/spinner_frequency_min"
-                    style="@style/config_content_spinner"
-                    android:selectedItemPosition="@{vm.frequencyMinIndex}"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_frequency_max_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_frequency_max_title" />
-
-                <Spinner
-                    android:id="@+id/spinner_frequency_max"
-                    style="@style/config_content_spinner"
-                    android:selectedItemPosition="@{vm.frequencyMaxIndex}"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_power_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_power_title" />
-
-                <Spinner
-                    android:id="@+id/spinner_power"
-                    style="@style/config_content_spinner"
-                    android:selectedItemPosition="@{vm.powerIndex}"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ip_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_ip_title" />
-
-                <TextView
-                    android:id="@+id/tv_ip"
-                    style="@style/config_content_tv"
-                    android:ellipsize="none"
-                    android:maxLines="5"
-                    android:singleLine="false"
-                    android:text="@{vm.ip}"
-                    tools:text="IP" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv6_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv6_title" />
-
-                <EditText
-                    android:id="@+id/edt_ipv6"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_title"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_title" />
-
-                <Spinner
-                    android:id="@+id/spinner_ipv4_mode"
-                    style="@style/config_content_spinner"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_address"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_address" />
-
-                <EditText
-                    android:id="@+id/edt_ipv4_address"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_netmask"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_netmask" />
-
-                <EditText
-                    android:id="@+id/edt_ipv4_netmask"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_gateway"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_gateway" />
-
-                <EditText
-                    android:id="@+id/edt_ipv4_gateway"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_dns1"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_dns1" />
-
-                <EditText
-                    android:id="@+id/edt_ipv4_dns1"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_ipv4_dns2"
-                    style="@style/config_title"
-                    android:text="@string/tv_ipv4_dns2" />
-
-
-                <EditText
-                    android:id="@+id/edt_ipv4_dns2"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_test_ping"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="0.3"
-                    android:text="@string/btn_test_ping" />
-
-                <EditText
-                    android:id="@+id/edt_ping_address"
-                    style="@style/config_content_edt"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-
-                <Button
-                    android:id="@+id/btn_read_config"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_read_config_title" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_set_power"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_set_power_title" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_set_frequency_band"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_set_frequency_band_title" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_exit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_exit" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_set_ipv4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_set_ipv4" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_set_ipv6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/btn_set_ipv6" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+            android:text="@string/btn_exit" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
