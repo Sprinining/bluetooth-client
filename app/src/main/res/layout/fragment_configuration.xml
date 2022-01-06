@@ -208,7 +208,7 @@
                     <TextView
                         android:id="@+id/tv_mac"
                         style="@style/config_content_tv"
-                        android:text="@{vm.mac}" />
+                        android:text="@{config_vm.mac}" />
                 </LinearLayout>
 
                 <LinearLayout
