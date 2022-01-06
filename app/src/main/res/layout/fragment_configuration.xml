@@ -17,7 +17,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -93,6 +94,7 @@
                             android:id="@+id/btn_set_frequency_band"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="0dp"
                             android:text="@string/btn_set_frequency_band_title" />
                     </LinearLayout>
 
@@ -148,6 +150,7 @@
                             android:id="@+id/btn_set_power"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="0dp"
                             android:text="@string/btn_set_power_title" />
                     </LinearLayout>
 
@@ -198,12 +201,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <TextView
+                        style="@style/config_title"
+                        android:text="@string/tv_mac" />
+
+                    <TextView
+                        android:id="@+id/tv_mac"
+                        style="@style/config_content_tv"
+                        android:text="@{vm.mac}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                     <LinearLayout style="@style/config_title">
 
                         <Button
                             android:id="@+id/btn_set_ipv6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="0dp"
                             android:text="@string/btn_set_ipv6" />
                     </LinearLayout>
 
@@ -229,6 +248,7 @@
                             android:id="@+id/btn_set_ipv4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingHorizontal="0dp"
                             android:text="@string/btn_set_ipv4" />
                     </LinearLayout>
 
