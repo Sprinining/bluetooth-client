@@ -20,10 +20,13 @@ import com.example.uhf_bluetoothclient.entity.MsgBaseSetPower;
 import com.example.uhf_bluetoothclient.entity.MsgBaseStop;
 import com.example.uhf_bluetoothclient.entity.MsgFrequencyHopTable;
 import com.example.uhf_bluetoothclient.entity.MsgSetIPv4;
+import com.example.uhf_bluetoothclient.entity.NetworkStateBean;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.seuic.util.common.GsonUtils;
+import com.seuic.util.common.RegexUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class MessageUtils {
     @SuppressLint("StaticFieldLeak")
@@ -214,7 +219,37 @@ public class MessageUtils {
                 case Constants.GET_IP:
                     // 获取ip
                     if (requestMessage.getRtCode() == 0) {
-                        viewModel.getIp().postValue((String) requestMessage.getData());
+                        NetworkStateBean bean = GsonUtils.fromJson((String) requestMessage.getData(), NetworkStateBean.class);
+                        if (bean != null) {
+                            viewModel.getNetworkType().postValue(bean.networkType);
+                            if (bean.IP != null && !bean.IP.isEmpty()) {
+                                bean.IP.forEach(s -> {
+                                    if (RegexUtils.isIP(s)) {
+                                        viewModel.getIpv4().postValue(s);
+                                    } else {
+                                        viewModel.getIpv6().postValue(s);
+                                    }
+                                });
+                            } else {
+                                viewModel.getIpv4().postValue("");
+                                viewModel.getIpv6().postValue("");
+                            }
+                            viewModel.getNetMask().postValue(bean.NETMASK);
+                            viewModel.getGateWay().postValue(bean.GATEWAY);
+                            if (bean.DNS != null && !bean.DNS.isEmpty()) {
+                                switch (bean.DNS.size()) {
+                                    case 2:
+                                        viewModel.getDns2().postValue(bean.DNS.get(1));
+                                    case 1:
+                                        viewModel.getDns1().postValue(bean.DNS.get(0));
+                                }
+                            } else {
+                                viewModel.getDns1().postValue("");
+                                viewModel.getDns2().postValue("");
+                            }
+                            viewModel.getMac().postValue(bean.MAC);
+                        }
+
                         showExecuteResult(Constants.GET_SUCCESS);
                     }
                     break;

@@ -178,6 +178,20 @@
                 <!--                    android:text="@{vm.ip}"-->
                 <!--                    tools:text="IP" />-->
                 <!--            </LinearLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/config_title"
+                        android:text="@string/tv_network_type" />
+
+                    <TextView
+                        android:id="@+id/tv_network_type"
+                        style="@style/config_content_tv"
+                        android:text="@{vm.networkType}" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -196,6 +210,7 @@
                     <EditText
                         android:id="@+id/edt_ipv6"
                         style="@style/config_content_edt"
+                        android:text="@{vm.ipv6}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -220,6 +235,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_address"
                         style="@style/config_content_edt"
+                        android:text="@{vm.ipv4}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -252,6 +268,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_netmask"
                         style="@style/config_content_edt"
+                        android:text="@{vm.netMask}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -268,6 +285,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_gateway"
                         style="@style/config_content_edt"
+                        android:text="@{vm.gateWay}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -284,6 +302,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_dns1"
                         style="@style/config_content_edt"
+                        android:text="@{vm.dns1}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -301,6 +320,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_dns2"
                         style="@style/config_content_edt"
+                        android:text="@{vm.dns2}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 

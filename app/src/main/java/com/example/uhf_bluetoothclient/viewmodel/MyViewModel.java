@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
+import com.example.uhf_bluetoothclient.entity.NetworkStateBean;
 import com.example.uhf_bluetoothclient.entity.TagCells;
 
 import java.util.List;
@@ -24,8 +25,22 @@ public class MyViewModel extends ViewModel {
     private final MutableLiveData<Integer> powerIndex = new MutableLiveData<>(20);
     // SN
     private final MutableLiveData<String> sn = new MutableLiveData<>("");
-    // ip
-    private final MutableLiveData<String> ip = new MutableLiveData<>("");
+    // networkType
+    private final MutableLiveData<String> networkType = new MutableLiveData<String>("");
+    // ipv4
+    private final MutableLiveData<String> ipv4 = new MutableLiveData<String>("");
+    // ipv6
+    private final MutableLiveData<String> ipv6 = new MutableLiveData<String>("");
+    // networkType
+    private final MutableLiveData<String> netMask = new MutableLiveData<String>("");
+    // gateWay
+    private final MutableLiveData<String> gateWay = new MutableLiveData<String>("");
+    // dns1
+    private final MutableLiveData<String> dns1 = new MutableLiveData<String>("");
+    // dns2
+    private final MutableLiveData<String> dns2 = new MutableLiveData<String>("");
+    // mac
+    private final MutableLiveData<String> mac = new MutableLiveData<String>("");
     // 是否在扫描中
     private final MutableLiveData<Boolean> scanFlag = new MutableLiveData<>(false);
     // 标签列表
@@ -43,8 +58,36 @@ public class MyViewModel extends ViewModel {
         return tagCellsMutableLiveData;
     }
 
-    public MutableLiveData<String> getIp() {
-        return ip;
+    public MutableLiveData<String> getIpv4() {
+        return ipv4;
+    }
+
+    public MutableLiveData<String> getIpv6() {
+        return ipv6;
+    }
+
+    public MutableLiveData<String> getNetworkType() {
+        return networkType;
+    }
+
+    public MutableLiveData<String> getNetMask() {
+        return netMask;
+    }
+
+    public MutableLiveData<String> getGateWay() {
+        return gateWay;
+    }
+
+    public MutableLiveData<String> getDns1() {
+        return dns1;
+    }
+
+    public MutableLiveData<String> getDns2() {
+        return dns2;
+    }
+
+    public MutableLiveData<String> getMac() {
+        return mac;
     }
 
     public MutableLiveData<Long> getRunTimeLiveData() {

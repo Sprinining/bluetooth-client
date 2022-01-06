@@ -10,10 +10,10 @@ import java.util.List;
  * @Version: 1.0
  */
 public class NetworkStateBean {
-    String networkType;
-    List<String> IP;
-    String NETMASK;
-    String GATEWAY;
-    List<String> DNS;
-    String MAC;
+    public String networkType;
+    public List<String> IP;
+    public String NETMASK;
+    public String GATEWAY;
+    public List<String> DNS;
+    public String MAC;
 }
