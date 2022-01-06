@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="vm"
+            name="config_vm"
             type="com.example.uhf_bluetoothclient.viewmodel.MyViewModel" />
     </data>
 
@@ -44,7 +44,7 @@
                     <TextView
                         android:id="@+id/tv_result"
                         style="@style/config_content_tv"
-                        android:text="@{vm.executeResult}"
+                        android:text="@{config_vm.executeResult}"
                         tools:text="13:49:08读取成功" />
                 </LinearLayout>
 
@@ -61,7 +61,7 @@
                     <TextView
                         android:id="@+id/tv_version"
                         style="@style/config_content_tv"
-                        android:text="@{vm.version}"
+                        android:text="@{config_vm.version}"
                         tools:text="0.3.25" />
                 </LinearLayout>
 
@@ -78,7 +78,7 @@
                     <TextView
                         android:id="@+id/tv_SN"
                         style="@style/config_content_tv"
-                        android:text="@{vm.sn}"
+                        android:text="@{config_vm.sn}"
                         tools:text="11111" />
                 </LinearLayout>
 
@@ -99,7 +99,7 @@
                     <Spinner
                         android:id="@+id/spinner_frequency_band"
                         style="@style/config_content_spinner"
-                        android:selectedItemPosition="@{vm.frequencyBandIndex}"
+                        android:selectedItemPosition="@{config_vm.frequencyBandIndex}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -116,7 +116,7 @@
                     <Spinner
                         android:id="@+id/spinner_frequency_min"
                         style="@style/config_content_spinner"
-                        android:selectedItemPosition="@{vm.frequencyMinIndex}"
+                        android:selectedItemPosition="@{config_vm.frequencyMinIndex}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -133,7 +133,7 @@
                     <Spinner
                         android:id="@+id/spinner_frequency_max"
                         style="@style/config_content_spinner"
-                        android:selectedItemPosition="@{vm.frequencyMaxIndex}"
+                        android:selectedItemPosition="@{config_vm.frequencyMaxIndex}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -154,7 +154,7 @@
                     <Spinner
                         android:id="@+id/spinner_power"
                         style="@style/config_content_spinner"
-                        android:selectedItemPosition="@{vm.powerIndex}"
+                        android:selectedItemPosition="@{config_vm.powerIndex}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -175,7 +175,7 @@
                 <!--                    android:ellipsize="none"-->
                 <!--                    android:maxLines="5"-->
                 <!--                    android:singleLine="false"-->
-                <!--                    android:text="@{vm.ip}"-->
+                <!--                    android:text="@{config_vm.ip}"-->
                 <!--                    tools:text="IP" />-->
                 <!--            </LinearLayout>-->
                 <LinearLayout
@@ -190,7 +190,7 @@
                     <TextView
                         android:id="@+id/tv_network_type"
                         style="@style/config_content_tv"
-                        android:text="@{vm.networkType}" />
+                        android:text="@{config_vm.networkType}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -210,7 +210,7 @@
                     <EditText
                         android:id="@+id/edt_ipv6"
                         style="@style/config_content_edt"
-                        android:text="@{vm.ipv6}"
+                        android:text="@{config_vm.ipv6}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -235,7 +235,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_address"
                         style="@style/config_content_edt"
-                        android:text="@{vm.ipv4}"
+                        android:text="@{config_vm.ipv4}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -268,7 +268,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_netmask"
                         style="@style/config_content_edt"
-                        android:text="@{vm.netMask}"
+                        android:text="@{config_vm.netMask}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -285,7 +285,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_gateway"
                         style="@style/config_content_edt"
-                        android:text="@{vm.gateWay}"
+                        android:text="@{config_vm.gateWay}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -302,7 +302,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_dns1"
                         style="@style/config_content_edt"
-                        android:text="@{vm.dns1}"
+                        android:text="@{config_vm.dns1}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
@@ -320,7 +320,7 @@
                     <EditText
                         android:id="@+id/edt_ipv4_dns2"
                         style="@style/config_content_edt"
-                        android:text="@{vm.dns2}"
+                        android:text="@{config_vm.dns2}"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 

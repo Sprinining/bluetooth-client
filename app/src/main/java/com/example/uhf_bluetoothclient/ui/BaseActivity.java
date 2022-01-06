@@ -37,7 +37,6 @@ import java.util.List;
 public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewModel> extends AppCompatActivity implements BluetoothPermissionInterface {
     protected T binding;
     protected V viewModel;
-    private static final String TAG = BaseActivity.class.getSimpleName();
     private boolean mIsExit;
     private AlertDialog alertDialog;
     public final Handler baseActivityHandler = new Handler(Looper.getMainLooper()) {

@@ -15,7 +15,6 @@ public class ScanDeviceActivity extends BaseActivity<ActivityScanDeviceBinding, 
 
     @Override
     public void initView() {
-
         binding.rvDeviceFound.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         binding.rvDeviceFound.setLayoutManager(new LinearLayoutManager(this));
         viewModel.getConnectState().observe(this, binding.tvConnectState::setText);

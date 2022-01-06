@@ -2,6 +2,8 @@ package com.example.uhf_bluetoothclient.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.TextView;
 
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
@@ -25,9 +27,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MyViewModel>
 
     @Override
     public void initView() {
-        binding.setLifecycleOwner(this);
-        binding.setVm(viewModel);
-
         initPager();
         initTabLayout();
     }
@@ -51,8 +50,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MyViewModel>
     public void initPager() {
         viewPager2 = findViewById(R.id.vp);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ConfigurationFragment.newInstance());
-        fragments.add(ScanFragment.newInstance());
+        fragments.add(new ConfigurationFragment());
+        fragments.add(new ScanFragment());
         // 模拟服务器功能
 //        fragments.add(ServerSimulationFragment.newInstance());
         MyFragmentPagerAdapter fragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), getLifecycle(), fragments);
@@ -72,7 +71,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MyViewModel>
         tabLayout.setBackgroundColor(Color.parseColor("#D3D3D3"));
         // 设置标题
         for (String tab : tabs) {
-            tabLayout.addTab(tabLayout.newTab().setText(tab));
+            TextView textView = new TextView(this);
+            textView.setText(tab);
+            textView.setTextSize(24);
+            textView.setGravity(Gravity.CENTER);
+            tabLayout.addTab(tabLayout.newTab().setCustomView(textView));
         }
 
         // 监听tabLayout事件 设置选中的viewpager2

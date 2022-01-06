@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="vm"
+            name="scan_vm"
             type="com.example.uhf_bluetoothclient.viewmodel.MyViewModel" />
     </data>
 
@@ -77,7 +77,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline15"
                 app:layout_constraintTop_toTopOf="@+id/guideline13" />
 
-            <!--                android:text="@{vm.countLiveData}"-->
+            <!--                android:text="@{scan_vm.countLiveData}"-->
             <TextView
                 android:id="@+id/tv_tag_count"
                 android:layout_width="0dp"
@@ -224,8 +224,8 @@
                 app:layout_constraintStart_toEndOf="@+id/checkBox_antenna7"
                 app:layout_constraintTop_toTopOf="@+id/checkBox_antenna7" />
 
-            <!--                android:adapter="@{vm.tagInfoRecyclerViewAdapter}"
-                app:layoutManager="@{vm.staggeredGridLayoutManager}"-->
+            <!--                android:adapter="@{scan_vm.tagInfoRecyclerViewAdapter}"
+                app:layoutManager="@{scan_vm.staggeredGridLayoutManager}"-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_taginfo"
                 android:layout_width="0dp"
