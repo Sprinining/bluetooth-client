@@ -168,8 +168,11 @@ public class BleClient {
             Log.i(TAG, "搜索到的设备: deviceName: " + deviceName + " deviceHardwareAddress: " + deviceHardwareAddress);
             if (scanDeviceViewModel != null) {
                 List<BluetoothDevice> list = scanDeviceViewModel.getListMutableLiveData().getValue();
-                // TODO: 2021/12/31 对东集设备进行过滤
-                if (list != null && !list.contains(device)) {
+                if (list != null
+                        && !list.contains(device)
+                        && device.getName() != null
+                        && device.getName().toUpperCase().startsWith("UF3C")
+                ) {
                     list.add(device);
                     scanDeviceViewModel.getListMutableLiveData().setValue(list);
                     scanDeviceViewModel.getScanDeviceRecyclerViewAdapter().notifyDataSetChanged();

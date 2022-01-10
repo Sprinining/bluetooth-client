@@ -39,7 +39,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
-        <!--            app:layoutManager="@{vmm.staggeredGridLayoutManager}"-->
         <TextView
             android:id="@+id/tv_device_name_title"
             android:layout_width="wrap_content"
@@ -117,7 +116,6 @@
             app:layout_constraintTop_toTopOf="@+id/guideline21"
             tools:text="连接状态" />
 
-        <!--            android:text="@{vmm.connectState}"-->
         <View
             android:id="@+id/divider16"
             android:layout_width="0dp"
