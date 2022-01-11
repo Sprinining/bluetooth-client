@@ -49,7 +49,7 @@ public class ScanDeviceViewModel extends ViewModel {
 
     public void connectDeviceClick() {
         if (listMutableLiveData.getValue() != null) {
-            if (currentSelectedDeviceIndex <= 0) {
+            if (currentSelectedDeviceIndex < 0) {
                 return;
             }
             BluetoothDevice device = listMutableLiveData.getValue().get(currentSelectedDeviceIndex);
