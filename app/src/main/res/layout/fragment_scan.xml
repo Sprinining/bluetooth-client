@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.85" />
+                app:layout_constraintGuide_percent="0.83" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline15"
@@ -105,11 +105,9 @@
                 android:id="@+id/tv_session_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="@string/tv_session_title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/spinner_session"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintEnd_toStartOf="@+id/guideline15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline14" />
 
@@ -119,10 +117,10 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_session_title"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintStart_toEndOf="@+id/tv_session_title"
-                app:layout_constraintTop_toTopOf="@+id/tv_session_title"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline15"
+                app:layout_constraintTop_toTopOf="@+id/guideline14"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <Button
@@ -133,8 +131,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_clear"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/spinner_session"
-                app:layout_constraintTop_toTopOf="@+id/guideline14" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
             <CheckBox
                 android:id="@+id/checkBox_antenna1"
@@ -246,13 +244,6 @@
                 app:layout_constraintStart_toEndOf="@+id/btn_scan"
                 app:layout_constraintTop_toTopOf="@+id/btn_scan" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
-
             <View
                 android:id="@+id/divider4"
                 android:layout_width="0dp"
@@ -311,6 +302,13 @@
                     android:textColor="@color/black" />
 
             </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

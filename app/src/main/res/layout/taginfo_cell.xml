@@ -25,7 +25,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="?android:attr/listDivider" />
+            android:background="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_tag_detail"
@@ -35,6 +35,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="?android:attr/listDivider" />
+            android:background="@color/black" />
     </LinearLayout>
 </layout>
