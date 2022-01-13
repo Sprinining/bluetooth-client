@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TagCells {
     // 已经被扫描到的标签epc值
@@ -116,7 +117,7 @@ public class TagCells {
             // 首次读取时间
             private LocalDateTime readTime;
             // 该标签在该天线下的读取次数
-            private int count = 0;
+            private AtomicInteger count = new AtomicInteger(0);
 
             public int getAntennaId() {
                 return antennaId;
@@ -135,24 +136,24 @@ public class TagCells {
             }
 
             public int getCount() {
-                return count;
+                return count.get();
             }
 
             public void setCount(int count) {
-                this.count = count;
+                this.count.set(count);
             }
 
             public AntennaCell(int antennaId, LocalDateTime readTime, int count) {
                 this.antennaId = antennaId;
                 this.readTime = readTime;
-                this.count = count;
+                this.count.set(count);
             }
 
             public AntennaCell() {
             }
 
             public void addCount() {
-                count++;
+                count.incrementAndGet();
             }
 
             @Override
