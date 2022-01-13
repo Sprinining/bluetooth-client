@@ -1,7 +1,5 @@
 package com.example.uhf_bluetoothclient.entity;
 
-import android.util.Log;
-
 import com.example.uhf_bluetoothclient.util.DateUtils;
 
 import java.time.LocalDateTime;
@@ -16,7 +14,7 @@ public class TagCells {
     private final Map<String, Integer> epcMap = new HashMap<>();
     private final List<TagCell> tagCells = new ArrayList<>();
 
-    public void addTagCell(LogBaseEpcInfo tagInfo) {
+    public synchronized void addTagCell(LogBaseEpcInfo tagInfo) {
         if (!epcMap.containsKey(tagInfo.getEpc())) {
             // 第一次搜到这张卡
             TagCell tagCell = new TagCell(tagInfo.getEpc());
@@ -64,7 +62,7 @@ public class TagCells {
         // 已加入的天线
         private final Map<Integer, Integer> antennaMap = new HashMap<>();
 
-        public void add(int antennaId, LocalDateTime localDateTime) {
+        public synchronized void add(int antennaId, LocalDateTime localDateTime) {
             if (!antennaMap.containsKey(antennaId)) {
                 // 没有就先初始化
                 AntennaCell antennaCell = new AntennaCell(antennaId, localDateTime, 1);
