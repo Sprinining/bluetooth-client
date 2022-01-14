@@ -130,9 +130,9 @@ public class MyViewModel extends ViewModel {
         // 获取已有的
         TagCells tagCells = tagCellsMutableLiveData.getValue();
         if (tagCells != null) {
-            for (LogBaseEpcInfo tagInfo : list) {
+            for (int i = 0; i < list.size(); i++) {
                 // 在原有的数据上追加新的list
-                tagCells.addTagCell(tagInfo);
+                tagCells.addTagCell(list.get(i));
             }
 //            Log.e(TAG, "updateTagList: " + tagCells.toString());
             // 更新数据
