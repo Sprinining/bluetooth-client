@@ -68,7 +68,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+//    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation files('../libs/jxl-2.6.12.jar')
     implementation project(path: ':bluetoothSdk')
 
 
