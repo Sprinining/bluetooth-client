@@ -28,6 +28,8 @@ import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.constants.Constants;
 import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
+import com.seuic.util.common.PermissionUtils;
+import com.seuic.util.common.constant.PermissionConstants;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -174,6 +176,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
     @Override
     public void requestPermission() {
         // 安卓6.0及以上要运行时申请权限
+        PermissionUtils.permission(PermissionConstants.LOCATION).request();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED) {
