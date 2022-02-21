@@ -70,6 +70,7 @@ public interface Constants {
     int GET_IP = 1029;  // 获取ip，如果是静态ipv4就返回，否则返回ipv6
     int SET_IPV4 = 1030;// 设置ipv4
     int SET_IPV6 = 1031;// 设置ipv6
+    int TEST_PING = 1034;   // ping测试
     List<Integer> FREQUENCY_HOP_TABLE = new ArrayList<Integer>() {{
         add(902750);
         add(903250);

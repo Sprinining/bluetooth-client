@@ -85,17 +85,7 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
     @Override
     public void initClick() {
         binding.btnTestPing.setOnClickListener(v -> {
-            String ipAddress = binding.edtPingAddress.getText().toString();
-            if ((!CalibrationUtils.isIPv4Address(ipAddress) && !CalibrationUtils.isIPv6Address(ipAddress)) || ipAddress.equals("")) {
-                Toast.makeText(requireContext(), "ip地址格式错误", Toast.LENGTH_SHORT).show();
-            } else {
-                boolean availableByPing = NetworkUtils.isAvailableByPing(ipAddress);
-                if (availableByPing) {
-                    Toast.makeText(requireContext(), "ping成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(requireContext(), "ping失败", Toast.LENGTH_SHORT).show();
-                }
-            }
+            MessageUtils.getINSTANCE().testPing(binding.edtPingAddress.getText().toString());
         });
 
         binding.btnReadConfig.setOnClickListener(v -> {
