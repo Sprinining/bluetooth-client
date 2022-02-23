@@ -34,11 +34,13 @@
 
                     <LinearLayout style="@style/config_title">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_read_config"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/btn_read_config_title" />
+                            android:backgroundTint="@color/teal_200"
+                            android:text="@string/btn_read_config_title"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
 
@@ -90,12 +92,14 @@
 
                     <LinearLayout style="@style/config_title">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_set_frequency_band"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/teal_200"
                             android:paddingHorizontal="0dp"
-                            android:text="@string/btn_set_frequency_band_title" />
+                            android:text="@string/btn_set_frequency_band_title"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <Spinner
@@ -146,12 +150,14 @@
 
                     <LinearLayout style="@style/config_title">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_set_power"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/teal_200"
                             android:paddingHorizontal="0dp"
-                            android:text="@string/btn_set_power_title" />
+                            android:text="@string/btn_set_power_title"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <Spinner
@@ -218,12 +224,14 @@
 
                     <LinearLayout style="@style/config_title">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_set_ipv6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/teal_200"
                             android:paddingHorizontal="0dp"
-                            android:text="@string/btn_set_ipv6" />
+                            android:text="@string/btn_set_ipv6"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <EditText
@@ -244,12 +252,14 @@
                     <!--                    android:text="@string/tv_ipv4_address" />-->
                     <LinearLayout style="@style/config_title">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_set_ipv4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="@color/teal_200"
                             android:paddingHorizontal="0dp"
-                            android:text="@string/btn_set_ipv4" />
+                            android:text="@string/btn_set_ipv4"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <EditText
@@ -369,10 +379,12 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_exit" />
+            android:backgroundTint="@color/teal_200"
+            android:text="@string/btn_exit"
+            android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
