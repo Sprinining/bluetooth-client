@@ -22,7 +22,7 @@ public class MyViewModel extends ViewModel {
     // 最大频点下标
     private final MutableLiveData<Integer> frequencyMaxIndex = new MutableLiveData<>(49);
     // 功率下标
-    private final MutableLiveData<Integer> powerIndex = new MutableLiveData<>(20);
+    private final MutableLiveData<Integer> powerIndex = new MutableLiveData<>(33);
     // SN
     private final MutableLiveData<String> sn = new MutableLiveData<>("");
     // networkType

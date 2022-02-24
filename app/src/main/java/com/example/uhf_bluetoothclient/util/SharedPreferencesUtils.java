@@ -40,7 +40,7 @@ public class SharedPreferencesUtils {
     }
 
     public int getPowerSelection() {
-        return sharedPreferences.getInt(Constants.SP_POWER, 0);
+        return sharedPreferences.getInt(Constants.SP_POWER, 33);
     }
 
     public int getSessionSelection() {
@@ -48,19 +48,19 @@ public class SharedPreferencesUtils {
     }
 
     public boolean getAntenna1IsChecked() {
-        return sharedPreferences.getBoolean(Constants.SP_ANTENNA1, false);
+        return sharedPreferences.getBoolean(Constants.SP_ANTENNA1, true);
     }
 
     public boolean getAntenna2IsChecked() {
-        return sharedPreferences.getBoolean(Constants.SP_ANTENNA2, false);
+        return sharedPreferences.getBoolean(Constants.SP_ANTENNA2, true);
     }
 
     public boolean getAntenna3IsChecked() {
-        return sharedPreferences.getBoolean(Constants.SP_ANTENNA3, false);
+        return sharedPreferences.getBoolean(Constants.SP_ANTENNA3, true);
     }
 
     public boolean getAntenna4IsChecked() {
-        return sharedPreferences.getBoolean(Constants.SP_ANTENNA4, false);
+        return sharedPreferences.getBoolean(Constants.SP_ANTENNA4, true);
     }
 
     public boolean getAntenna5IsChecked() {

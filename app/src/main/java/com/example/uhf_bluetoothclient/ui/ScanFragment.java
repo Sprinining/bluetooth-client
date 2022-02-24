@@ -52,6 +52,12 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding, MyViewModel>
         ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sessionArray);
         sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSession.setAdapter(sessionAdapter);
+
+        // 默认勾选天线1到4
+        binding.checkBoxAntenna1.setChecked(true);
+        binding.checkBoxAntenna2.setChecked(true);
+        binding.checkBoxAntenna3.setChecked(true);
+        binding.checkBoxAntenna4.setChecked(true);
     }
 
     @Override
