@@ -9,10 +9,8 @@ import com.example.uhf_bluetoothclient.BR;
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
 import com.example.uhf_bluetoothclient.util.BleClient;
-import com.example.uhf_bluetoothclient.util.CalibrationUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
-import com.seuic.util.common.NetworkUtils;
 
 public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBinding, MyViewModel> {
     private String[] frequencyBandArray, frequencyMinArray, frequencyMaxArray, powerArray, ipModeArray;
@@ -110,8 +108,19 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
         });
 
         binding.btnSetIpv4.setOnClickListener(v -> {
+
+            String mode = "STATIC";
+            switch (binding.spinnerIpv4Mode.getSelectedItemPosition()) {
+                case 0:
+                    mode = "STATIC";
+                    break;
+                case 1:
+                    mode = "DHCP";
+                    break;
+            }
+
             MessageUtils.getINSTANCE().setIPv4(
-                    ipModeArray[binding.spinnerIpv4Mode.getSelectedItemPosition()],
+                    mode,
                     binding.edtIpv4Address.getText().toString(),
                     binding.edtIpv4Netmask.getText().toString(),
                     binding.edtIpv4Gateway.getText().toString(),
