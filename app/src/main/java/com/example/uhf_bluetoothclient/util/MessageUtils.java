@@ -254,7 +254,37 @@ public class MessageUtils {
                                 (List<String>) map.get("dNS"),
                                 (String) map.get("mAC")
                         );
-                        viewModel.getNetworkType().postValue(bean.networkType);
+                        // 网络状态
+                        String netWorkType = "无网络连接";
+                        switch (bean.networkType) {
+                            case "NETWORK_ETHERNET":
+                                netWorkType = "以太网";
+                                break;
+                            case "NETWORK_WIFI":
+                                netWorkType = "WIFI";
+                                break;
+                            case "NETWORK_2G":
+                                netWorkType = "2G";
+                                break;
+                            case "NETWORK_3G":
+                                netWorkType = "3G";
+                                break;
+                            case "NETWORK_4G":
+                                netWorkType = "4G";
+                                break;
+                            case "NETWORK_5G":
+                                netWorkType = "5G";
+                                break;
+                            case "NETWORK_UNKNOWN":
+                                netWorkType = "未知";
+                                break;
+                            case "NETWORK_NO":
+                                netWorkType = "无";
+                                break;
+                            default:
+                        }
+                        viewModel.getNetworkType().postValue(netWorkType);
+
                         if (bean.IP != null && !bean.IP.isEmpty()) {
                             bean.IP.forEach(s -> {
                                 if (RegexUtils.isIP(s)) {
