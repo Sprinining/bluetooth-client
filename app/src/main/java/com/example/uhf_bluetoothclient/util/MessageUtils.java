@@ -245,7 +245,6 @@ public class MessageUtils {
                     // 获取ip
                     if (requestMessage.getRtCode() == 0) {
                         Log.e(TAG, "handlerMessage: " + GsonUtils.toJson(requestMessage.getData()));
-                        // TODO: 2022/2/24  java.lang.String cannot be cast to java.util.Map
                         Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
                         NetworkStateBean bean = new NetworkStateBean(
                                 (String) map.get("networkType"),

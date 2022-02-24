@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
-import com.example.uhf_bluetoothclient.entity.NetworkStateBean;
 import com.example.uhf_bluetoothclient.entity.TagCells;
 
 import java.util.List;
@@ -31,7 +30,9 @@ public class MyViewModel extends ViewModel {
     private final MutableLiveData<String> ipv4 = new MutableLiveData<String>("");
     // ipv6
     private final MutableLiveData<String> ipv6 = new MutableLiveData<String>("");
-    // networkType
+    // mode
+    private final MutableLiveData<Integer> mode = new MutableLiveData<>(0);
+    // netMask
     private final MutableLiveData<String> netMask = new MutableLiveData<String>("");
     // gateWay
     private final MutableLiveData<String> gateWay = new MutableLiveData<String>("");
@@ -49,6 +50,10 @@ public class MyViewModel extends ViewModel {
     private final MutableLiveData<Integer> countLiveData = new MutableLiveData<>(0);
     // 扫描时长
     private final MutableLiveData<Long> runTimeLiveData = new MutableLiveData<>(0L);
+
+    public MutableLiveData<Integer> getMode() {
+        return mode;
+    }
 
     public MutableLiveData<Integer> getCountLiveData() {
         return countLiveData;

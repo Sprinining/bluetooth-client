@@ -2,6 +2,8 @@ package com.example.uhf_bluetoothclient.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -53,6 +55,22 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
 
     @Override
     public void initObserver() {
+        viewModel.getMode().observe(requireActivity(), integer -> {
+            if (integer == 0) {
+                // static
+                binding.edtIpv4Netmask.setEnabled(true);
+                binding.edtIpv4Gateway.setEnabled(true);
+                binding.edtIpv4Dns1.setEnabled(true);
+                binding.edtIpv4Dns2.setEnabled(true);
+            } else if (integer == 1) {
+                // dhcp
+                binding.edtIpv4Netmask.setEnabled(false);
+                binding.edtIpv4Gateway.setEnabled(false);
+                binding.edtIpv4Dns1.setEnabled(false);
+                binding.edtIpv4Dns2.setEnabled(false);
+            }
+        });
+
         viewModel.getScanFlag().observe(requireActivity(), aBoolean -> {
             if (aBoolean) {
                 binding.btnReadConfig.setEnabled(false);
@@ -82,6 +100,18 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
 
     @Override
     public void initClick() {
+        binding.spinnerIpv4Mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.getMode().postValue(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         binding.btnTestPing.setOnClickListener(v -> {
             MessageUtils.getINSTANCE().testPing(binding.edtPingAddress.getText().toString());
         });
