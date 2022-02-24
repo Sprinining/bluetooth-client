@@ -85,19 +85,42 @@ public class MessageUtils {
             switch (requestMessage.getCode()) {
                 case Constants.SET_IPV4:
                     // 设置ipv4
+                    if (requestMessage.getRtCode() == 0) {
+                        showToast("ipv4设置成功");
+                    } else {
+                        showToast("ipv4设置失败: " + requestMessage.getRtMsg());
+                    }
+                    break;
                 case Constants.SET_IPV6:
                     // 设置ipv6
+                    if (requestMessage.getRtCode() == 0) {
+                        showToast("ipv6设置成功");
+                    } else {
+                        showToast("ipv6设置失败: " + requestMessage.getRtMsg());
+                    }
+                    break;
                 case Constants.MSG_BASE_SET_POWER:
                     // 设置功率
+                    if (requestMessage.getRtCode() == 0) {
+                        showToast("功率设置成功");
+                    } else {
+                        showToast("功率设置失败: " + requestMessage.getRtMsg());
+                    }
+                    break;
                 case Constants.MSG_BASE_SET_FREQUENCY_HOP_TABLE:
                     // 设置调频表
+                    if (requestMessage.getRtCode() == 0) {
+                        showToast("频点设置成功");
+                    } else {
+                        showToast("频点设置失败: " + requestMessage.getRtMsg());
+                    }
+                    break;
                 case Constants.MSG_BASE_SET_FREQ_RANGE:
                     // 设置频段
                     if (requestMessage.getRtCode() == 0) {
-                        showExecuteResult(Constants.SET_SUCCESS);
+                        showToast("频段设置成功");
                     } else {
-                        showExecuteResult(Constants.SET_FAIL);
-                        showToast(Constants.SET_FAIL + ": " + requestMessage.getRtMsg());
+                        showToast("频段设置失败: " + requestMessage.getRtMsg());
                     }
                     break;
                 case Constants.TEST_PING:
@@ -105,7 +128,7 @@ public class MessageUtils {
                     if (requestMessage.getRtCode() == 0) {
                         showToast("ping成功");
                     } else {
-                        showToast(requestMessage.getRtMsg());
+                        showToast("ping失败：" + requestMessage.getRtMsg());
                     }
                     break;
                 case Constants.MSG_APP_GET_READER_INFO:
@@ -116,7 +139,6 @@ public class MessageUtils {
                         viewModel.getVersion().postValue((String) map.get("systemVersions"));
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
-                        showExecuteResult(Constants.GET_FAIL);
                         showToast("获取设备信息失败: " + requestMessage.getRtMsg());
                     }
                     break;
@@ -137,7 +159,6 @@ public class MessageUtils {
                         }
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
-                        showExecuteResult(Constants.GET_FAIL);
                         showToast("获取频段失败: " + requestMessage.getRtMsg());
                     }
                     break;
@@ -157,7 +178,6 @@ public class MessageUtils {
                         viewModel.getFrequencyMaxIndex().postValue(maxIndex);
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
-                        showExecuteResult(Constants.GET_FAIL);
                         showToast("获取跳频表失败: " + requestMessage.getRtMsg());
                     }
                     break;
@@ -174,7 +194,6 @@ public class MessageUtils {
                         viewModel.getPowerIndex().postValue(index);
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
-                        showExecuteResult(Constants.GET_FAIL);
                         showToast("获取功率失败: " + requestMessage.getRtMsg());
                     }
                     break;
@@ -226,6 +245,7 @@ public class MessageUtils {
                     // 获取ip
                     if (requestMessage.getRtCode() == 0) {
                         Log.e(TAG, "handlerMessage: " + GsonUtils.toJson(requestMessage.getData()));
+                        // TODO: 2022/2/24  java.lang.String cannot be cast to java.util.Map
                         Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
                         NetworkStateBean bean = new NetworkStateBean(
                                 (String) map.get("networkType"),
@@ -417,10 +437,14 @@ public class MessageUtils {
      * @param ipAddress
      */
     public void testPing(String ipAddress) {
-        Message<String> message = new Message<>();
-        message.setCode(Constants.TEST_PING);
-        message.setData(ipAddress);
-        sendMessage(message);
+        if ((!CalibrationUtils.isIPv4Address(ipAddress) && !CalibrationUtils.isIPv6Address(ipAddress)) || "".equals(ipAddress)) {
+            showToast("ip地址格式错误");
+        } else {
+            Message<String> message = new Message<>();
+            message.setCode(Constants.TEST_PING);
+            message.setData(ipAddress);
+            sendMessage(message);
+        }
     }
 
     /**
@@ -462,6 +486,8 @@ public class MessageUtils {
     }
 
     public void showToast(String str) {
+        showExecuteResult(str);
+
         if (handler != null) {
             android.os.Message message = new android.os.Message();
             message.what = 1;
