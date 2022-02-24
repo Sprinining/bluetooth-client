@@ -123,11 +123,13 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline14"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_200"
                 android:text="@string/btn_scan_title"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_clear"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -139,6 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkBox_antenna1"
+                android:checked="true"
                 app:layout_constraintBottom_toTopOf="@+id/checkBox_antenna5"
                 app:layout_constraintEnd_toStartOf="@+id/checkBox_antenna2"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -150,6 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkBox_antenna2"
+                android:checked="true"
                 app:layout_constraintBottom_toBottomOf="@+id/checkBox_antenna1"
                 app:layout_constraintEnd_toStartOf="@+id/checkBox_antenna3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -161,6 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkBox_antenna3"
+                android:checked="true"
                 app:layout_constraintBottom_toBottomOf="@+id/checkBox_antenna2"
                 app:layout_constraintEnd_toStartOf="@+id/checkBox_antenna4"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -172,6 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkBox_antenna4"
+                android:checked="true"
                 app:layout_constraintBottom_toBottomOf="@+id/checkBox_antenna3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -233,11 +239,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_200"
                 android:text="@string/btn_clear"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_scan"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
