@@ -1,6 +1,5 @@
 package com.example.uhf_bluetoothclient.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 import com.example.uhf_bluetoothclient.BR;
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
-import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 
@@ -159,15 +157,9 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
             );
         });
 
-        binding.btnSetIpv6.setOnClickListener(v -> {
-            MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString());
-        });
+        binding.btnSetIpv6.setOnClickListener(v -> MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString()));
 
-        binding.btnExit.setOnClickListener(v -> {
-            BleClient.getINSTANCE().destroy();
-            Intent intent = new Intent(requireActivity(), ScanDeviceActivity.class);
-            startActivity(intent);
-        });
+        binding.btnExit.setOnClickListener(v -> MessageUtils.getINSTANCE().showExitDialog());
     }
 
     @Override

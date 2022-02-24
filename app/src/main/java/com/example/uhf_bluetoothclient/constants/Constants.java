@@ -36,6 +36,7 @@ public interface Constants {
     int MESSAGE_WHAT_BLE_DISCONNECT = 2;
     int MESSAGE_WHAT_BLE_RECONNECT_SUCCESS = 3;
     int MESSAGE_WHAT_BLE_RECONNECT_FAIL = 4;
+    int MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING = 5;
 
     // 建行的
     int MSG_APP_HEARTBEAT = 1000;// 心跳包标识

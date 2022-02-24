@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +41,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
     protected T binding;
     protected V viewModel;
     private boolean mIsExit;
-    private AlertDialog alertDialog;
+    private AlertDialog disconnect_alertDialog;
+    private AlertDialog exit_alterDialog;
     public final Handler baseActivityHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -52,7 +54,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
                 case Constants.MESSAGE_WHAT_BLE_DISCONNECT:
                     BleClient.getINSTANCE().enableBluetooth();
                     // 断开连接
-                    showDialog();
+                    showDisconnectDialog();
                     break;
                 case Constants.MESSAGE_WHAT_BLE_RECONNECT_SUCCESS:
                     // 重连成功
@@ -61,6 +63,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
                 case Constants.MESSAGE_WHAT_BLE_RECONNECT_FAIL:
                     // 重连失败
                     setDialogMessage("重连失败，请再次尝试");
+                case Constants.MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING:
+                    // 退出至设备搜索
+                    showExitDialog();
                 default:
             }
         }
@@ -119,22 +124,33 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
     // Dialog
     private void initDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
-        alertDialog = builder.setIcon(R.drawable.bluetooth_disconnect)
+        disconnect_alertDialog = builder.setIcon(R.drawable.bluetooth_disconnect)
                 .setTitle("连接中断")
                 .setMessage("与设备的蓝牙连接已断开")
-                .setPositiveButton("退出应用", dialogOnclickListener)
-                .setNeutralButton("重新连接", dialogOnclickListener)
+                .setPositiveButton("退出应用", disconnect_dialogOnclickListener)
+                .setNeutralButton("重新连接", disconnect_dialogOnclickListener)
+                .create();
+
+        exit_alterDialog = builder.setIcon(R.drawable.exit)
+                .setTitle("返回设备搜索")
+                .setMessage("是否重启设备")
+                .setPositiveButton("是", exit_dialogOnclickListener)
+                .setNeutralButton("否", exit_dialogOnclickListener)
                 .create();
     }
 
-    public void showDialog() {
-        alertDialog.show();
+    public void showExitDialog() {
+        exit_alterDialog.show();
+    }
+
+    public void showDisconnectDialog() {
+        disconnect_alertDialog.show();
     }
 
     public void dismissDialog() {
         try {
-            if (alertDialog != null) {
-                alertDialog.dismiss();
+            if (disconnect_alertDialog != null) {
+                disconnect_alertDialog.dismiss();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,22 +159,22 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
 
     public void setDialogMessage(String message) {
         try {
-            if (alertDialog != null) {
-                alertDialog.setMessage(message);
+            if (disconnect_alertDialog != null) {
+                disconnect_alertDialog.setMessage(message);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private final DialogInterface.OnClickListener dialogOnclickListener = (dialog, which) -> {
+    private final DialogInterface.OnClickListener disconnect_dialogOnclickListener = (dialog, which) -> {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
                 exitAPP();
                 break;
             case DialogInterface.BUTTON_NEUTRAL:
                 BleClient.getINSTANCE().reconnect();
-                alertDialog.setMessage("重连中...");
+                disconnect_alertDialog.setMessage("重连中...");
                 // 不退出dialog
                 try {
                     Field field = dialog.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
@@ -167,6 +183,21 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            default:
+        }
+    };
+
+    private final DialogInterface.OnClickListener exit_dialogOnclickListener = (dialog, which) -> {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                // 重启R102S设备
+                MessageUtils.getINSTANCE().rebootDevice();
+            case DialogInterface.BUTTON_NEUTRAL:
+                // 断开蓝牙并返回设备搜索界面
+                BleClient.getINSTANCE().destroy();
+                Intent intent = new Intent(this, ScanDeviceActivity.class);
+                startActivity(intent);
                 break;
             default:
         }

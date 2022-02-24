@@ -11,6 +11,7 @@ import com.example.uhf_bluetoothclient.constants.Constants;
 import com.example.uhf_bluetoothclient.entity.LogBaseEpcInfo;
 import com.example.uhf_bluetoothclient.entity.Message;
 import com.example.uhf_bluetoothclient.entity.MsgAppGetReaderInfo;
+import com.example.uhf_bluetoothclient.entity.MsgAppReset;
 import com.example.uhf_bluetoothclient.entity.MsgBaseGetFreqRange;
 import com.example.uhf_bluetoothclient.entity.MsgBaseGetPower;
 import com.example.uhf_bluetoothclient.entity.MsgBaseInventoryEpc;
@@ -323,6 +324,11 @@ public class MessageUtils {
         }
     }
 
+    public void rebootDevice(){
+        Message<MsgAppReset> message = new Message<>();
+        message.setCode(Constants.MSG_APP_RESET);
+        sendMessage(message);
+    }
 
     /**
      * 1012
@@ -352,7 +358,6 @@ public class MessageUtils {
         // {"code":1013,"rtCode":-1,"rtMsg":""}
         Message<MsgBaseGetPower> message = new Message<>();
         message.setCode(Constants.MSG_BASE_GET_POWER);
-
         sendMessage(message);
     }
 
@@ -519,10 +524,18 @@ public class MessageUtils {
 
         if (handler != null) {
             android.os.Message message = new android.os.Message();
-            message.what = 1;
+            message.what = Constants.MESSAGE_WHAT_SHOW_TOAST;
             Bundle bundle = new Bundle();
             bundle.putString("toast", str);
             message.setData(bundle);
+            handler.sendMessage(message);
+        }
+    }
+
+    public void showExitDialog(){
+        if (handler != null) {
+            android.os.Message message = new android.os.Message();
+            message.what = Constants.MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING;
             handler.sendMessage(message);
         }
     }
