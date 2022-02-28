@@ -65,24 +65,28 @@
             app:layout_constraintStart_toEndOf="@+id/tv_device_name_title"
             app:layout_constraintTop_toTopOf="@+id/tv_device_name_title" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_connect_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_200"
             android:onClick="@{()->vmm.connectDeviceClick()}"
             android:text="@string/btn_connect_device"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_scan_device"
             app:layout_constraintTop_toTopOf="@+id/guideline23" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_scan_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_200"
             android:onClick="@{()->vmm.scanDeviceClick()}"
             android:text="@string/btn_scan_device"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/btn_connect_device"
             app:layout_constraintEnd_toStartOf="@+id/btn_connect_device"
             app:layout_constraintHorizontal_bias="0.5"
