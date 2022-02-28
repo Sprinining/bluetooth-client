@@ -36,6 +36,7 @@ public interface Constants {
     int MESSAGE_WHAT_BLE_DISCONNECT = 2;
     int MESSAGE_WHAT_BLE_RECONNECT_SUCCESS = 3;
     int MESSAGE_WHAT_BLE_RECONNECT_FAIL = 4;
+    int MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING = 5;
 
     // 建行的
     int MSG_APP_HEARTBEAT = 1000;// 心跳包标识
@@ -67,7 +68,7 @@ public interface Constants {
     int RFID_APP_DOWNLOAD_APP = 1026;// 读写器下载app
     int MSG_BASE_GET_FREQUENCY_HOP_TABLE = 1027;// 获取跳频表
     int MSG_BASE_SET_FREQUENCY_HOP_TABLE = 1028;// 设置跳频表
-    int GET_IP = 1029;  // 获取ip，如果是静态ipv4就返回，否则返回ipv6
+    int GET_IP = 1029;  // 获取ip
     int SET_IPV4 = 1030;// 设置ipv4
     int SET_IPV6 = 1031;// 设置ipv6
     int TEST_PING = 1034;   // ping测试

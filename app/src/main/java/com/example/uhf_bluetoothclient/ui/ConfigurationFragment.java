@@ -1,18 +1,16 @@
 package com.example.uhf_bluetoothclient.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.uhf_bluetoothclient.BR;
 import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
-import com.example.uhf_bluetoothclient.util.BleClient;
-import com.example.uhf_bluetoothclient.util.CalibrationUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
-import com.seuic.util.common.NetworkUtils;
 
 public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBinding, MyViewModel> {
     private String[] frequencyBandArray, frequencyMinArray, frequencyMaxArray, powerArray, ipModeArray;
@@ -55,6 +53,22 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
 
     @Override
     public void initObserver() {
+        viewModel.getMode().observe(requireActivity(), integer -> {
+            if (integer == 0) {
+                // static
+                binding.edtIpv4Netmask.setEnabled(true);
+                binding.edtIpv4Gateway.setEnabled(true);
+                binding.edtIpv4Dns1.setEnabled(true);
+                binding.edtIpv4Dns2.setEnabled(true);
+            } else if (integer == 1) {
+                // dhcp
+                binding.edtIpv4Netmask.setEnabled(false);
+                binding.edtIpv4Gateway.setEnabled(false);
+                binding.edtIpv4Dns1.setEnabled(false);
+                binding.edtIpv4Dns2.setEnabled(false);
+            }
+        });
+
         viewModel.getScanFlag().observe(requireActivity(), aBoolean -> {
             if (aBoolean) {
                 binding.btnReadConfig.setEnabled(false);
@@ -84,6 +98,18 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
 
     @Override
     public void initClick() {
+        binding.spinnerIpv4Mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.getMode().postValue(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         binding.btnTestPing.setOnClickListener(v -> {
             MessageUtils.getINSTANCE().testPing(binding.edtPingAddress.getText().toString());
         });
@@ -110,8 +136,19 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
         });
 
         binding.btnSetIpv4.setOnClickListener(v -> {
+
+            String mode = "STATIC";
+            switch (binding.spinnerIpv4Mode.getSelectedItemPosition()) {
+                case 0:
+                    mode = "STATIC";
+                    break;
+                case 1:
+                    mode = "DHCP";
+                    break;
+            }
+
             MessageUtils.getINSTANCE().setIPv4(
-                    ipModeArray[binding.spinnerIpv4Mode.getSelectedItemPosition()],
+                    mode,
                     binding.edtIpv4Address.getText().toString(),
                     binding.edtIpv4Netmask.getText().toString(),
                     binding.edtIpv4Gateway.getText().toString(),
@@ -120,15 +157,9 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
             );
         });
 
-        binding.btnSetIpv6.setOnClickListener(v -> {
-            MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString());
-        });
+        binding.btnSetIpv6.setOnClickListener(v -> MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString()));
 
-        binding.btnExit.setOnClickListener(v -> {
-            BleClient.getINSTANCE().destroy();
-            Intent intent = new Intent(requireActivity(), ScanDeviceActivity.class);
-            startActivity(intent);
-        });
+        binding.btnExit.setOnClickListener(v -> MessageUtils.getINSTANCE().showExitDialog());
     }
 
     @Override
