@@ -8,8 +8,11 @@ import com.example.uhf_bluetoothclient.databinding.ActivityDataExportBinding
 import com.example.uhf_bluetoothclient.entity.CityBean
 import com.example.uhf_bluetoothclient.entity.ExportBean
 import com.example.uhf_bluetoothclient.entity.ProvinceBean
+import com.example.uhf_bluetoothclient.http.ErrorInfo
+import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
 import com.lxj.xpopup.XPopup
+import com.seuic.util.common.PhoneUtils
 import com.seuic.util.common.SPUtils
 import com.seuic.util.common.ext.*
 import kotlinx.coroutines.launch
@@ -189,19 +192,33 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 powerSupplyMode = binding.exportPowerTypeTv.text?.trim().toString(),
                 function = binding.exportUseForEt.text?.trim().toString(),
                 remark = binding.exportOtherEt.text?.trim().toString(),
-            ).run {
+            ).also { bean ->
+                //保存记录
+                viewModel.lastIP.postValue(binding.exportIpEt.text?.trim().toString())
+                viewModel.lastPort.postValue(binding.exportPortEt.text?.trim().toString())
+                val exportBranches =
+                    SPUtils.getInstance().getString("exportBranches", null)
+                        .toTypeClassList<String>()
+                        ?.toMutableList() ?: mutableListOf()
+                exportBranches.add(0, bean.branches)
+                SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
+
                 lifecycleScope.launch {
-                    RxHttp.postJson("/server/information/save").addAll(
-                        JSONObject().put(
-                            "jsonString",
-                            this.toJsonStr()
-                        ).toString()
-                    ).toResponse<Any>().awaitResult {
+                    RxHttp.postJson("https://${viewModel.lastIP.value}:${viewModel.lastPort.value}/server/information/save")
+                        .addAll(
+                            JSONObject().put(
+                                "jsonString",
+                                this.toJsonStr()
+                            ).toString()
+                        ).toResponse<Any>().awaitResult {
                         toastShort { "上传成功" }
                     }.onFailure {
-
+                        ErrorInfo(it)
+                        //保存到数据库
+                        exportInfoDao.insertItem(bean)
                     }
                 }
+
             }
 
         }

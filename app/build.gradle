@@ -113,6 +113,7 @@ dependencies {
     kapt  "com.android.databinding:compiler:4.2.1"
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation 'com.github.liujingxing.rxhttp:rxhttp:2.8.1'
     // ksp/kapt/annotationProcessor 选其一
     kapt 'com.github.liujingxing.rxhttp:rxhttp-compiler:2.8.1'
@@ -120,5 +121,5 @@ dependencies {
 
     implementation "androidx.room:room-runtime:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
-
+    implementation 'androidx.startup:startup-runtime:1.1.0'
 }

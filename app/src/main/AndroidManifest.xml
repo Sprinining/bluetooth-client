@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.uhf_bluetoothclient">
     <!--    android:sharedUserId="android.uid.system"-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
@@ -15,6 +16,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UHF_BluetoothClient.NoActionBar">
@@ -33,6 +35,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="${applicationId}.initializer.BaseInitializer"
+                android:value="androidx.startup" />
+            <!--			<meta-data-->
+            <!--				android:name="androidx.work.WorkManagerInitializer"-->
+            <!--				android:value="androidx.startup"-->
+            <!--				tools:node="remove" />-->
+        </provider>
     </application>
 
 </manifest>

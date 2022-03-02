@@ -13,6 +13,24 @@ import com.seuic.util.common.SPUtils
  * @Version:        1.0
  */
 class DataExportModel : ViewModel() {
+    //IP历史记录
+    val lastIP: MutableLiveData<String> =
+        object : MutableLiveData<String>(SPUtils.getInstance().getString("lastIP", "")) {
+            override fun postValue(value: String?) {
+                super.postValue(value)
+                SPUtils.getInstance().put("lastIP", value)
+            }
+        }
+
+    //PORT历史记录
+    val lastPort: MutableLiveData<String> =
+        object : MutableLiveData<String>(SPUtils.getInstance().getString("lastPort", "")) {
+            override fun postValue(value: String?) {
+                super.postValue(value)
+                SPUtils.getInstance().put("lastPort", value)
+            }
+        }
+
     //省历史记录
     val lastProvince: MutableLiveData<String> =
         object : MutableLiveData<String>(SPUtils.getInstance().getString("lastProvince", "")) {
