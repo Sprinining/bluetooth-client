@@ -33,11 +33,7 @@ open class ResponseParser<T> : TypeParser<T> {
             t = responseData as? T
         }
         if (t == null) { //说明数据不正确，抛出异常
-            throw ParseException(response.code.toString(), responseData.message, response)
-        }
-
-        if (!responseData.success) {
-            throw CommonException(responseData.message)
+            throw ParseException(response.code.toString(), responseData.msg, response)
         }
         return t //获取data字段
     }
