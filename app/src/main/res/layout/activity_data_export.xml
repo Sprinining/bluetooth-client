@@ -25,12 +25,13 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/toolbar_back"
+                android:layout_toLeftOf="@id/toolbar_more_tv"
                 android:gravity="center"
+                android:text="数据导出"
                 android:textColor="@color/color_33"
-                android:textSize="17dp"
-                tools:text="Title" />
+                android:textSize="17dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/toolbar_back"
@@ -50,14 +51,15 @@
                 android:layout_centerVertical="true"
                 android:backgroundTint="@color/teal_200"
                 android:minWidth="24dp"
-                android:text="提交"
+                android:text="未提交记录"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -481,7 +483,7 @@
                             style="@style/config_export_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="天线数量" />
+                            android:text="天线" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/export_ant_tv"
@@ -503,7 +505,7 @@
                             style="@style/config_export_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="供电方式" />
+                            android:text="供电" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/export_power_type_tv"
@@ -570,5 +572,12 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_200"
+            android:text="提交"
+            android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

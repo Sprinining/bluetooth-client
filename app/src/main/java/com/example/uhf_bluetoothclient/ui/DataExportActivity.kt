@@ -12,6 +12,7 @@ import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
 import com.lxj.xpopup.XPopup
+import com.seuic.util.common.ActivityUtils
 import com.seuic.util.common.PhoneUtils
 import com.seuic.util.common.SPUtils
 import com.seuic.util.common.ext.*
@@ -38,41 +39,59 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
     }
     private var selectProvinceBean: ProvinceBean? = null
 
-    override fun initView() {
-        binding.exportProvinceEt.setDrawableRightClickListener {
-            XPopup.Builder(this).atView(binding.exportProvinceEt).asCustom(object :
-                MyAttachListPopupView<ProvinceBean>(this) {
-                override fun getDataString(data: ProvinceBean) = data.name
+    private val provincePopupView by lazy {
+        object :
+            MyAttachListPopupView<ProvinceBean>(this) {
+            override fun getDataString(data: ProvinceBean) = data.name
 
-                override fun getIcon(data: ProvinceBean) = null
-            }.setStringData(provinceJson?.toMutableList()).setOnSelectListener { _, data ->
-                selectProvinceBean = data
-                binding.exportVm!!.lastProvince.value = data.name
-            }).show()
+            override fun getIcon(data: ProvinceBean) = null
+        }.setStringData(provinceJson?.toMutableList()).setOnSelectListener { _, data ->
+            selectProvinceBean = data
+            binding.exportVm!!.lastProvince.value = data.name
+        }
+    }
+
+    private val cityPopupView by lazy {
+        object :
+            MyAttachListPopupView<CityBean>(this) {
+            override fun getDataString(data: CityBean) = data.name
+
+            override fun getIcon(data: CityBean) = null
+        }.setStringData(selectProvinceBean?.city?.toMutableList())
+            .setOnSelectListener { _, data ->
+                binding.exportVm!!.lastCity.value = data.name
+            }
+    }
+
+    override fun initView() {
+        binding.toolbarBack.singleClick {
+            finish()
+        }
+        binding.toolbarMoreTv.singleClick {
+            ActivityUtils.startActivity(NotExportActivity::class.java)
+        }
+        binding.exportProvinceEt.setDrawableRightClickListener {
+            XPopup.Builder(this).atView(binding.exportProvinceEt)
+                .asCustom(provincePopupView).show()
         }
         binding.exportCityEt.setDrawableRightClickListener {
-            XPopup.Builder(this).atView(binding.exportCityEt).asCustom(
-                object :
-                    MyAttachListPopupView<CityBean>(this) {
-                    override fun getDataString(data: CityBean) = data.name
-
-                    override fun getIcon(data: CityBean) = null
-                }.setStringData(selectProvinceBean?.city?.toMutableList())
-                    .setOnSelectListener { _, data ->
-                        binding.exportVm!!.lastCity.value = data.name
-                    }).show()
+            XPopup.Builder(this).atView(binding.exportCityEt).isDarkTheme(false).asCustom(
+                cityPopupView
+            ).show()
         }
         binding.exportBranchesEt.setDrawableRightClickListener {
             val exportBranches =
-                SPUtils.getInstance().getString("exportBranches", null).toTypeClassList<String>()
+                SPUtils.getInstance().getString("exportBranches", null)?.toTypeClassList<String>()
                     ?.toMutableList() ?: mutableListOf()
-            exportBranches.add("清除网点记录！")
+            exportBranches.add("清除网点记录")
             XPopup.Builder(this).atView(binding.exportBranchesEt)
                 .asAttachList(exportBranches.toTypedArray(), null) { pos, text ->
-                    if (exportBranches.size > 1 && pos == exportBranches.size - 1) {
-                        XPopup.Builder(this).asConfirm("提示", "请确认是否清除网点记录！", "取消", "清除", {
-                            SPUtils.getInstance().remove("exportBranches")
-                        }, null, false).show()
+                    if (pos == exportBranches.size - 1) {
+                        if (exportBranches.size > 1) {
+                            XPopup.Builder(this).asConfirm("提示", "请确认是否清除网点记录！", "取消", "清除", {
+                                SPUtils.getInstance().remove("exportBranches")
+                            }, null, false).show()
+                        }
                         return@asAttachList
                     }
                     binding.exportBranchesEt.setText(text)
@@ -114,7 +133,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 }.show()
         }
 
-        binding.toolbarMoreTv.singleClick {
+        binding.submitBtn.singleClick {
             if (binding.exportProvinceEt.length() <= 0) {
                 toastShort { "请输入省！" }
                 return@singleClick
@@ -198,7 +217,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 viewModel.lastPort.postValue(binding.exportPortEt.text?.trim().toString())
                 val exportBranches =
                     SPUtils.getInstance().getString("exportBranches", null)
-                        .toTypeClassList<String>()
+                        ?.toTypeClassList<String>()
                         ?.toMutableList() ?: mutableListOf()
                 exportBranches.add(0, bean.branches)
                 SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
@@ -211,12 +230,12 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                                 this.toJsonStr()
                             ).toString()
                         ).toResponse<Any>().awaitResult {
-                        toastShort { "上传成功" }
-                    }.onFailure {
-                        ErrorInfo(it)
-                        //保存到数据库
-                        exportInfoDao.insertItem(bean)
-                    }
+                            toastShort { "上传成功" }
+                        }.onFailure {
+                            ErrorInfo(it)
+                            //保存到数据库
+                            exportInfoDao.insertItem(bean)
+                        }
                 }
 
             }
