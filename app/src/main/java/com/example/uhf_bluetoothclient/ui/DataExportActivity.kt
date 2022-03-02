@@ -1,18 +1,22 @@
 package com.example.uhf_bluetoothclient.ui
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.example.uhf_bluetoothclient.BR
 import com.example.uhf_bluetoothclient.R
 import com.example.uhf_bluetoothclient.databinding.ActivityDataExportBinding
 import com.example.uhf_bluetoothclient.entity.CityBean
+import com.example.uhf_bluetoothclient.entity.ExportBean
 import com.example.uhf_bluetoothclient.entity.ProvinceBean
 import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
 import com.lxj.xpopup.XPopup
 import com.seuic.util.common.SPUtils
-import com.seuic.util.common.ext.getString
-import com.seuic.util.common.ext.singleClick
-import com.seuic.util.common.ext.toTypeClassList
-import com.seuic.util.common.ext.toastShort
+import com.seuic.util.common.ext.*
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import rxhttp.RxHttp
+import rxhttp.awaitResult
+import rxhttp.toResponse
 
 /**
  *
@@ -108,56 +112,97 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
         }
 
         binding.toolbarMoreTv.singleClick {
-            if (binding.exportProvinceEt.length()<=0){
+            if (binding.exportProvinceEt.length() <= 0) {
                 toastShort { "请输入省！" }
                 return@singleClick
             }
-            if (binding.exportCityEt.length()<=0){
+            if (binding.exportCityEt.length() <= 0) {
                 toastShort { "请输入城市！" }
                 return@singleClick
             }
-            if (binding.exportBranchesEt.length()<=0){
+            if (binding.exportBranchesEt.length() <= 0) {
                 toastShort { "请输入网点！" }
                 return@singleClick
             }
-            if (binding.exportLocationEt.length()<=0){
+            if (binding.exportLocationEt.length() <= 0) {
                 toastShort { "请输入安装位置！" }
                 return@singleClick
             }
-            if (binding.exportAddressEt.length()<=0){
+            if (binding.exportAddressEt.length() <= 0) {
                 toastShort { "请输入详细信息！" }
                 return@singleClick
             }
-            if (binding.exportSnEt.length()<=0){
+            if (binding.exportSnEt.length() <= 0) {
                 toastShort { "请输入设备SN！" }
                 return@singleClick
             }
-            if (binding.exportIpv4Et.length()<=0){
+            if (binding.exportIpv4Et.length() <= 0) {
                 toastShort { "请输入IPV4！" }
                 return@singleClick
             }
-            if (binding.exportIpv4InfoEt.length()<=0){
+            if (binding.exportIpv4InfoEt.length() <= 0) {
                 toastShort { "请输入IPV4网端信息！" }
                 return@singleClick
             }
-            if (binding.exportIpv6Et.length()<=0){
+            if (binding.exportIpv6Et.length() <= 0) {
                 toastShort { "请输入IPV6！" }
                 return@singleClick
             }
-            if (binding.exportImeiEt.length()<=0){
+            if (binding.exportImeiEt.length() <= 0) {
                 toastShort { "请输入IMEI！" }
                 return@singleClick
             }
-            if (binding.exportRj45macEt.length()<=0){
+            if (binding.exportRj45macEt.length() <= 0) {
                 toastShort { "请输入RJ45MAC地址！" }
                 return@singleClick
             }
-            if (binding.exportIpv4InfoEt.length()<=0){
-                toastShort { "请输入IPV4网端信息！" }
+            if (binding.exportBluetoothmacEt.length() <= 0) {
+                toastShort { "请输入蓝牙MAC地址！" }
                 return@singleClick
             }
-            // FIXME: 以上校验完成。。。。。。
+            if (binding.exportAntTv.length() <= 0) {
+                toastShort { "请输入天线数量！" }
+                return@singleClick
+            }
+            if (binding.exportPowerTypeTv.length() <= 0) {
+                toastShort { "请输入供电方式！" }
+                return@singleClick
+            }
+            if (binding.exportUseForEt.length() <= 0) {
+                toastShort { "请输入功能！" }
+                return@singleClick
+            }
+            ExportBean(
+                province = binding.exportProvinceEt.text?.trim().toString(),
+                city = binding.exportCityEt.text?.trim().toString(),
+                branches = binding.exportBranchesEt.text?.trim().toString(),
+                location = binding.exportLocationEt.text?.trim().toString(),
+                address = binding.exportAddressEt.text?.trim().toString(),
+                snNum = binding.exportSnEt.text?.trim().toString(),
+                ipv4 = binding.exportIpv4Et.text?.trim().toString(),
+                netServerSide = binding.exportIpv4InfoEt.text?.trim().toString(),
+                ipv6 = binding.exportIpv6Et.text?.trim().toString(),
+                imei = binding.exportImeiEt.text?.trim().toString(),
+                rj54mac = binding.exportRj45macEt.text?.trim().toString(),
+                blueToothMac = binding.exportBluetoothmacEt.text?.trim().toString(),
+                antennaNumber = binding.exportAntTv.text?.trim().toString(),
+                powerSupplyMode = binding.exportPowerTypeTv.text?.trim().toString(),
+                function = binding.exportUseForEt.text?.trim().toString(),
+                remark = binding.exportOtherEt.text?.trim().toString(),
+            ).run {
+                lifecycleScope.launch {
+                    RxHttp.postJson("/server/information/save").addAll(
+                        JSONObject().put(
+                            "jsonString",
+                            this.toJsonStr()
+                        ).toString()
+                    ).toResponse<Any>().awaitResult {
+                        toastShort { "上传成功" }
+                    }.onFailure {
 
+                    }
+                }
+            }
 
         }
     }

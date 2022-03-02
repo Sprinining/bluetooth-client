@@ -22,11 +22,15 @@ android {
         dataBinding {
             enabled true
         }
-        kapt {
-            generateStubs = true
+
+    }
+    kapt {
+        generateStubs = true
+        arguments {
+//            arg("rxhttp_rxjava", "3.1.1")
+            arg("rxhttp_package", "rxhttp")
         }
     }
-
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${appName}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
@@ -107,5 +111,14 @@ dependencies {
 
     implementation "com.seuic.util:commonlib:1.0.8"
     kapt  "com.android.databinding:compiler:4.2.1"
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.github.liujingxing.rxhttp:rxhttp:2.8.1'
+    // ksp/kapt/annotationProcessor 选其一
+    kapt 'com.github.liujingxing.rxhttp:rxhttp-compiler:2.8.1'
+
+
+    implementation "androidx.room:room-runtime:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
 
 }
