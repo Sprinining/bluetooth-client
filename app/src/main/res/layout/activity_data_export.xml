@@ -26,8 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/toolbar_back"
                 android:layout_toLeftOf="@id/toolbar_more_tv"
+                android:layout_toRightOf="@id/toolbar_back"
                 android:gravity="center"
                 android:text="数据导出"
                 android:textColor="@color/color_33"
@@ -140,48 +140,47 @@
                     android:layout_marginHorizontal="12dp"
                     android:gravity="center">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
+                    <TextView
+                        style="@style/config_export_title"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:text="省" />
 
-                        <TextView
-                            style="@style/config_export_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="省" />
-
-                        <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
-                            android:id="@+id/export_province_et"
-                            style="@style/config_export_et"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_arrow_sort_down"
-                            android:drawablePadding="5dp"
-                            android:text="@{export_vm.lastProvince}" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
+                    <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
+                        android:id="@+id/export_province_et"
+                        style="@style/config_export_et"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1">
+                        android:drawableRight="@drawable/ic_arrow_sort_down"
+                        android:drawablePadding="5dp"
+                        android:text="@{export_vm.lastProvince}" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <TextView
-                            style="@style/config_export_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="城市" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_99" />
 
-                        <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
-                            android:id="@+id/export_city_et"
-                            style="@style/config_export_et"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_arrow_sort_down"
-                            android:drawablePadding="5dp"
-                            android:text="@{export_vm.lastCity}" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/config_export_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="城市" />
+
+                    <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
+                        android:id="@+id/export_city_et"
+                        style="@style/config_export_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_sort_down"
+                        android:drawablePadding="5dp"
+                        android:text="@{export_vm.lastCity}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <View

@@ -11,7 +11,11 @@ import com.example.uhf_bluetoothclient.entity.ProvinceBean
 import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.DecodeHintType
+import com.google.zxing.MultiFormatReader
 import com.lxj.xpopup.XPopup
+import com.seuic.scancode.DecodeFormatManager
 import com.seuic.util.common.ActivityUtils
 import com.seuic.util.common.PhoneUtils
 import com.seuic.util.common.SPUtils
@@ -21,6 +25,7 @@ import org.json.JSONObject
 import rxhttp.RxHttp
 import rxhttp.awaitResult
 import rxhttp.toResponse
+import java.util.*
 
 /**
  *
@@ -57,10 +62,9 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             override fun getDataString(data: CityBean) = data.name
 
             override fun getIcon(data: CityBean) = null
-        }.setStringData(selectProvinceBean?.city?.toMutableList())
-            .setOnSelectListener { _, data ->
-                binding.exportVm!!.lastCity.value = data.name
-            }
+        }.setOnSelectListener { _, data ->
+            binding.exportVm!!.lastCity.value = data.name
+        }
     }
 
     override fun initView() {
@@ -75,9 +79,12 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 .asCustom(provincePopupView).show()
         }
         binding.exportCityEt.setDrawableRightClickListener {
-            XPopup.Builder(this).atView(binding.exportCityEt).isDarkTheme(false).asCustom(
-                cityPopupView
-            ).show()
+            if (selectProvinceBean != null)
+                XPopup.Builder(this).atView(binding.exportCityEt).asCustom(
+                    cityPopupView.apply {
+                        setStringData(selectProvinceBean?.city?.toMutableList())
+                    }
+                ).show()
         }
         binding.exportBranchesEt.setDrawableRightClickListener {
             val exportBranches =
@@ -134,6 +141,15 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
         }
 
         binding.submitBtn.singleClick {
+            if (binding.exportIpEt.length() <= 0) {
+                toastShort { "请输入IP！" }
+                return@singleClick
+            }
+            if (binding.exportPortEt.length() <= 0) {
+                toastShort { "请输入端口！" }
+                return@singleClick
+            }
+
             if (binding.exportProvinceEt.length() <= 0) {
                 toastShort { "请输入省！" }
                 return@singleClick
@@ -242,6 +258,29 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
         }
     }
+
+    val reader: MultiFormatReader by lazy {
+        val formatReader = MultiFormatReader()
+        val hints = Hashtable<DecodeHintType, Any>()
+        val decodeFormats = Vector<BarcodeFormat>()
+
+        //添加一维码解码格式
+        decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS)
+        //添加二维码解码格式
+        decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS)
+        decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS)
+
+        hints[DecodeHintType.POSSIBLE_FORMATS] = decodeFormats
+        //设置解码的字符类型
+        hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
+        //这边是焦点回调，就是找到那个条码的所在位置，这里我不处理
+//        hints[DecodeHintType.NEED_RESULT_POINT_CALLBACK] = mPointCallBack
+        hints[DecodeHintType.PURE_BARCODE] = true
+        hints[DecodeHintType.TRY_HARDER] = true
+        formatReader.setHints(hints)
+        formatReader
+    }
+
 
     override fun initOthers() {
     }

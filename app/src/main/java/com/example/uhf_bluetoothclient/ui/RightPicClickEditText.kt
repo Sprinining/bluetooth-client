@@ -43,7 +43,6 @@ class RightPicClickEditText : AppCompatEditText {
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        touchGestureDetector.onTouchEvent(event)
-        return true
+        return if (touchGestureDetector.onTouchEvent(event)) true else super.onTouchEvent(event)
     }
 }
