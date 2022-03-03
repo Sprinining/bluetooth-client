@@ -239,15 +239,18 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
 
                 lifecycleScope.launch {
+                    showLoading("")
                     RxHttp.postJson("https://${viewModel.lastIP.value}:${viewModel.lastPort.value}/server/information/save")
                         .addAll(
                             JSONObject().put(
                                 "jsonString",
-                                this.toJsonStr()
+                                bean.toJsonStr()
                             ).toString()
                         ).toResponse<Any>().awaitResult {
                             toastShort { "上传成功" }
+                            hideLoading()
                         }.onFailure {
+                            hideLoading()
                             ErrorInfo(it)
                             //保存到数据库
                             exportInfoDao.insertItem(bean)

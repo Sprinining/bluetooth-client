@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.aitsuki.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:autoClose="true"
+    app:designer="@string/classic_designer"
+    app:preview="right">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_green_bg">
+
+        <TextView
+            android:id="@+id/rootnode_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="模板标题模板标题" />
+
+        <View
+            android:id="@+id/line_v"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_33"
+            app:layout_constraintTop_toBottomOf="@id/rootnode_title_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/delete_tv"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/color_33"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</com.aitsuki.swipe.SwipeLayout>
