@@ -41,7 +41,7 @@ public class MyViewModel extends ViewModel {
     // dns2
     private final MutableLiveData<String> dns2 = new MutableLiveData<String>("");
     // mac
-    private final MutableLiveData<String> mac = new MutableLiveData<String>("");
+    private final MutableLiveData<String> mac_net = new MutableLiveData<String>("");
     // 是否在扫描中
     private final MutableLiveData<Boolean> scanFlag = new MutableLiveData<>(false);
     // 标签列表
@@ -91,8 +91,8 @@ public class MyViewModel extends ViewModel {
         return dns2;
     }
 
-    public MutableLiveData<String> getMac() {
-        return mac;
+    public MutableLiveData<String> getMac_net() {
+        return mac_net;
     }
 
     public MutableLiveData<Long> getRunTimeLiveData() {

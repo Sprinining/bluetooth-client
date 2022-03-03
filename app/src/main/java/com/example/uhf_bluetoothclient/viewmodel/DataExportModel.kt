@@ -48,4 +48,25 @@ class DataExportModel : ViewModel() {
                 SPUtils.getInstance().put("lastCity", value)
             }
         }
+
+    // sn
+    val sn = MutableLiveData("")
+
+    // ipv4
+    val ipv4 = MutableLiveData("")
+
+    // 网端
+    val network_side = MutableLiveData("")
+
+    // ipv6
+    val ipv6 = MutableLiveData("")
+
+    // IMEI
+    val imei = MutableLiveData("")
+
+    // 网络mac
+    val mac_net = MutableLiveData("")
+
+    // 蓝牙mac
+    val mac_ble = MutableLiveData("")
 }
