@@ -77,7 +77,7 @@ class NotExportActivity : AppCompatActivity() {
                 val port = SPUtils.getInstance().getString("lastPort", "")
                 exportInfoDao.getAll().forEach { bean ->
                     showLoading("")
-                    RxHttp.postJson("https://${ip}:${port}/server/information/save")
+                    RxHttp.postJson("http://${ip}:${port}/server/information/save")
                         .addAll(
                             JSONObject().put(
                                 "jsonString",

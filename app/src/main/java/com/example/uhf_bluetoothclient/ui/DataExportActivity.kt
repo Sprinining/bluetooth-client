@@ -266,8 +266,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 device = binding.exportDeviceTypeEt.text?.trim().toString(),
             ).also { bean ->
                 //保存记录
-                viewModel.lastIP.postValue(binding.exportIpEt.text?.trim().toString())
-                viewModel.lastPort.postValue(binding.exportPortEt.text?.trim().toString())
+                val ip = binding.exportIpEt.text?.trim().toString()
+                val port = binding.exportPortEt.text?.trim().toString()
+                viewModel.lastIP.postValue(ip)
+                viewModel.lastPort.postValue(port)
                 val exportBranches =
                     SPUtils.getInstance().getString("exportBranches", null)
                         ?.toTypeClassList<String>()
@@ -277,7 +279,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
                 lifecycleScope.launch {
                     showLoading("")
-                    RxHttp.postJson("https://${viewModel.lastIP.value}:${viewModel.lastPort.value}/server/information/save")
+                    RxHttp.postJson("http://${ip}:${port}/server/information/save")
                         .addAll(
                             JSONObject().put(
                                 "jsonString",
