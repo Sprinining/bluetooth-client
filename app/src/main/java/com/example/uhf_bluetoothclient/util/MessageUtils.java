@@ -22,6 +22,7 @@ import com.example.uhf_bluetoothclient.entity.MsgBaseStop;
 import com.example.uhf_bluetoothclient.entity.MsgFrequencyHopTable;
 import com.example.uhf_bluetoothclient.entity.MsgSetIPv4;
 import com.example.uhf_bluetoothclient.entity.NetworkStateBean;
+import com.example.uhf_bluetoothclient.viewmodel.DataExportModel;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -45,7 +46,9 @@ public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
     private final Gson gson;
     private final BleClient bleClient;
-    private MyViewModel viewModel;
+    private MyViewModel myViewModel;
+
+    private DataExportModel dataExportModel;
     private Context context;
     private Handler handler;
 
@@ -136,9 +139,14 @@ public class MessageUtils {
                     // 获取设备信息，包括SN和version
                     if (requestMessage.getRtCode() == 0) {
                         Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
-                        viewModel.getSn().postValue((String) map.get("readerSerialNumber"));
-                        viewModel.getVersion().postValue((String) map.get("systemVersions"));
-                        showExecuteResult(Constants.GET_SUCCESS);
+                        if (myViewModel != null) {
+                            myViewModel.getSn().postValue((String) map.get("readerSerialNumber"));
+                            myViewModel.getVersion().postValue((String) map.get("systemVersions"));
+                            showExecuteResult(Constants.GET_SUCCESS);
+                        }
+                        if (dataExportModel != null) {
+                            dataExportModel.getSn().postValue((String) map.get("readerSerialNumber"));
+                        }
                     } else {
                         showToast("获取设备信息失败: " + requestMessage.getRtMsg());
                     }
@@ -146,7 +154,7 @@ public class MessageUtils {
                 case Constants.MSG_BASE_GET_FREQ_RANGE:
                     // 获取频段
                     if (requestMessage.getRtCode() == 0) {
-                        viewModel.getExecuteResult().postValue(Constants.GET_SUCCESS);
+                        myViewModel.getExecuteResult().postValue(Constants.GET_SUCCESS);
 
                         Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
                         String freqRangeIndex = (String) map.get("freqRangeIndex");
@@ -154,7 +162,7 @@ public class MessageUtils {
 
                         for (int i = 0; i < frequencyBandArray.length; i++) {
                             if (frequencyBandArray[i].equals(freqRangeIndex)) {
-                                viewModel.getFrequencyBandIndex().postValue(i);
+                                myViewModel.getFrequencyBandIndex().postValue(i);
                                 break;
                             }
                         }
@@ -175,8 +183,8 @@ public class MessageUtils {
                         if (d_max != null) maxIndex = d_max.intValue();
                         if (minIndex < 0 || minIndex >= 50) minIndex = 0;
                         if (maxIndex < 0 || maxIndex >= 50) maxIndex = 49;
-                        viewModel.getFrequencyMinIndex().postValue(minIndex);
-                        viewModel.getFrequencyMaxIndex().postValue(maxIndex);
+                        myViewModel.getFrequencyMinIndex().postValue(minIndex);
+                        myViewModel.getFrequencyMaxIndex().postValue(maxIndex);
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
                         showToast("获取跳频表失败: " + requestMessage.getRtMsg());
@@ -185,14 +193,14 @@ public class MessageUtils {
                 case Constants.MSG_BASE_GET_POWER:
                     // 获取功率
                     if (requestMessage.getRtCode() == 0) {
-                        viewModel.getExecuteResult().postValue(Constants.GET_SUCCESS);
+                        myViewModel.getExecuteResult().postValue(Constants.GET_SUCCESS);
                         Map<String, Object> map = (Map<String, Object>) requestMessage.getData();
                         Map<String, Double> map1 = (Map<String, Double>) map.get("dicPower");
                         Double d = map1.get("1");
                         int index = d.intValue();
                         if (index < 0) index = 0;
                         if (index > 33) index = 33;
-                        viewModel.getPowerIndex().postValue(index);
+                        myViewModel.getPowerIndex().postValue(index);
                         showExecuteResult(Constants.GET_SUCCESS);
                     } else {
                         showToast("获取功率失败: " + requestMessage.getRtMsg());
@@ -223,7 +231,7 @@ public class MessageUtils {
                                 value.add(tagInfo);
                             }
                         }
-                        viewModel.updateTagList(value);
+                        myViewModel.updateTagList(value);
                     }
                     break;
                 case Constants.MSG_BASE_READ_EPC:
@@ -284,35 +292,82 @@ public class MessageUtils {
                                 break;
                             default:
                         }
-                        viewModel.getNetworkType().postValue(netWorkType);
 
-                        if (bean.IP != null && !bean.IP.isEmpty()) {
-                            bean.IP.forEach(s -> {
-                                if (RegexUtils.isIP(s)) {
-                                    viewModel.getIpv4().postValue(s);
-                                } else {
-                                    viewModel.getIpv6().postValue(s);
-                                }
-                            });
-                        } else {
-                            viewModel.getIpv4().postValue("");
-                            viewModel.getIpv6().postValue("");
-                        }
-                        viewModel.getNetMask().postValue(bean.NETMASK);
-                        viewModel.getGateWay().postValue(bean.GATEWAY);
-                        if (bean.DNS != null && !bean.DNS.isEmpty()) {
-                            switch (bean.DNS.size()) {
-                                case 2:
-                                    viewModel.getDns2().postValue(bean.DNS.get(1));
-                                case 1:
-                                    viewModel.getDns1().postValue(bean.DNS.get(0));
+                        if (myViewModel != null) {
+                            myViewModel.getNetworkType().postValue(netWorkType);
+
+                            if (bean.IP != null && !bean.IP.isEmpty()) {
+                                bean.IP.forEach(s -> {
+                                    if (RegexUtils.isIP(s)) {
+                                        myViewModel.getIpv4().postValue(s);
+                                    } else {
+                                        myViewModel.getIpv6().postValue(s);
+                                    }
+                                });
+                            } else {
+                                myViewModel.getIpv4().postValue("");
+                                myViewModel.getIpv6().postValue("");
                             }
-                        } else {
-                            viewModel.getDns1().postValue("");
-                            viewModel.getDns2().postValue("");
+                            myViewModel.getNetMask().postValue(bean.NETMASK);
+                            myViewModel.getGateWay().postValue(bean.GATEWAY);
+                            if (bean.DNS != null && !bean.DNS.isEmpty()) {
+                                switch (bean.DNS.size()) {
+                                    case 2:
+                                        myViewModel.getDns2().postValue(bean.DNS.get(1));
+                                    case 1:
+                                        myViewModel.getDns1().postValue(bean.DNS.get(0));
+                                }
+                            } else {
+                                myViewModel.getDns1().postValue("");
+                                myViewModel.getDns2().postValue("");
+                            }
+                            myViewModel.getMac_net().postValue(bean.MAC);
+                            showExecuteResult(Constants.GET_SUCCESS);
                         }
-                        viewModel.getMac().postValue(bean.MAC);
-                        showExecuteResult(Constants.GET_SUCCESS);
+
+                        // 导出的数据
+                        if (dataExportModel != null) {
+                            if (bean.IP != null && !bean.IP.isEmpty()) {
+                                bean.IP.forEach(s -> {
+                                    if (RegexUtils.isIP(s)) {
+                                        dataExportModel.getIpv4().postValue(s);
+                                    } else {
+                                        dataExportModel.getIpv6().postValue(s);
+                                    }
+                                });
+                            } else {
+                                dataExportModel.getIpv4().postValue("");
+                                dataExportModel.getIpv6().postValue("");
+                            }
+                            dataExportModel.getMac_net().postValue(bean.MAC);
+                            StringBuilder network_side = new StringBuilder();
+                            network_side.append("子网掩码:")
+                                    .append(bean.NETMASK)
+                                    .append(", ")
+                                    .append("默认网关:")
+                                    .append(bean.GATEWAY);
+
+                            if (bean.DNS != null && !bean.DNS.isEmpty()) {
+                                switch (bean.DNS.size()) {
+                                    case 2:
+                                        network_side.append("DNS:")
+                                                .append(bean.DNS.get(0))
+                                                .append(", ")
+                                                .append("备用DNS:")
+                                                .append(bean.DNS.get(1));
+                                        break;
+                                    case 1:
+                                        network_side.append("DNS:")
+                                                .append(bean.DNS.get(0))
+                                                .append(", ")
+                                                .append("备用DNS:");
+                                        break;
+                                }
+                            } else {
+                                network_side.append("DNS:, 备用DNS:");
+                            }
+                            dataExportModel.getNetwork_side().postValue(network_side.toString());
+                        }
                     }
                     break;
                 default:
@@ -324,7 +379,7 @@ public class MessageUtils {
         }
     }
 
-    public void rebootDevice(){
+    public void rebootDevice() {
         Message<MsgAppReset> message = new Message<>();
         message.setCode(Constants.MSG_APP_RESET);
         sendMessage(message);
@@ -532,7 +587,7 @@ public class MessageUtils {
         }
     }
 
-    public void showExitDialog(){
+    public void showExitDialog() {
         if (handler != null) {
             android.os.Message message = new android.os.Message();
             message.what = Constants.MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING;
@@ -543,7 +598,7 @@ public class MessageUtils {
     public void showExecuteResult(String str) {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        viewModel.getExecuteResult().postValue(simpleDateFormat.format(date) + " " + str);
+        myViewModel.getExecuteResult().postValue(simpleDateFormat.format(date) + " " + str);
     }
 
     public MessageUtils setContext(Context context) {
@@ -551,9 +606,13 @@ public class MessageUtils {
         return this;
     }
 
-    public MessageUtils setViewModel(MyViewModel viewModel) {
-        this.viewModel = viewModel;
+    public MessageUtils setMyViewModel(MyViewModel myViewModel) {
+        this.myViewModel = myViewModel;
         return this;
+    }
+
+    public void setDataExportModel(DataExportModel dataExportModel) {
+        this.dataExportModel = dataExportModel;
     }
 
     /**

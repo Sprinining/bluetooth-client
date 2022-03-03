@@ -33,8 +33,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MyViewModel>
 
     @Override
     public void initOthers() {
-        MessageUtils.getINSTANCE()
-                .setViewModel(viewModel);
+        MessageUtils.getINSTANCE().setMyViewModel(viewModel);
     }
 
     @Override

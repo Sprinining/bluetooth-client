@@ -38,6 +38,7 @@ public class ScanDeviceViewModel extends ViewModel {
         return connectState;
     }
 
+    // 扫描蓝牙设备
     public void scanDeviceClick() {
         if (listMutableLiveData.getValue() != null) {
             List<BluetoothDevice> list = listMutableLiveData.getValue();
@@ -47,9 +48,21 @@ public class ScanDeviceViewModel extends ViewModel {
         bleClient.scan();
     }
 
+    // 连接设备
     public void connectDeviceClick() {
+        BleClient.connect_flag = true;
+        connectDevice();
+    }
+
+    // 获取设备的信息
+    public void getInfo() {
+        BleClient.connect_flag = false;
+        connectDevice();
+    }
+
+    private void connectDevice() {
         if (listMutableLiveData.getValue() != null) {
-            if (currentSelectedDeviceIndex < 0) {
+            if (currentSelectedDeviceIndex >= listMutableLiveData.getValue().size()) {
                 return;
             }
             BluetoothDevice device = listMutableLiveData.getValue().get(currentSelectedDeviceIndex);

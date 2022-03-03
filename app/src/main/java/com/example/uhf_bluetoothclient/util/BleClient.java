@@ -17,6 +17,7 @@ import com.example.bluetoothsdk.interfaces.PairingResultListener;
 import com.example.bluetoothsdk.interfaces.ScanResultListener;
 import com.example.bluetoothsdk.interfaces.TransferListener;
 import com.example.uhf_bluetoothclient.constants.Constants;
+import com.example.uhf_bluetoothclient.ui.DataExportActivity;
 import com.example.uhf_bluetoothclient.ui.MainActivity;
 import com.example.uhf_bluetoothclient.viewmodel.ScanDeviceViewModel;
 
@@ -33,6 +34,7 @@ public class BleClient {
     private Context context;
     private Handler handler;
     private BluetoothDevice tempDevice;
+    public static boolean connect_flag = true;
 
     private BleClient() {
         bluetoothUtils = BluetoothUtils.getINSTANCE();
@@ -128,11 +130,20 @@ public class BleClient {
             connectedThread.setReadTransferListener(readTransferListener);
             // 写监听
             connectedThread.setWriteTransferListener(writeTransferListener);
-            // 跳转界面
-            if (context != null) {
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+            if (connect_flag) {
+                // 跳转界面
+                if (context != null) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            } else {
+                // 跳转刚才的界面
+                if (context != null) {
+                    Intent intent = new Intent(context, DataExportActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         }
 
