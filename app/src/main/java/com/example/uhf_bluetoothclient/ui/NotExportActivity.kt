@@ -1,6 +1,7 @@
 package com.example.uhf_bluetoothclient.ui
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +17,6 @@ import com.lxj.xpopup.XPopup
 import com.seuic.util.common.SPUtils
 import com.seuic.util.common.ext.singleClick
 import com.seuic.util.common.ext.toJsonStr
-import com.seuic.util.common.ext.toastShort
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import rxhttp.RxHttp
@@ -38,7 +38,9 @@ class NotExportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notexport)
-
+        findViewById<ImageView>(R.id.toolbar_back).singleClick {
+            finish()
+        }
         findViewById<RecyclerView>(R.id.not_export_rv).apply {
             layoutManager =
                 LinearLayoutManager(this@NotExportActivity, LinearLayoutManager.VERTICAL, false)
@@ -75,7 +77,7 @@ class NotExportActivity : AppCompatActivity() {
                 val port = SPUtils.getInstance().getString("lastPort", "")
                 exportInfoDao.getAll().forEach { bean ->
                     showLoading("")
-                    RxHttp.postJson("https://${ip}:${port}/server/information/save")
+                    RxHttp.postJson("http://${ip}:${port}/server/information/save")
                         .addAll(
                             JSONObject().put(
                                 "jsonString",

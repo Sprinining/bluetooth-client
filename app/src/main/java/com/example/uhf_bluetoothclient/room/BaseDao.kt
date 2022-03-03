@@ -1,4 +1,4 @@
-package com.seuic.industrial_node.room
+package com.example.uhf_bluetoothclient.room
 
 import androidx.room.*
 

@@ -276,13 +276,34 @@
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/scan_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/teal_200"
+                        android:text="扫码"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toStartOf="@id/update_btn"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/update_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/teal_200"
                         android:text="@string/btn_read_config_title"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toStartOf="@id/connect_btn"
+                        app:layout_constraintStart_toEndOf="@id/scan_btn"
+                        tools:ignore="MissingConstraints" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/connect_btn"
@@ -290,9 +311,11 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/teal_200"
                         android:text="@string/btn_connect"
-                        android:textColor="@color/white" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/update_btn"
+                        tools:ignore="MissingConstraints" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -313,6 +336,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_99" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/config_export_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备型号" />
+
+                    <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
+                        android:id="@+id/export_device_type_et"
+                        style="@style/config_export_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_arrow_sort_down"
+                        android:drawablePadding="5dp" />
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -566,9 +619,7 @@
                     android:hint="备注说明..."
                     android:minHeight="100dp"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/color_99" />
+                    android:paddingVertical="5dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>
 

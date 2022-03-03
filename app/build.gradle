@@ -75,6 +75,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -124,4 +130,10 @@ dependencies {
     implementation 'androidx.startup:startup-runtime:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.10"
     implementation "com.github.aitsuki:SwipeMenuRecyclerView:2.0.0"
+
+    implementation "androidx.camera:camera-core:1.0.1"
+    implementation "androidx.camera:camera-camera2:1.0.1"
+    implementation "androidx.camera:camera-lifecycle:1.0.1"
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha28"
+    implementation "androidx.camera:camera-view:1.0.0-alpha28"
 }
