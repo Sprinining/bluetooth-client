@@ -4,8 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/drawable/shape_dividers.xml" value="0.36614583333333334" />
-        <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_data_export.xml" value="0.2898550724637681" />
-        <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_home.xml" value="0.2898550724637681" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_main.xml" value="0.35208333333333336" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_scan_device.xml" value="0.25" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/device_found_cell.xml" value="0.165625" />
@@ -26,6 +24,8 @@
         <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/fragment_server_simulation.xml" value="0.24139492753623187" />
         <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/page_item.xml" value="0.67" />
         <entry key="..\:/SeuicCode/UHF_BluetoothClient/app/src/main/res/layout/taginfo_cell.xml" value="0.67" />
+        <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/drawable/ic_arrow_sort_down.xml" value="0.206" />
+        <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/drawable/ic_nav_btn_back_black.xml" value="0.199" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/drawable/shape_dividers.xml" value="0.23697916666666666" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/drawable/shape_et_bg.xml" value="0.206" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/drawable/shape_green_bg.xml" value="0.1445" />
@@ -35,6 +35,7 @@
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/activity_main.xml" value="0.22291666666666668" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/activity_notexport.xml" value="0.22291666666666668" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/activity_scan_device.xml" value="0.22291666666666668" />
+        <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/camera_window_layout.xml" value="0.22291666666666668" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/dataset_item.xml" value="0.22291666666666668" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/dataset_second_item.xml" value="0.22291666666666668" />
         <entry key="..\:/android_studio/workspace/UHF_BluetoothClient/app/src/main/res/layout/fragment_configuration.xml" value="0.264" />

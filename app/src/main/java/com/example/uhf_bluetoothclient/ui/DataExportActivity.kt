@@ -1,5 +1,6 @@
 package com.example.uhf_bluetoothclient.ui
 
+import android.graphics.Camera
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
@@ -13,20 +14,18 @@ import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.util.MessageUtils
 import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.DecodeHintType
-import com.google.zxing.MultiFormatReader
 import com.lxj.xpopup.XPopup
-import com.seuic.scancode.DecodeFormatManager
 import com.seuic.util.common.ActivityUtils
+import com.seuic.util.common.PermissionUtils
+import com.seuic.util.common.RegexUtils
 import com.seuic.util.common.SPUtils
+import com.seuic.util.common.constant.PermissionConstants
 import com.seuic.util.common.ext.*
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import rxhttp.RxHttp
 import rxhttp.awaitResult
 import rxhttp.toResponse
-import java.util.*
 
 /**
  *
@@ -65,6 +64,19 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             override fun getIcon(data: CityBean) = null
         }.setOnSelectListener { _, data ->
             binding.exportVm!!.lastCity.value = data.name
+        }
+    }
+
+    private val cameraXPopup: CameraPopupWindow by lazy {
+        CameraPopupWindow(this).also {
+            it.setBarcodeListener {
+                val sn = Regex("SN:(\\S+)").find(it)?.groupValues?.lastOrNull()
+                val imei = Regex("IMEI:(\\S+)").find(it)?.groupValues?.lastOrNull()
+                lifecycleScope.launch {
+                    binding.exportImeiEt?.setText(imei)
+                    binding.exportSnEt?.setText(sn)
+                }
+            }
         }
     }
 
@@ -114,7 +126,14 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                     binding.exportLocationEt.setText(text)
                 }.show()
         }
-
+        binding.scanBtn.singleClick {
+            PermissionUtils.permission(PermissionConstants.CAMERA)
+                .callback { b, _, _, _ ->
+                    if (b) {
+                        XPopup.Builder(this).asCustom(cameraXPopup).show()
+                    }
+                }.request()
+        }
         binding.connectBtn.singleClick {
             ActivityUtils.startActivity(ScanDeviceActivity::class.java)
         }
@@ -265,29 +284,6 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
         }
     }
 
-    val reader: MultiFormatReader by lazy {
-        val formatReader = MultiFormatReader()
-        val hints = Hashtable<DecodeHintType, Any>()
-        val decodeFormats = Vector<BarcodeFormat>()
-
-        //添加一维码解码格式
-        decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS)
-        //添加二维码解码格式
-        decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS)
-        decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS)
-
-        hints[DecodeHintType.POSSIBLE_FORMATS] = decodeFormats
-        //设置解码的字符类型
-        hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
-        //这边是焦点回调，就是找到那个条码的所在位置，这里我不处理
-//        hints[DecodeHintType.NEED_RESULT_POINT_CALLBACK] = mPointCallBack
-        hints[DecodeHintType.PURE_BARCODE] = true
-        hints[DecodeHintType.TRY_HARDER] = true
-        formatReader.setHints(hints)
-        formatReader
-    }
-
-
     override fun initOthers() {
         MessageUtils.getINSTANCE().setDataExportModel(viewModel)
     }
@@ -334,3 +330,11 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
     override fun initBR(): Int = BR.export_vm
 }
+
+//fun main(args: Array<String>) {
+//    val it="SN:UF3C21120001 IMEI:862337050026635"
+//    val sn = Regex("SN:(\\S+)").find(it)?.groupValues?.lastOrNull()
+//    val imei = RegexUtils.getReplaceAll(it, "IMEI:(\\S+)", "")
+//    println(sn.toJsonStr())
+//    println(imei)
+//}
