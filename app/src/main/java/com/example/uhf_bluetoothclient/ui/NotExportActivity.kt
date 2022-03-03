@@ -44,7 +44,7 @@ class NotExportActivity : AppCompatActivity() {
                                     list.firstOrNull { it.snNum == this.sn }?.also {
                                         list.remove(it)
                                         exportInfoDao.deleteItem(it)
-                                        adapter.remove(it)
+                                        adapter.removeAt(position)
                                     }
                                 }
                             }
