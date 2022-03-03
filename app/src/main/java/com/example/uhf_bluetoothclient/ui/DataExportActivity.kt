@@ -1,8 +1,6 @@
 package com.example.uhf_bluetoothclient.ui
 
-import android.graphics.Camera
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.example.uhf_bluetoothclient.BR
 import com.example.uhf_bluetoothclient.R
@@ -10,7 +8,6 @@ import com.example.uhf_bluetoothclient.databinding.ActivityDataExportBinding
 import com.example.uhf_bluetoothclient.entity.CityBean
 import com.example.uhf_bluetoothclient.entity.ExportBean
 import com.example.uhf_bluetoothclient.entity.ProvinceBean
-import com.example.uhf_bluetoothclient.entity.UploadBean
 import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.util.MessageUtils
@@ -18,12 +15,10 @@ import com.example.uhf_bluetoothclient.viewmodel.DataExportModel
 import com.lxj.xpopup.XPopup
 import com.seuic.util.common.ActivityUtils
 import com.seuic.util.common.PermissionUtils
-import com.seuic.util.common.RegexUtils
 import com.seuic.util.common.SPUtils
 import com.seuic.util.common.constant.PermissionConstants
 import com.seuic.util.common.ext.*
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import rxhttp.RxHttp
 import rxhttp.awaitResult
 import rxhttp.toResponse

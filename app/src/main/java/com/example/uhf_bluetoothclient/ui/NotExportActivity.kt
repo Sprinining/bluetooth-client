@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uhf_bluetoothclient.R
 import com.example.uhf_bluetoothclient.entity.RootNodeBean
-import com.example.uhf_bluetoothclient.entity.UploadBean
 import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.ui.adapter.NodeInfoAdapter
@@ -19,7 +18,6 @@ import com.seuic.util.common.SPUtils
 import com.seuic.util.common.ext.singleClick
 import com.seuic.util.common.ext.toJsonStr
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import rxhttp.RxHttp
 import rxhttp.awaitResult
 import rxhttp.toResponse
