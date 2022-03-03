@@ -22,7 +22,7 @@ fun ExportBean.toDatasetRootNodeBean(): RootNodeBean {
         SecondNodeBean("网点", branches),
         SecondNodeBean("安装位置", location),
         SecondNodeBean("详细地址", address),
-        SecondNodeBean("设备类型", address),
+        SecondNodeBean("设备类型", device),
         SecondNodeBean("IPV4", ipv4),
         SecondNodeBean("IPV4网端", netServerSide),
         SecondNodeBean("IPV6", ipv6),

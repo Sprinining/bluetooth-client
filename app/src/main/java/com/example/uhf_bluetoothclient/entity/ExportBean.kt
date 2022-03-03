@@ -34,6 +34,6 @@ data class ExportBean(
     @ColumnInfo var rj54mac: String = "",
     @PrimaryKey @ColumnInfo(name = "SN") var snNum: String = "",
     @Ignore var serialNumber: String = snNum,
-    @Ignore var device: String = "固定设备",
+    @ColumnInfo var device: String = "",
     @ColumnInfo var timestamp: Long = System.currentTimeMillis()
 )

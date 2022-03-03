@@ -149,6 +149,14 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                     binding.exportAntTv.setText(text)
                 }.show()
         }
+
+        val devideTypes = arrayOf("RS2201", "RS2201A", "RS2201B", "RS2201C")
+        binding.exportDeviceTypeEt.singleClick {
+            XPopup.Builder(this).atView(binding.exportDeviceTypeEt)
+                .asAttachList(devideTypes, null) { _, text ->
+                    binding.exportDeviceTypeEt.setText(text)
+                }.show()
+        }
         val powerTypes = arrayOf("电源", "POE")
         binding.exportPowerTypeTv.singleClick {
             XPopup.Builder(this).atView(binding.exportPowerTypeTv)
@@ -196,6 +204,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             }
             if (binding.exportSnEt.length() <= 0) {
                 toastShort { "请输入设备SN！" }
+                return@singleClick
+            }
+            if (binding.exportDeviceTypeEt.length() <= 0) {
+                toastShort { "请输入设备类型！" }
                 return@singleClick
             }
             if (binding.exportIpv4Et.length() <= 0) {
@@ -251,6 +263,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 powerSupplyMode = binding.exportPowerTypeTv.text?.trim().toString(),
                 function = binding.exportUseForEt.text?.trim().toString(),
                 remark = binding.exportOtherEt.text?.trim().toString(),
+                device = binding.exportDeviceTypeEt.text?.trim().toString(),
             ).also { bean ->
                 //保存记录
                 viewModel.lastIP.postValue(binding.exportIpEt.text?.trim().toString())
