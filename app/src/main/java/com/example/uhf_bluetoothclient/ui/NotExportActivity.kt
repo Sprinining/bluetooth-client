@@ -34,17 +34,18 @@ class NotExportActivity : AppCompatActivity() {
         }
 
         val list = exportInfoDao.getAll().toMutableList()
-        adapter.setOnItemChildClickListener { adapter, view, position ->
+        adapter.setOnItemChildClickListener { _, view, position ->
             when (view.id) {
                 R.id.delete_tv -> {
                     XPopup.Builder(this)
                         .asConfirm("", "确认是否删除?") {
-                            adapter.getItemOrNull(position)?.apply {
-                                if (this is RootNodeBean) {
-                                    list.firstOrNull { it.snNum == this.sn }?.also {
+                            adapter.getItemOrNull(position)?.also {item->
+                                if (item is RootNodeBean) {
+                                    list.firstOrNull { it.snNum == item.sn }?.also {
                                         list.remove(it)
                                         exportInfoDao.deleteItem(it)
-                                        adapter.removeAt(position)
+                                        adapter.data.remove(item)
+                                        adapter.notifyDataSetChanged()
                                     }
                                 }
                             }
