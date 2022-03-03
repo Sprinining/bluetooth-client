@@ -142,6 +142,8 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             // 没连上蓝牙的时候要手动输入
             MessageUtils.getINSTANCE().getReaderInfo()
             MessageUtils.getINSTANCE().getIP()
+            MessageUtils.getINSTANCE().getIMEI()
+            MessageUtils.getINSTANCE().getBluetoothMAC()
         }
         val ants = arrayOf("1", "2", "3", "4", "5", "6", "7", "8")
         binding.exportAntTv.singleClick {
@@ -304,38 +306,31 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
     private fun initObserve() {
         viewModel.sn.observe(this, { s: String ->
             binding.exportSnEt.setText(s)
-            Log.e("wmj", "sn: $s")
         })
 
         viewModel.ipv4.observe(this, { s: String ->
             binding.exportIpv4Et.setText(s)
-            Log.e("wmj", "ipv4: $s")
         })
 
 
         viewModel.network_side.observe(this, { s: String ->
             binding.exportIpv4InfoEt.setText(s)
-            Log.e("wmj", "network_side: $s")
         })
 
         viewModel.ipv6.observe(this, { s: String ->
             binding.exportIpv6Et.setText(s)
-            Log.e("wmj", "ipv6: $s")
         })
 
         viewModel.imei.observe(this, { s: String ->
             binding.exportImeiEt.setText(s)
-            Log.e("wmj", "imei: $s")
         })
 
         viewModel.mac_net.observe(this, { s: String ->
             binding.exportRj45macEt.setText(s)
-            Log.e("wmj", "mac_net: $s")
         })
 
         viewModel.mac_ble.observe(this, { s: String ->
             binding.exportBluetoothmacEt.setText(s)
-            Log.e("wmj", "mac_ble: $s")
         })
     }
 

@@ -72,6 +72,8 @@ public interface Constants {
     int SET_IPV4 = 1030;// 设置ipv4
     int SET_IPV6 = 1031;// 设置ipv6
     int TEST_PING = 1034;   // ping测试
+    int GET_IMEI = 1035;   // IMEI
+    int GET_MAC_BLE = 1036;   // 蓝牙MAC
     List<Integer> FREQUENCY_HOP_TABLE = new ArrayList<Integer>() {{
         add(902750);
         add(903250);
