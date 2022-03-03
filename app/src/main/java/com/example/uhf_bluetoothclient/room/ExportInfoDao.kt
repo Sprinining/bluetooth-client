@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.example.uhf_bluetoothclient.Constants
 import com.example.uhf_bluetoothclient.entity.ExportBean
-import com.seuic.industrial_node.room.BaseDao
 
 @Dao
 interface ExportInfoDao : BaseDao<ExportBean> {
