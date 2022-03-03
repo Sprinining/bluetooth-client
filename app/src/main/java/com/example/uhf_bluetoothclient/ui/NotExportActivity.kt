@@ -2,7 +2,14 @@ package com.example.uhf_bluetoothclient.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.uhf_bluetoothclient.R
+import com.example.uhf_bluetoothclient.entity.RootNodeBean
+import com.example.uhf_bluetoothclient.initializer.exportInfoDao
+import com.example.uhf_bluetoothclient.ui.adapter.NodeInfoAdapter
+import com.example.uhf_bluetoothclient.util.toDatasetRootNodeBean
+import com.lxj.xpopup.XPopup
 
 /**
  *
@@ -13,14 +20,43 @@ import com.example.uhf_bluetoothclient.R
  * @Version:        1.0
  */
 class NotExportActivity : AppCompatActivity() {
+    private val adapter: NodeInfoAdapter = NodeInfoAdapter()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notexport)
-//        findViewById<AppCompatButton>(R.id.device_test_btn).singleClick {
-//            ActivityUtils.startActivity(ScanDeviceActivity::class.java)
-//        }
-//        findViewById<AppCompatButton>(R.id.data_export_btn).singleClick {
-//            ActivityUtils.startActivity(DataExportActivity::class.java)
-//        }
+
+        findViewById<RecyclerView>(R.id.not_export_rv).apply {
+            layoutManager =
+                LinearLayoutManager(this@NotExportActivity, LinearLayoutManager.VERTICAL, false)
+            this.adapter = this@NotExportActivity.adapter
+        }
+
+        val list = exportInfoDao.getAll().toMutableList()
+        adapter.setOnItemChildClickListener { _, view, position ->
+            when (view.id) {
+                R.id.delete_tv -> {
+                    XPopup.Builder(this)
+                        .asConfirm("", "确认是否删除?") {
+                            adapter.getItemOrNull(position)?.also {item->
+                                if (item is RootNodeBean) {
+                                    list.firstOrNull { it.snNum == item.sn }?.also {
+                                        list.remove(it)
+                                        exportInfoDao.deleteItem(it)
+                                        adapter.data.remove(item)
+                                        adapter.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+                        }.show()
+                }
+            }
+        }
+
+        adapter.setNewInstance(list.map { it.toDatasetRootNodeBean() }
+            .toMutableList())
+
+
     }
 }

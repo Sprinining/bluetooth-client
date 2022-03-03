@@ -512,7 +512,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableRight="@drawable/ic_arrow_sort_down"
-                            android:drawablePadding="5dp" />
+                            android:drawablePadding="5dp"
+                            android:text="电源" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

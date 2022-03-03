@@ -29,6 +29,8 @@ import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.constants.Constants;
 import com.example.uhf_bluetoothclient.util.BleClient;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.impl.LoadingPopupView;
 import com.seuic.util.common.PermissionUtils;
 import com.seuic.util.common.constant.PermissionConstants;
 
@@ -70,6 +72,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
             }
         }
     };
+    private LoadingPopupView loadingView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
 
         initView();
         initOthers();
+        loadingView = new XPopup.Builder(this).asLoading();
     }
 
     public abstract void initView();
@@ -257,4 +261,15 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
             appTask.finishAndRemoveTask();
         }
     }
+
+    protected void showLoading(String message) {
+        loadingView.setTitle(message);
+        if (!loadingView.isShow())
+            loadingView.show();
+    }
+
+    protected void hideLoading() {
+        loadingView.dismiss();
+    }
+
 }
