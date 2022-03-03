@@ -10,6 +10,7 @@ import com.example.uhf_bluetoothclient.databinding.ActivityDataExportBinding
 import com.example.uhf_bluetoothclient.entity.CityBean
 import com.example.uhf_bluetoothclient.entity.ExportBean
 import com.example.uhf_bluetoothclient.entity.ProvinceBean
+import com.example.uhf_bluetoothclient.entity.UploadBean
 import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.util.MessageUtils
@@ -279,12 +280,9 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
                 lifecycleScope.launch {
                     showLoading("")
-                    RxHttp.postJson("http://${ip}:${port}/server/information/save")
-                        .addAll(
-                            JSONObject().put(
-                                "jsonString",
-                                bean.toJsonStr()
-                            ).toString()
+                    RxHttp.postForm("http://${ip}:${port}/server/information/save")
+                        .add(
+                            "jsonString", bean.toJsonStr()
                         ).toResponse<Any>().awaitResult {
                             toastShort { "上传成功" }
                             hideLoading()

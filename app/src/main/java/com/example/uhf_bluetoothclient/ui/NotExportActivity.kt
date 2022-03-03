@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uhf_bluetoothclient.R
 import com.example.uhf_bluetoothclient.entity.RootNodeBean
+import com.example.uhf_bluetoothclient.entity.UploadBean
 import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.ui.adapter.NodeInfoAdapter
@@ -77,12 +78,9 @@ class NotExportActivity : AppCompatActivity() {
                 val port = SPUtils.getInstance().getString("lastPort", "")
                 exportInfoDao.getAll().forEach { bean ->
                     showLoading("")
-                    RxHttp.postJson("http://${ip}:${port}/server/information/save")
-                        .addAll(
-                            JSONObject().put(
-                                "jsonString",
-                                bean.toJsonStr()
-                            ).toString()
+                    RxHttp.postForm("http://${ip}:${port}/server/information/save")
+                        .add(
+                            "jsonString", bean.toJsonStr()
                         ).toResponse<Any>().awaitResult {
                             exportInfoDao.deleteItem(bean)
                             list.remove(bean)
