@@ -1,15 +1,27 @@
 package com.example.uhf_bluetoothclient.ui
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uhf_bluetoothclient.R
 import com.example.uhf_bluetoothclient.entity.RootNodeBean
+import com.example.uhf_bluetoothclient.http.ErrorInfo
 import com.example.uhf_bluetoothclient.initializer.exportInfoDao
 import com.example.uhf_bluetoothclient.ui.adapter.NodeInfoAdapter
 import com.example.uhf_bluetoothclient.util.toDatasetRootNodeBean
 import com.lxj.xpopup.XPopup
+import com.seuic.util.common.SPUtils
+import com.seuic.util.common.ext.singleClick
+import com.seuic.util.common.ext.toJsonStr
+import com.seuic.util.common.ext.toastShort
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import rxhttp.RxHttp
+import rxhttp.awaitResult
+import rxhttp.toResponse
 
 /**
  *
@@ -39,7 +51,7 @@ class NotExportActivity : AppCompatActivity() {
                 R.id.delete_tv -> {
                     XPopup.Builder(this)
                         .asConfirm("", "确认是否删除?") {
-                            adapter.getItemOrNull(position)?.also {item->
+                            adapter.getItemOrNull(position)?.also { item ->
                                 if (item is RootNodeBean) {
                                     list.firstOrNull { it.snNum == item.sn }?.also {
                                         list.remove(it)
@@ -57,6 +69,49 @@ class NotExportActivity : AppCompatActivity() {
         adapter.setNewInstance(list.map { it.toDatasetRootNodeBean() }
             .toMutableList())
 
+        findViewById<TextView>(R.id.toolbar_more_tv)?.singleClick {
+            lifecycleScope.launch {
+                val ip = SPUtils.getInstance().getString("lastIP", "")
+                val port = SPUtils.getInstance().getString("lastPort", "")
+                exportInfoDao.getAll().forEach { bean ->
+                    showLoading("")
+                    RxHttp.postJson("https://${ip}:${port}/server/information/save")
+                        .addAll(
+                            JSONObject().put(
+                                "jsonString",
+                                bean.toJsonStr()
+                            ).toString()
+                        ).toResponse<Any>().awaitResult {
+                            exportInfoDao.deleteItem(bean)
+                            list.remove(bean)
+                            adapter.data.removeIf { it is RootNodeBean && it.sn == bean.snNum }
+                            adapter.notifyDataSetChanged()
+                            hideLoading()
+                        }.onFailure {
+                            ErrorInfo(it)
+                            hideLoading()
+                        }
+                }
 
+            }
+        }
+    }
+
+    private val loadingView by lazy {
+        XPopup.Builder(this).asLoading()
+    }
+
+    fun hideLoading() {
+        index--
+        if (index <= 0)
+            loadingView.dismiss()
+    }
+
+    var index = 0
+    fun showLoading(message: String) {
+        index++
+        loadingView.setTitle(message)
+        if (!loadingView.isShow)
+            loadingView.show()
     }
 }

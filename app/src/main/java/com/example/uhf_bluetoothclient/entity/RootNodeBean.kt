@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.entity.node.BaseExpandNode
 import com.chad.library.adapter.base.entity.node.BaseNode
 
 
- class RootNodeBean(
+data class RootNodeBean(
     val sn: String,
 ) : BaseExpandNode() {
     init {
