@@ -370,6 +370,16 @@ public class MessageUtils {
                         }
                     }
                     break;
+                case Constants.GET_IMEI:
+                    if (requestMessage.getRtCode() == 0 && dataExportModel != null) {
+                        dataExportModel.getImei().postValue((String) requestMessage.getData());
+                    }
+                    break;
+                case Constants.GET_MAC_BLE:
+                    if (requestMessage.getRtCode() == 0 && dataExportModel != null) {
+                        dataExportModel.getMac_ble().postValue((String) requestMessage.getData());
+                    }
+                    break;
                 default:
                     Log.e(TAG, "handlerMessage: " + Constants.CODE_ERROR);
             }
@@ -534,6 +544,24 @@ public class MessageUtils {
             message.setData(ipAddress);
             sendMessage(message);
         }
+    }
+
+    /**
+     * 1035
+     */
+    public void getIMEI() {
+        Message<String> message = new Message<>();
+        message.setCode(Constants.GET_IMEI);
+        sendMessage(message);
+    }
+
+    /**
+     * 1036
+     */
+    public void getBluetoothMAC() {
+        Message<String> message = new Message<>();
+        message.setCode(Constants.GET_MAC_BLE);
+        sendMessage(message);
     }
 
     /**
