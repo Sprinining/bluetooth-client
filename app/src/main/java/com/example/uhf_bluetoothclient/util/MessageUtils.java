@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MessageUtils {
     @SuppressLint("StaticFieldLeak")
@@ -51,6 +52,8 @@ public class MessageUtils {
     private DataExportModel dataExportModel;
     private Context context;
     private Handler handler;
+    public static AtomicInteger totalCount_receive = new AtomicInteger(0);
+    public static AtomicInteger tempThousand = new AtomicInteger(1);
 
     private MessageUtils() {
         gson = new Gson();
@@ -231,6 +234,7 @@ public class MessageUtils {
                                 value.add(tagInfo);
                             }
                         }
+                        checkTotalCount(value.size());
                         myViewModel.updateTagList(value);
                     }
                     break;
@@ -386,6 +390,15 @@ public class MessageUtils {
         } catch (Exception e) {
             Log.e(TAG, "handlerMessage: " + Constants.CMD_EXCEPTION, e);
             showToast(Constants.CMD_EXCEPTION + ": " + e);
+        }
+    }
+
+    private void checkTotalCount(int size) {
+        int currentCount = totalCount_receive.addAndGet(size);
+        // 每超过一千条打印一次
+        if (currentCount >= tempThousand.get() * 1000) {
+            Log.i(TAG, "当前标签总数: " + currentCount);
+            tempThousand.addAndGet(1);
         }
     }
 
@@ -579,6 +592,9 @@ public class MessageUtils {
         message.setData(msgBaseSetBaseband);
         sendMessage(message);
 
+        // 清空计数
+        totalCount_receive.set(0);
+        tempThousand.set(1);
         // 开始盘存 1018
         Message<MsgBaseInventoryEpc> message1 = new Message<>();
         message1.setCode(Constants.MSG_BASE_READ_EPC);
@@ -590,9 +606,11 @@ public class MessageUtils {
     }
 
     /**
+     * 1011
      * 停止寻卡
      */
     public void stopInventory() {
+        Log.i(TAG, "标签总数: " + totalCount_receive.get());
         Message<MsgBaseStop> message = new Message<>();
         message.setCode(Constants.MSG_BASE_STOP);
         sendMessage(message);
