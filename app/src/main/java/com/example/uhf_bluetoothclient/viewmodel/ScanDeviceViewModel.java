@@ -61,31 +61,33 @@ public class ScanDeviceViewModel extends ViewModel {
     }
 
     private void connectDevice() {
-        if (listMutableLiveData.getValue() != null) {
-            if (currentSelectedDeviceIndex >= listMutableLiveData.getValue().size()) {
-                return;
+        new Thread(() -> {
+            if (listMutableLiveData.getValue() != null) {
+                if (currentSelectedDeviceIndex >= listMutableLiveData.getValue().size()) {
+                    return;
+                }
+                BluetoothDevice device = listMutableLiveData.getValue().get(currentSelectedDeviceIndex);
+                if (bleClient.isPaired(device)) {
+                    bleClient.connect(device);
+                } else {
+                    bleClient.startPairing(device, new PairingResultListener() {
+                        @Override
+                        public void pairing(BluetoothDevice device) {
+
+                        }
+
+                        @Override
+                        public void paired(BluetoothDevice device) {
+                            bleClient.connect(device);
+                        }
+
+                        @Override
+                        public void pairFailed(BluetoothDevice device) {
+
+                        }
+                    });
+                }
             }
-            BluetoothDevice device = listMutableLiveData.getValue().get(currentSelectedDeviceIndex);
-            if (bleClient.isPaired(device)) {
-                bleClient.connect(device);
-            } else {
-                bleClient.startPairing(device, new PairingResultListener() {
-                    @Override
-                    public void pairing(BluetoothDevice device) {
-
-                    }
-
-                    @Override
-                    public void paired(BluetoothDevice device) {
-                        bleClient.connect(device);
-                    }
-
-                    @Override
-                    public void pairFailed(BluetoothDevice device) {
-
-                    }
-                });
-            }
-        }
+        }).start();
     }
 }
