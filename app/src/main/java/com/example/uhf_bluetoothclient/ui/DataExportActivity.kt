@@ -1,5 +1,6 @@
 package com.example.uhf_bluetoothclient.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.example.uhf_bluetoothclient.BR
@@ -131,7 +132,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 }.request()
         }
         binding.connectBtn.singleClick {
-            ActivityUtils.startActivity(ScanDeviceActivity::class.java)
+            // true显示连接设备，false显示仅连接
+            val intent = Intent(this, ScanDeviceActivity::class.java)
+            intent.putExtra("btn_flag", false)
+            startActivity(intent)
         }
         binding.updateBtn.singleClick {
             // 没连上蓝牙的时候要手动输入

@@ -23,11 +23,11 @@
             android:onClick="@{()->vmm.getInfo()}"
             android:text="@string/getInfo"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_connect_device"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_scan_device"
+            app:layout_constraintEnd_toStartOf="@+id/btn_connect_device"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_connect_device"
-            app:layout_constraintTop_toTopOf="@+id/btn_connect_device" />
+            app:layout_constraintStart_toEndOf="@+id/btn_scan_device"
+            app:layout_constraintTop_toTopOf="@+id/btn_scan_device" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline19"
@@ -87,11 +87,11 @@
             android:onClick="@{()->vmm.connectDeviceClick()}"
             android:text="@string/btn_connect_device"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_scan_device"
-            app:layout_constraintEnd_toStartOf="@+id/btn_get_info"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_get_info"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_scan_device"
-            app:layout_constraintTop_toTopOf="@+id/btn_scan_device" />
+            app:layout_constraintStart_toEndOf="@+id/btn_get_info"
+            app:layout_constraintTop_toTopOf="@+id/btn_get_info" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_scan_device"
@@ -102,7 +102,7 @@
             android:text="@string/btn_scan_device"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_connect_device"
+            app:layout_constraintEnd_toStartOf="@+id/btn_get_info"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline23" />
