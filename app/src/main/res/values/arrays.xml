@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_spinner_frequency_band">
-        <item>Chinese band2</item>
         <item>US band</item>
-        <item>Korean band</item>
-        <item>EU band</item>
         <item>Chinese band1</item>
+        <item>Chinese band2</item>
+        <item>EU band</item>
+        <item>Korean band</item>
     </string-array>
     <string-array name="array_spinner_frequency_min">
         <item>902.750MHz</item>
