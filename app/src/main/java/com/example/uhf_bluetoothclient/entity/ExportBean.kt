@@ -22,6 +22,7 @@ data class ExportBean(
     @ColumnInfo var blueToothMac: String = "",
     @ColumnInfo var branches: String = "",
     @ColumnInfo var city: String = "",
+    @ColumnInfo var cityId: Int = 0,
     @ColumnInfo var function: String = "",
     @ColumnInfo var imei: String = "",
     @ColumnInfo var ipv4: String = "",
