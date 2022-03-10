@@ -10,9 +10,11 @@ package com.example.uhf_bluetoothclient.entity
  */
 data class ProvinceBean(
     val city: List<CityBean>,
-    val name: String
+    val name: String,
+    val id:Int
 )
 
 data class CityBean(
-    val name: String
+    val name: String,
+    val id:Int
 )

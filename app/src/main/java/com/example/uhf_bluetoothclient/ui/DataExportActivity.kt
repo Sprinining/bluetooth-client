@@ -40,6 +40,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             }
     }
     private var selectProvinceBean: ProvinceBean? = null
+    private var selectCityBean: CityBean? = null
 
     private val provincePopupView by lazy {
         object :
@@ -49,7 +50,9 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             override fun getIcon(data: ProvinceBean) = null
         }.setStringData(provinceJson?.toMutableList()).setOnSelectListener { _, data ->
             selectProvinceBean = data
+            selectCityBean=null
             binding.exportVm!!.lastProvince.value = data.name
+            binding.exportVm!!.lastCity.value = ""
         }
     }
 
@@ -60,6 +63,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
             override fun getIcon(data: CityBean) = null
         }.setOnSelectListener { _, data ->
+            selectCityBean=data
             binding.exportVm!!.lastCity.value = data.name
         }
     }
@@ -184,11 +188,11 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 return@singleClick
             }
 
-            if (binding.exportProvinceEt.length() <= 0) {
+            if (binding.exportProvinceEt.length() <= 0||selectProvinceBean==null) {
                 toastShort { "请输入省！" }
                 return@singleClick
             }
-            if (binding.exportCityEt.length() <= 0) {
+            if (binding.exportCityEt.length() <= 0||selectCityBean==null) {
                 toastShort { "请输入城市！" }
                 return@singleClick
             }
@@ -266,6 +270,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 function = binding.exportUseForEt.text?.trim().toString(),
                 remark = binding.exportOtherEt.text?.trim().toString(),
                 device = binding.exportDeviceTypeEt.text?.trim().toString(),
+                provinceCode=(selectProvinceBean?.id?:0).let {
+                  if (it==0) selectCityBean?.id?:0 else it
+                },
+                cityCode = selectCityBean?.id?:0,
             ).also { bean ->
                 //保存记录
                 val ip = binding.exportIpEt.text?.trim().toString()
@@ -285,7 +293,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                         .add(
                             "jsonString", bean.toJsonStr()
                         ).toResponse<Any>().awaitResult {
-                            toastShort { "上传成功" }
+                            toastLong { "上传成功" }
                             hideLoading()
                         }.onFailure {
                             hideLoading()
@@ -336,6 +344,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
     override fun initLayout(savedInstanceState: Bundle?): Int = R.layout.activity_data_export
 
     override fun initBR(): Int = BR.export_vm
+
 }
 
 //fun main(args: Array<String>) {
