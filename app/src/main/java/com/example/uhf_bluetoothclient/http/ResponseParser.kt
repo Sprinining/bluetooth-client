@@ -35,6 +35,9 @@ open class ResponseParser<T> : TypeParser<T> {
         if (t == null) { //说明数据不正确，抛出异常
             throw ParseException(response.code.toString(), responseData.msg, response)
         }
+        if (responseData.code!=200) {
+            throw CommonException(responseData.msg)
+        }
         return t //获取data字段
     }
 }

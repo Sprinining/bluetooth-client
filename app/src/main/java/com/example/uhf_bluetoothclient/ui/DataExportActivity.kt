@@ -272,8 +272,8 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 device = binding.exportDeviceTypeEt.text?.trim().toString(),
                 provinceCode=(selectProvinceBean?.id?:0).let {
                   if (it==0) selectCityBean?.id?:0 else it
-                },
-                cityCode = selectCityBean?.id?:0,
+                }.toString(),
+                cityCode =(selectCityBean?.id?:0).toString(),
             ).also { bean ->
                 //保存记录
                 val ip = binding.exportIpEt.text?.trim().toString()
@@ -284,6 +284,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                     SPUtils.getInstance().getString("exportBranches", null)
                         ?.toTypeClassList<String>()
                         ?.toMutableList() ?: mutableListOf()
+                if (!exportBranches.contains(bean.branches))
                 exportBranches.add(0, bean.branches)
                 SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
 
