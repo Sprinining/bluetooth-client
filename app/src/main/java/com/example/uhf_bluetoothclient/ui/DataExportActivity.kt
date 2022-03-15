@@ -179,14 +179,14 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
         }
 
         binding.submitBtn.singleClick {
-            if (binding.exportIpEt.length() <= 0) {
-                toastShort { "请输入IP！" }
-                return@singleClick
-            }
-            if (binding.exportPortEt.length() <= 0) {
-                toastShort { "请输入端口！" }
-                return@singleClick
-            }
+//            if (binding.exportIpEt.length() <= 0) {
+//                toastShort { "请输入IP！" }
+//                return@singleClick
+//            }
+//            if (binding.exportPortEt.length() <= 0) {
+//                toastShort { "请输入端口！" }
+//                return@singleClick
+//            }
 
             if (binding.exportProvinceEt.length() <= 0||selectProvinceBean==null) {
                 toastShort { "请输入省！" }
@@ -276,10 +276,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 cityCode =(selectCityBean?.id?:0).toString(),
             ).also { bean ->
                 //保存记录
-                val ip = binding.exportIpEt.text?.trim().toString()
-                val port = binding.exportPortEt.text?.trim().toString()
-                viewModel.lastIP.postValue(ip)
-                viewModel.lastPort.postValue(port)
+//                val ip = binding.exportIpEt.text?.trim().toString()
+//                val port = binding.exportPortEt.text?.trim().toString()
+//                viewModel.lastIP.postValue(ip)
+//                viewModel.lastPort.postValue(port)
                 val exportBranches =
                     SPUtils.getInstance().getString("exportBranches", null)
                         ?.toTypeClassList<String>()
@@ -290,7 +290,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
                 lifecycleScope.launch {
                     showLoading("")
-                    RxHttp.postForm("http://${ip}:${port}/server/information/save")
+                    RxHttp.postForm("http://123.60.156.206:8040/server/information/save")
                         .add(
                             "jsonString", bean.toJsonStr()
                         ).toResponse<Any>().awaitResult {

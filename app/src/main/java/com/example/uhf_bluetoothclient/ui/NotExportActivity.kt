@@ -72,11 +72,9 @@ class NotExportActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.toolbar_more_tv)?.singleClick {
             lifecycleScope.launch {
-                val ip = SPUtils.getInstance().getString("lastIP", "")
-                val port = SPUtils.getInstance().getString("lastPort", "")
                 exportInfoDao.getAll().forEach { bean ->
                     showLoading("")
-                    RxHttp.postForm("http://${ip}:${port}/server/information/save")
+                    RxHttp.postForm("http://123.60.156.206:8040/server/information/save")
                         .add(
                             "jsonString", bean.toJsonStr()
                         ).toResponse<Any>().awaitResult {
