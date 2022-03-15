@@ -65,6 +65,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
                 case Constants.MESSAGE_WHAT_BLE_RECONNECT_FAIL:
                     // 重连失败
                     setDialogMessage("重连失败，请再次尝试");
+                    break;
                 case Constants.MESSAGE_WHAT_EXIT_TO_DEVICE_SEARCHING:
                     // 退出至设备搜索
                     showExitDialog();
