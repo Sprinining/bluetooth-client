@@ -85,11 +85,14 @@ class CameraPopupWindow(context: Context) : CenterPopupView(context) {
         hints[DecodeHintType.POSSIBLE_FORMATS] = decodeFormats
         //设置解码的字符类型
         hints[DecodeHintType.CHARACTER_SET] = "UTF-8"
+        hints[DecodeHintType.ASSUME_GS1] = true
+        hints[DecodeHintType.ALLOWED_LENGTHS] = 80
+
         //这边是焦点回调，就是找到那个条码的所在位置，这里我不处理
 //        hints[DecodeHintType.NEED_RESULT_POINT_CALLBACK] = mPointCallBack
-        hints[DecodeHintType.PURE_BARCODE] = true
-        hints[DecodeHintType.TRY_HARDER] = true
-        formatReader.setHints(hints)
+//        hints[DecodeHintType.PURE_BARCODE] = true
+//        hints[DecodeHintType.TRY_HARDER] = true
+//        formatReader.setHints(hints)
         formatReader
     }
 

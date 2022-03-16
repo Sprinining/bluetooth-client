@@ -77,9 +77,9 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                     if (sn == null && imei == null) {
                         if (it.contains(Regex("[:：]"))) {
                             if (it.startsWith("00")) {
-                                binding.exportRj45macEt?.setText(imei)
+                                binding.exportRj45macEt?.setText(it)
                             } else {
-                                binding.exportBluetoothmacEt?.setText(imei)
+                                binding.exportBluetoothmacEt?.setText(it)
                             }
                         } else {
                             binding.exportSnEt?.setText(it)
@@ -187,7 +187,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
         }
 
         val devideTypes = arrayOf("RS2201", "RS2201A", "RS2201B", "RS2201C")
-        binding.exportDeviceTypeEt.singleClick {
+        binding.exportDeviceTypeEt.setDrawableRightClickListener {
             XPopup.Builder(this).atView(binding.exportDeviceTypeEt)
                 .asAttachList(devideTypes, null) { _, text ->
                     binding.exportDeviceTypeEt.setText(text)
