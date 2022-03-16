@@ -334,7 +334,8 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
 
         viewModel.network_side.observe(this, { s: String ->
-            binding.exportIpv4InfoEt.setText(s)
+            if (s.isNotBlank())
+                binding.exportIpv4InfoEt.setText(s)
         })
 
         viewModel.ipv6.observe(this, { s: String ->
