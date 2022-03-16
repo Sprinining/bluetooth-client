@@ -6,6 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatEditText
 import com.seuic.core.utils.ext.appContext
+import com.seuic.util.common.KeyboardUtils
 
 
 class RightPicClickEditText : AppCompatEditText {
@@ -34,7 +35,8 @@ class RightPicClickEditText : AppCompatEditText {
             if (drawableRight != null && e.getRawX() >= right - drawableRight.bounds.width()) {
                 drawableListener?.invoke()
             } else {
-                requestFocus()
+                requestFocusFromTouch()
+                KeyboardUtils.showSoftInput(this@RightPicClickEditText)
             }
             return true
         }

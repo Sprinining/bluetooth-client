@@ -324,7 +324,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                         ?.toMutableList() ?: mutableListOf()
                 if (!exportAddress.contains(bean.address))
                     exportAddress.add(0, bean.address)
-                SPUtils.getInstance().put("exportBranches", exportAddress.toJsonStr())
+                SPUtils.getInstance().put("exportAddress", exportAddress.toJsonStr())
 
                 lifecycleScope.launch {
                     showLoading("")
