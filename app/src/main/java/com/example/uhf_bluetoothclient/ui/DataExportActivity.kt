@@ -139,6 +139,24 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                     binding.exportLocationEt.setText(text)
                 }.show()
         }
+        binding.exportAddressEt.setDrawableRightClickListener {
+            val exportAddress =
+                SPUtils.getInstance().getString("exportAddress", null)?.toTypeClassList<String>()
+                    ?.toMutableList() ?: mutableListOf()
+            exportAddress.add("清除地址记录")
+            XPopup.Builder(this).atView(binding.exportAddressEt)
+                .asAttachList(exportAddress.toTypedArray(), null) { pos, text ->
+                    if (pos == exportAddress.size - 1) {
+                        if (exportAddress.size > 1) {
+                            XPopup.Builder(this).asConfirm("提示", "请确认是否清除地址记录！", "取消", "清除", {
+                                SPUtils.getInstance().remove("exportAddress")
+                            }, null, false).show()
+                        }
+                        return@asAttachList
+                    }
+                    binding.exportAddressEt.setText(text)
+                }.show()
+        }
         binding.scanBtn.singleClick {
             PermissionUtils.permission(PermissionConstants.CAMERA)
                 .callback { b, _, _, _ ->
@@ -236,22 +254,22 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 toastShort { "请输入IPV4网端信息！" }
                 return@singleClick
             }
-            if (binding.exportIpv6Et.length() <= 0) {
-                toastShort { "请输入IPV6！" }
-                return@singleClick
-            }
-            if (binding.exportImeiEt.length() <= 0) {
-                toastShort { "请输入IMEI！" }
-                return@singleClick
-            }
-            if (binding.exportRj45macEt.length() <= 0) {
-                toastShort { "请输入RJ45MAC地址！" }
-                return@singleClick
-            }
-            if (binding.exportBluetoothmacEt.length() <= 0) {
-                toastShort { "请输入蓝牙MAC地址！" }
-                return@singleClick
-            }
+//            if (binding.exportIpv6Et.length() <= 0) {
+//                toastShort { "请输入IPV6！" }
+//                return@singleClick
+//            }
+//            if (binding.exportImeiEt.length() <= 0) {
+//                toastShort { "请输入IMEI！" }
+//                return@singleClick
+//            }
+//            if (binding.exportRj45macEt.length() <= 0) {
+//                toastShort { "请输入RJ45MAC地址！" }
+//                return@singleClick
+//            }
+//            if (binding.exportBluetoothmacEt.length() <= 0) {
+//                toastShort { "请输入蓝牙MAC地址！" }
+//                return@singleClick
+//            }
             if (binding.exportAntTv.length() <= 0) {
                 toastShort { "请输入天线数量！" }
                 return@singleClick
@@ -299,6 +317,14 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 if (!exportBranches.contains(bean.branches))
                     exportBranches.add(0, bean.branches)
                 SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
+
+                val exportAddress =
+                    SPUtils.getInstance().getString("exportAddress", null)
+                        ?.toTypeClassList<String>()
+                        ?.toMutableList() ?: mutableListOf()
+                if (!exportAddress.contains(bean.address))
+                    exportAddress.add(0, bean.address)
+                SPUtils.getInstance().put("exportBranches", exportAddress.toJsonStr())
 
                 lifecycleScope.launch {
                     showLoading("")
@@ -359,9 +385,4 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
     override fun initBR(): Int = BR.export_vm
 
-}
-
-fun main(args: Array<String>) {
-    val it = "SN:UF3C21120001 IMEI:862337050026635"
-    println(it.contains(Regex("[:：]")))
 }

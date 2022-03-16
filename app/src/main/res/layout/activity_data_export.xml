@@ -252,11 +252,13 @@
                         android:layout_height="wrap_content"
                         android:text="详细地址" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.example.uhf_bluetoothclient.ui.RightPicClickEditText
                         android:id="@+id/export_address_et"
                         style="@style/config_export_et"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_sort_down"
+                        android:drawablePadding="5dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat

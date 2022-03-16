@@ -33,7 +33,8 @@ class RightPicClickEditText : AppCompatEditText {
             val drawableRight = compoundDrawables[DRAWABLE_RIGHT]
             if (drawableRight != null && e.getRawX() >= right - drawableRight.bounds.width()) {
                 drawableListener?.invoke()
-                return true
+            } else {
+                requestFocus()
             }
             return true
         }
@@ -43,6 +44,7 @@ class RightPicClickEditText : AppCompatEditText {
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (touchGestureDetector.onTouchEvent(event)) true else super.onTouchEvent(event)
+        touchGestureDetector.onTouchEvent(event)
+        return true
     }
 }

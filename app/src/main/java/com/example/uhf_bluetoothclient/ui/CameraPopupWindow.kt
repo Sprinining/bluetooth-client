@@ -10,8 +10,6 @@ import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import com.lxj.xpopup.core.CenterPopupView
 import com.seuic.scancode.DecodeFormatManager
-import com.seuic.scancode.ScanCodeUtil
-import com.seuic.scancode.ScanMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -80,9 +78,8 @@ class CameraPopupWindow(context: Context) : CenterPopupView(context) {
         val decodeFormats = Vector<BarcodeFormat>()
 
         //添加一维码解码格式
-        decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS)
+        decodeFormats.addAll(EnumSet.of(BarcodeFormat.CODE_128))
         //添加二维码解码格式
-        decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS)
         decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS)
 
         hints[DecodeHintType.POSSIBLE_FORMATS] = decodeFormats
