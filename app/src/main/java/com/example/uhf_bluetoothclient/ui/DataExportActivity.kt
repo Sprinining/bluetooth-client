@@ -50,7 +50,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
             override fun getIcon(data: ProvinceBean) = null
         }.setStringData(provinceJson?.toMutableList()).setOnSelectListener { _, data ->
             selectProvinceBean = data
-            selectCityBean=null
+            selectCityBean = null
             binding.exportVm!!.lastProvince.value = data.name
             binding.exportVm!!.lastCity.value = ""
         }
@@ -63,7 +63,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
             override fun getIcon(data: CityBean) = null
         }.setOnSelectListener { _, data ->
-            selectCityBean=data
+            selectCityBean = data
             binding.exportVm!!.lastCity.value = data.name
         }
     }
@@ -74,8 +74,20 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 val sn = Regex("SN:(\\S+)").find(it)?.groupValues?.lastOrNull()
                 val imei = Regex("IMEI:(\\S+)").find(it)?.groupValues?.lastOrNull()
                 lifecycleScope.launch {
-                    binding.exportImeiEt?.setText(imei)
-                    binding.exportSnEt?.setText(sn)
+                    if (sn == null && imei == null) {
+                        if (it.contains(Regex("[:：]"))) {
+                            if (it.startsWith("00")) {
+                                binding.exportRj45macEt?.setText(imei)
+                            } else {
+                                binding.exportBluetoothmacEt?.setText(imei)
+                            }
+                        } else {
+                            binding.exportSnEt?.setText(it)
+                        }
+                    } else {
+                        binding.exportImeiEt?.setText(imei)
+                        binding.exportSnEt?.setText(sn)
+                    }
                 }
             }
         }
@@ -188,11 +200,11 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 //                return@singleClick
 //            }
 
-            if (binding.exportProvinceEt.length() <= 0||selectProvinceBean==null) {
+            if (binding.exportProvinceEt.length() <= 0 || selectProvinceBean == null) {
                 toastShort { "请输入省！" }
                 return@singleClick
             }
-            if (binding.exportCityEt.length() <= 0||selectCityBean==null) {
+            if (binding.exportCityEt.length() <= 0 || selectCityBean == null) {
                 toastShort { "请输入城市！" }
                 return@singleClick
             }
@@ -270,10 +282,10 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                 function = binding.exportUseForEt.text?.trim().toString(),
                 remark = binding.exportOtherEt.text?.trim().toString(),
                 device = binding.exportDeviceTypeEt.text?.trim().toString(),
-                provinceCode=(selectProvinceBean?.id?:0).let {
-                  if (it==0) selectCityBean?.id?:0 else it
+                provinceCode = (selectProvinceBean?.id ?: 0).let {
+                    if (it == 0) selectCityBean?.id ?: 0 else it
                 }.toString(),
-                cityCode =(selectCityBean?.id?:0).toString(),
+                cityCode = (selectCityBean?.id ?: 0).toString(),
             ).also { bean ->
                 //保存记录
 //                val ip = binding.exportIpEt.text?.trim().toString()
@@ -285,7 +297,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
                         ?.toTypeClassList<String>()
                         ?.toMutableList() ?: mutableListOf()
                 if (!exportBranches.contains(bean.branches))
-                exportBranches.add(0, bean.branches)
+                    exportBranches.add(0, bean.branches)
                 SPUtils.getInstance().put("exportBranches", exportBranches.toJsonStr())
 
                 lifecycleScope.launch {
@@ -348,10 +360,7 @@ class DataExportActivity : BaseActivity<ActivityDataExportBinding, DataExportMod
 
 }
 
-//fun main(args: Array<String>) {
-//    val it="SN:UF3C21120001 IMEI:862337050026635"
-//    val sn = Regex("SN:(\\S+)").find(it)?.groupValues?.lastOrNull()
-//    val imei = RegexUtils.getReplaceAll(it, "IMEI:(\\S+)", "")
-//    println(sn.toJsonStr())
-//    println(imei)
-//}
+fun main(args: Array<String>) {
+    val it = "SN:UF3C21120001 IMEI:862337050026635"
+    println(it.contains(Regex("[:：]")))
+}
