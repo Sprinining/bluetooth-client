@@ -7,6 +7,7 @@ import com.example.uhf_bluetoothclient.R
 import com.example.uhf_bluetoothclient.util.CameraUtils
 import com.example.uhf_bluetoothclient.util.Nv21ImageListener
 import com.google.zxing.*
+import com.google.zxing.common.GlobalHistogramBinarizer
 import com.google.zxing.common.HybridBinarizer
 import com.lxj.xpopup.core.CenterPopupView
 import com.seuic.scancode.DecodeFormatManager
@@ -56,7 +57,7 @@ class CameraPopupWindow(context: Context) : CenterPopupView(context) {
             kotlin.runCatching {
                 val source =
                     PlanarYUVLuminanceSource(image_nv21, width, height, 0, 0, width, height, false)
-                val bitmap = BinaryBitmap(HybridBinarizer(source))
+                val bitmap = BinaryBitmap(GlobalHistogramBinarizer(source))
                 reader.decode(bitmap).text
             }.getOrNull()
                 .takeIf {

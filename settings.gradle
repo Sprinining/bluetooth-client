@@ -1,3 +1,4 @@
 rootProject.name = "UHF_BluetoothClient"
 include ':app'
 include ':bluetoothSdk'
+include ':openCVLibrary345'
