@@ -3,6 +3,7 @@ package com.example.uhf_bluetoothclient.util
 import android.annotation.SuppressLint
 import android.graphics.ImageFormat
 import android.util.Log
+import android.util.Size
 import android.view.View
 import androidx.camera.core.*
 import androidx.camera.core.AspectRatio.RATIO_4_3
@@ -83,8 +84,8 @@ object CameraUtils : LifecycleOwner {
                     preview = Preview.Builder()
                         // We request aspect ratio but no resolution
                         // Set initial target rotation
-                        .setTargetAspectRatio(RATIO_4_3)
-//                        .setTargetResolution(Size(1200, 1600))
+//                        .setTargetAspectRatio(RATIO_4_3)
+                        .setTargetResolution(Size(1080, 1920))
                         .build()
                     // Attach the viewfinder's surface provider to preview use case
                     preview.setSurfaceProvider(view_finder.surfaceProvider)
@@ -97,8 +98,8 @@ object CameraUtils : LifecycleOwner {
                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                     // We request aspect ratio but no resolution
 //					.setTargetAspectRatio(screenAspectRatio)
-                    .setTargetAspectRatio(RATIO_4_3)
-//                        .setTargetResolution(Size(1200, 1600))
+//                    .setTargetAspectRatio(RATIO_4_3)
+                    .setTargetResolution(Size(1080, 1920))
 // Set initial target rotation, we will have to call this again if rotation changes
                     // during the lifecycle of this use case
                     .build() // The analyzer can then be assigned to the instance
