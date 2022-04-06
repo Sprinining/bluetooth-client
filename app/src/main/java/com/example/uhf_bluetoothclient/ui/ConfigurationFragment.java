@@ -154,6 +154,7 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
             if (binding.edtIpv4Dns2.length() <= 0) {
                 binding.edtIpv4Dns2.setText("8.8.8.8");
             }
+            binding.spinnerIpv4Mode.setSelection(0);
         });
 
         binding.btnSetIpv4.setOnClickListener(v -> {
