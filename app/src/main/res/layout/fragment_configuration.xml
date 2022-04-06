@@ -241,26 +241,44 @@
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_auto_fill_ipv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/teal_200"
+                        android:paddingHorizontal="0dp"
+                        android:text="@string/btn_autofill_ipv4"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toStartOf="@id/btn_set_ipv4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_set_ipv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/teal_200"
+                        android:paddingHorizontal="0dp"
+                        android:text="@string/btn_set_ipv4"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/btn_auto_fill_ipv4"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/tv_ipv4_address"-->
-                    <!--                    style="@style/config_title"-->
-                    <!--                    android:text="@string/tv_ipv4_address" />-->
-                    <LinearLayout style="@style/config_title">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_set_ipv4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/teal_200"
-                            android:paddingHorizontal="0dp"
-                            android:text="@string/btn_set_ipv4"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
+                    <TextView
+                        style="@style/config_title"
+                        android:text="@string/tv_ipv4" />
 
                     <EditText
                         android:id="@+id/edt_ipv4_address"

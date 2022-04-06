@@ -47,9 +47,11 @@
     <string name="btn_scan_device">搜索设备</string>
     <string name="btn_connect_device">连接设备</string>
     <string name="btn_set_ipv4">设置IPv4</string>
+    <string name="btn_autofill_ipv4">自动填充</string>
     <string name="btn_set_ipv6">设置IPv6</string>
     <string name="tv_ip_title">获取IP:</string>
     <string name="tv_ipv6_title">IPv6:</string>
+    <string name="tv_ipv4">IPv4地址:</string>
     <string name="tv_ipv4_mode">IPv4模式:</string>
     <string name="tv_ipv4_address">IPv4:</string>
     <string name="tv_ipv4_netmask">子网掩码:</string>

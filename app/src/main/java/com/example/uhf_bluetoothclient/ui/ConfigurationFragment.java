@@ -11,6 +11,10 @@ import com.example.uhf_bluetoothclient.R;
 import com.example.uhf_bluetoothclient.databinding.FragmentConfigurationBinding;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.seuic.util.common.StringUtils;
+import com.seuic.util.common.ToastUtils;
 
 public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBinding, MyViewModel> {
     private String[] frequencyBandArray, frequencyMinArray, frequencyMaxArray, powerArray, ipModeArray;
@@ -134,6 +138,23 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
             MessageUtils.getINSTANCE().setFrequencyBand(binding.spinnerFrequencyBand.getSelectedItemPosition());
             MessageUtils.getINSTANCE().setFrequencyHopTableIndex(binding.spinnerFrequencyMin.getSelectedItemPosition(), binding.spinnerFrequencyMax.getSelectedItemPosition());
         });
+        binding.btnAutoFillIpv4.setOnClickListener(v -> {
+            if (binding.edtIpv4Address.length() <= 0) {
+                binding.edtIpv4Address.setText("192.168.1.100");
+            }
+            if (binding.edtIpv4Netmask.length() <= 0) {
+                binding.edtIpv4Netmask.setText("255.255.255.0");
+            }
+            if (binding.edtIpv4Gateway.length() <= 0) {
+                binding.edtIpv4Gateway.setText("192.168.1.1");
+            }
+            if (binding.edtIpv4Dns1.length() <= 0) {
+                binding.edtIpv4Dns1.setText("4.4.4.4");
+            }
+            if (binding.edtIpv4Dns2.length() <= 0) {
+                binding.edtIpv4Dns2.setText("8.8.8.8");
+            }
+        });
 
         binding.btnSetIpv4.setOnClickListener(v -> {
 
@@ -157,7 +178,18 @@ public class ConfigurationFragment extends BaseFragment<FragmentConfigurationBin
             );
         });
 
-        binding.btnSetIpv6.setOnClickListener(v -> MessageUtils.getINSTANCE().setIPv6(binding.edtIpv6.getText().toString()));
+        binding.btnSetIpv6.setOnClickListener(v -> {
+            if (StringUtils.isTrimEmpty(viewModel.getNetworkType().getValue())) {
+                ToastUtils.showShort("请先读取设备信息！");
+                return;
+            }
+            String ipv6 = binding.edtIpv6.getText().toString();
+            if (!StringUtils.isTrimEmpty(ipv6) && StringUtils.isTrimEmpty(viewModel.getIpv4().getValue())) {
+                ToastUtils.showShort("静态IPV6想要正常工作需要同时设置静态IPV4！");
+                return;
+            }
+            MessageUtils.getINSTANCE().setIPv6(ipv6);
+        });
 
         binding.btnExit.setOnClickListener(v -> MessageUtils.getINSTANCE().showExitDialog());
     }
