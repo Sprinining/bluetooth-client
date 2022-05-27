@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/drawable/shape_dividers.xml" value="0.36614583333333334" />
+        <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_data_export.xml" value="0.3296875" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_main.xml" value="0.35208333333333336" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/activity_scan_device.xml" value="0.33" />
         <entry key="..\:/SeuicCode/Developing/UHF_BluetoothClient/app/src/main/res/layout/device_found_cell.xml" value="0.165625" />

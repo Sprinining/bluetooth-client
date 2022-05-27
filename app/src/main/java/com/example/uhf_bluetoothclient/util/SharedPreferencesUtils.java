@@ -80,23 +80,23 @@ public class SharedPreferencesUtils {
     }
 
     public void setFrequencyBandSelection(int selection) {
-        editor.putInt(Constants.SP_FREQUENCY_BAND, selection).apply();
+        editor.putInt(Constants.SP_FREQUENCY_BAND, selection).commit();
     }
 
     public void setFrequencyMinSelection(int selection) {
-        editor.putInt(Constants.SP_FREQUENCY_MIN, selection).apply();
+        editor.putInt(Constants.SP_FREQUENCY_MIN, selection).commit();
     }
 
     public void setFrequencyMaxSelection(int selection) {
-        editor.putInt(Constants.SP_FREQUENCY_MAX, selection).apply();
+        editor.putInt(Constants.SP_FREQUENCY_MAX, selection).commit();
     }
 
     public void setPowerSelection(int selection) {
-        editor.putInt(Constants.SP_POWER, selection).apply();
+        editor.putInt(Constants.SP_POWER, selection).commit();
     }
 
     public void setSessionSelection(int selection) {
-        editor.putInt(Constants.SP_SESSION, selection).apply();
+        editor.putInt(Constants.SP_SESSION, selection).commit();
     }
 
     public void setAntenna1IsChecked(boolean isChecked) {
