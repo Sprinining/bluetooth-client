@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +18,7 @@ import com.example.uhf_bluetoothclient.util.MessageProtocolUtils;
 import com.example.uhf_bluetoothclient.util.MessageUtils;
 import com.example.uhf_bluetoothclient.viewmodel.MyViewModel;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -52,12 +52,6 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding, MyViewModel>
         ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, sessionArray);
         sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerSession.setAdapter(sessionAdapter);
-
-        // 默认勾选天线1到4
-        binding.checkBoxAntenna1.setChecked(true);
-        binding.checkBoxAntenna2.setChecked(true);
-        binding.checkBoxAntenna3.setChecked(true);
-        binding.checkBoxAntenna4.setChecked(true);
     }
 
     @Override
@@ -82,26 +76,10 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding, MyViewModel>
                 // 修改按钮文字，并禁用其他功能
                 binding.btnScan.setText("停止");
                 binding.spinnerSession.setEnabled(false);
-                binding.checkBoxAntenna1.setEnabled(false);
-                binding.checkBoxAntenna2.setEnabled(false);
-                binding.checkBoxAntenna3.setEnabled(false);
-                binding.checkBoxAntenna4.setEnabled(false);
-                binding.checkBoxAntenna5.setEnabled(false);
-                binding.checkBoxAntenna6.setEnabled(false);
-                binding.checkBoxAntenna7.setEnabled(false);
-                binding.checkBoxAntenna8.setEnabled(false);
                 binding.btnClear.setEnabled(false);
             } else {
                 binding.btnScan.setText("扫描");
                 binding.spinnerSession.setEnabled(true);
-                binding.checkBoxAntenna1.setEnabled(true);
-                binding.checkBoxAntenna2.setEnabled(true);
-                binding.checkBoxAntenna3.setEnabled(true);
-                binding.checkBoxAntenna4.setEnabled(true);
-                binding.checkBoxAntenna5.setEnabled(true);
-                binding.checkBoxAntenna6.setEnabled(true);
-                binding.checkBoxAntenna7.setEnabled(true);
-                binding.checkBoxAntenna8.setEnabled(true);
                 binding.btnClear.setEnabled(true);
             }
         });
@@ -118,22 +96,10 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding, MyViewModel>
                 scheduledThreadPoolExecutor.shutdown();
                 MessageUtils.getINSTANCE().stopInventory();
             } else {
-                // 扫描前判断
-                // 天线启用
+                // 实际使用的天线是自动检测出来的，不是下发下去的
                 boolean[] ants = new boolean[8];
-                ants[0] = binding.checkBoxAntenna1.isChecked();
-                ants[1] = binding.checkBoxAntenna2.isChecked();
-                ants[2] = binding.checkBoxAntenna3.isChecked();
-                ants[3] = binding.checkBoxAntenna4.isChecked();
-                ants[4] = binding.checkBoxAntenna5.isChecked();
-                ants[5] = binding.checkBoxAntenna6.isChecked();
-                ants[6] = binding.checkBoxAntenna7.isChecked();
-                ants[7] = binding.checkBoxAntenna8.isChecked();
+                Arrays.fill(ants, true);
                 int antenna = MessageProtocolUtils.antAryToByte(ants);
-                if (antenna == 0) {
-                    Toast.makeText(requireContext(), "请启用天线端口", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 // 没扫描，点击后就是开始扫描
                 viewModel.getScanFlag().postValue(true);
