@@ -14,15 +14,14 @@ android {
         applicationId "com.example.uhf_bluetoothclient"
         minSdk 22
         targetSdk 28
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         dataBinding {
             enabled true
         }
-
     }
     kapt {
         generateStubs = true
@@ -36,26 +35,6 @@ android {
             outputFileName = "${appName}-${defaultConfig.versionName}-${variant.buildType.name}.apk"
         }
     }
-
-/*    signingConfigs {
-        release {
-//            def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "D:\\keystore\\r102s\\platform.keystore"
-            def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "..\\platform.keystore"
-            keyAlias 'platform'
-            keyPassword 'android'
-            storeFile file(KEYSTORE_FILE)
-            storePassword 'android'
-        }
-
-        debug {
-//            def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "D:\\keystore\\r102s\\platform.keystore"
-            def KEYSTORE_FILE = System.getenv("KEYSTORE_FILE") ?: "..\\platform.keystore"
-            keyAlias 'platform'
-            keyPassword 'android'
-            storeFile file(KEYSTORE_FILE)
-            storePassword 'android'
-        }
-    }*/
 
     buildTypes {
         release {
@@ -77,8 +56,6 @@ android {
     }
     lintOptions {
         checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
         abortOnError false
     }
 }
@@ -138,5 +115,4 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha28"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 //    implementation project(path: ':openCVLibrary345')
-
 }
