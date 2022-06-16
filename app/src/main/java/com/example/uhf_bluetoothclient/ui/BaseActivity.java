@@ -236,19 +236,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends ViewMode
         }
     }
 
-    // 退出app
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mIsExit) {
-                exitAPP();
-            } else {
-                Toast.makeText(BaseActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                mIsExit = true;
-                new Handler().postDelayed(() -> mIsExit = false, 2000);
-            }
-            return true;
-        }
+        // 关闭蓝牙客户端
+        BleClient.getINSTANCE().destroy();
         return super.onKeyDown(keyCode, event);
     }
 

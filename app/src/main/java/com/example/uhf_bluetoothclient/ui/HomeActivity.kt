@@ -1,12 +1,15 @@
 package com.example.uhf_bluetoothclient.ui
 
 import android.Manifest
+import android.app.ActivityManager
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.os.Handler
 import android.util.Log
+import android.view.KeyEvent
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -23,6 +26,9 @@ import com.seuic.util.common.ext.singleClick
  * @Version:        1.0
  */
 class HomeActivity : AppCompatActivity() {
+
+    private var mIsExit = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -62,5 +68,27 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // 退出app
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                exitAPP()
+            } else {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+                mIsExit = true
+                Handler().postDelayed({ mIsExit = false }, 2000)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
+    private fun exitAPP() {
+        // 关闭app
+        val activityManager = applicationContext.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val appTaskList = activityManager.appTasks
+        for (appTask in appTaskList) {
+            appTask.finishAndRemoveTask()
+        }
+    }
 }

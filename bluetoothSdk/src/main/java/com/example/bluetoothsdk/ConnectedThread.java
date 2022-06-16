@@ -108,22 +108,7 @@ public class ConnectedThread extends Thread {
                     }
                     byte[] oneMessage = new byte[count];
                     System.arraycopy(bytes, 0, oneMessage, 0, count);
-//                    readBlockingQueue.put(oneMessage);
                     readTransferListener.transferSuccess(oneMessage);
-/*                    threadPool.execute(()->{
-                    });*/
-
-/*                    while ((n = inputStream.read(bytes)) != -1) {
-                        byte[] temp = new byte[n];
-                        System.arraycopy(bytes, 0, temp, 0, n);
-//                        readBlockingQueue.put(temp);
-
-                        new Thread(() -> {
-                            readTransferListener.transferSuccess(temp);
-                        }).start();
-
-                        Log.e("wmj", "run: ");
-                    }*/
                 }
             } catch (Exception e) {
                 readTransferListener.transferException("读线程异常终止", e);
